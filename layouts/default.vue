@@ -1,6 +1,9 @@
 <template>
   <v-layout>
-    <VAppBar color="surface-variant" title="Unity Docs" />
+    <VAppBar color="#19A7CE" title="Unity 古エッダ" >
+      <VSpacer />
+      <p>ver.1.0.0</p>
+    </VAppBar>
     <SideNavbar />
     <VMain>
       <div class="container">
@@ -17,5 +20,8 @@ const router = useRouter()
 <style>
 .container {
   padding: 1rem 1rem;
+}
+p {
+  margin-right: 1rem;
 }
 </style>

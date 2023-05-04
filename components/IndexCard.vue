@@ -3,9 +3,10 @@
     width="15rem"
     :title="Props.title"
     :subtitle="Props.subtitle"
-    :text="Props.text">
+    :text="Props.text"
+    color="#F6F1F1">
     <VCardActions>
-      <VBtn color="orange" variant="text" @click="router.push({path: Props.path})">閲覧</VBtn>
+      <VBtn color="#146C94" variant="outlined" @click="router.push({path: Props.path})">閲覧</VBtn>
     </VCardActions>
   </VCard>
 </template>
