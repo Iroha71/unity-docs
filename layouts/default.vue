@@ -3,7 +3,7 @@
     <VAppBar color="surface-variant" title="Unity Docs" />
     <VNavigationDrawer color="grey-darken-2" floating permanent >
       <VList nav>
-        <VListItem title="inbox" value="inbox"></VListItem>
+        <VListItem title="inbox" value="inbox" prepend-icon="mdi-email" @click="$router.push({path: '/'})"></VListItem>
       </VList>
     </VNavigationDrawer>
     <VMain>
@@ -13,6 +13,10 @@
     </VMain>
   </v-layout>
 </template>
+
+<script setup>
+const router = useRouter()
+</script>
 
 <style>
 .container {
