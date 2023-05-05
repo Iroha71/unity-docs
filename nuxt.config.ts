@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   content: {
     // コードハイライト有効化
     highlight: {
-      theme: "github-dark-dimmed",
+      theme: "github-light",
     },
   },
   build: {

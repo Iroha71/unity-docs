@@ -4,8 +4,9 @@
     :title="Props.title"
     :subtitle="Props.subtitle"
     :text="Props.text"
+    prepend-icon="mdi-book-multiple"
     color="#F6F1F1">
-    <VCardActions>
+    <VCardActions class="d-flex justify-center">
       <VBtn color="#146C94" variant="outlined" @click="router.push({path: Props.path})">閲覧</VBtn>
     </VCardActions>
   </VCard>
