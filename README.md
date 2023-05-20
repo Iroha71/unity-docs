@@ -1,5 +1,10 @@
 # Read Me
 
+## ページの追加方法
+
+- content/に.mdファイルを追加
+- pages/配下に.mdファイルと同名の.vueファイルを追加
+
 ## デプロイ方法
 
 - yarn generate
