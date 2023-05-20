@@ -28,6 +28,8 @@ if (rollInput.GetButtonDown() && cc.IsAnimatorTag("Attack"))
 
 ### テイクダウン
 
+- AI側のDetection(MinDistance)を0にする
+  - 接近時にプレイヤーを検知しないようにするため
 - AIへTriggerGenericAction.csを設置
   - Animation >>> プレイヤー側のアニメーション
   - Event > OnPressedAction >>> AI.Animator.PlayFixedTime()
@@ -41,8 +43,7 @@ if (rollInput.GetButtonDown() && cc.IsAnimatorTag("Attack"))
 
 #### カメラ
 
-``` .cs
-*vThirdPersonController
+``` vThirdPersonController.cs
 public bool IsExecuting {
  get { return this.isExecuting; }
  set { this.isExecuting = value }
@@ -52,6 +53,10 @@ public bool IsExecuting {
   tpCamera.ChangeState("Execution", true)
 }
 ```
+
+### AIのAttack DistanceとCombat Distanceの設定
+
+- Attack Distance > Combat Distanceの関係になるように設定する
 
 ### ボタン同時押し
 
@@ -69,3 +74,11 @@ if (exampleInput.GetButtonDown() && isBlocking)
 // vMeleeInput.cs > JumpCondition()
 return !isAttacking && base.JumpConditions() && !isBlocking;
 ```
+
+### 追加ダメージ設定等
+
+- `vMeleeAttackObject.cs` > ApplyDamage()の処理を変更するとダメージが変わる
+- meleeWeapon.damageが武器
+- meleeWeapon.damageModifierが追加ダメージ設定
+- 武器ダメージのみにしたい場合は`MeleeManager.cs` > defaultDamageを0にする
+- 属性や増加値はvItemAttributeを増やして対応
