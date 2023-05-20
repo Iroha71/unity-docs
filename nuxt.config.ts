@@ -9,13 +9,13 @@ export default defineNuxtConfig({
   content: {
     // コードハイライト有効化
     highlight: {
-      theme: "github-dark-dimmed",
+      theme: "github-light",
     },
   },
   build: {
     transpile: ['vuetify'],
   },
-  css: ['vuetify/lib/styles/main.sass', 'mdi/css/materialdesignicons.min.css'],
+  css: ['vuetify/lib/styles/main.sass', 'mdi/css/materialdesignicons.min.css', '@/assets/main.scss'],
   plugins: [
     '@/plugins/constants.ts',
   ]
