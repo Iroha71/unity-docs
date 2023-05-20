@@ -1,42 +1,18 @@
-# Nuxt 3 Minimal Starter
+# Read Me
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## ページの追加方法
 
-## Setup
+- content/に.mdファイルを追加
+- pages/配下に.mdファイルと同名の.vueファイルを追加
 
-Make sure to install the dependencies:
+## デプロイ方法
 
-```bash
-# yarn
-yarn install
+- yarn generate
+  - 静的ファイルの生成
+- yarn deploy
+  - gh-pagesブランチを利用したgithub pagesへのデプロイ
 
-# npm
-npm install
+## 参考
 
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [gh-pages](https://github.com/lucpotage/nuxt-github-pages)
+- ※dist配下に`.nojekeyll`を追加
