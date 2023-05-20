@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html >
+<head><meta charset="utf-8">
+<title>Invector</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style id="vuetify-theme-stylesheet">:root {
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--light {
+      color-scheme: normal;
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--dark {
+      color-scheme: dark;
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 189,189,189;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 66,66,66;
+      --v-theme-primary: 187,134,252;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 1;
+      --v-theme-secondary: 3,218,197;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 3,218,197;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 0,0,0;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background)) !important;
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface)) !important;
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant)) !important;
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error)) !important;
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info)) !important;
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success)) !important;
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning)) !important;
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+    .text-background {
+      color: rgb(var(--v-theme-background)) !important;
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface)) !important;
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant)) !important;
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary)) !important;
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1)) !important;
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1)) !important;
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error)) !important;
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info)) !important;
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success)) !important;
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning)) !important;
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+</style>
+<meta property="og:title" content="Invector"><link rel="modulepreload" href="/unity-docs/invector/top/_payload.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/entry.2ee64055.js"><link rel="preload" as="style" href="/unity-docs/_nuxt/entry.4e76a045.css"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/default.e0912b56.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/top.1a102529.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentDoc.0028122c.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRenderer.c26e31a2.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRendererMarkdown.58567134.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/index.a6ef77ff.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/preview.893bd1a2.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentQuery.53da2dac.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/query.4c26b0d6.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/utils.ab14c219.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH1.4c6388a2.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH2.6d4ee84e.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseUl.0f489117.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseLi.9c7b23c9.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseA.a5499ecd.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/nuxt-link.f47257ce.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH3.f844390a.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseCode.93c5fcaf.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH4.a3313c29.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseCodeInline.6d1f4de0.js"><link rel="prefetch" as="image" type="image/svg+xml" href="/unity-docs/_nuxt/materialdesignicons-webfont.87f88639.svg"><link rel="prefetch" as="script" crossorigin href="/unity-docs/_nuxt/error-component.4ef98135.js"><link rel="stylesheet" href="/unity-docs/_nuxt/entry.4e76a045.css"><style>.page-enter-active,.page-leave-active{transition:all .4s}.page-enter-from,.page-leave-to{filter:blur(1rem);opacity:0}</style><style>.container{padding:1rem}p{margin-right:1rem}</style><style>pre code .line{display:block;min-height:1rem}</style></head>
+<body ><div id="__nuxt"><!--[--><div class="v-layout" style="z-index:1000;"><!--[--><header class="v-toolbar v-toolbar--density-default v-theme--light v-app-bar" style="background-color:#19A7CE;top:0;z-index:1004;transform:translateY(0%);position:fixed;transition:none !important;"><!----><!--[--><div class="v-toolbar__content" style="height:64px;"><!----><div class="v-toolbar-title" style=""><div class="v-toolbar-title__placeholder">Unity 古エッダ<!----></div></div><!--[--><div class="flex-grow-1" style=""></div><p>ver.1.0.0</p><!--]--><!----></div><!--]--><!--[--><!----><!--]--></header><!--[--><nav class="v-navigation-drawer v-navigation-drawer--left v-navigation-drawer--floating v-theme--light" style="background-color:#AFD3E2;left:0;z-index:1006;transform:translateX(-110%);position:fixed;transition:none !important;"><!----><div class="v-navigation-drawer__prepend"><!--[--><div class="v-list-item v-list-item--link v-theme--light v-list-item--density-default v-list-item--two-line v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-home-circle mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">ホームへ</div><!----><!----></div><!----></div><!--]--></div><div class="v-navigation-drawer__content"><!--[--><!--[--><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">Invector</div><!----><!----></div><!----></div><!--]--></div><!--]--><!--]--></div><!----></nav><!----><!--]--><main class="v-main" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;"><!--[--><div class="container"><!--[--><div class="md-container"><!--[--><div><h1 id="invector"><!--[-->Invector<!--]--></h1><h2 id="目次"><a href="#目次"><!--[-->目次<!--]--></a></h2><ul><!--[--><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#melee" class="router-link-active router-link-exact-active"><!--[-->Melee<!--]--></a><ul><!--[--><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#%E3%83%AD%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0" class="router-link-active router-link-exact-active"><!--[-->ローリング<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#%E3%83%AD%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0%E3%82%AD%E3%83%A3%E3%83%B3%E3%82%BB%E3%83%AB" class="router-link-active router-link-exact-active"><!--[-->ローリングキャンセル<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#ragdoll" class="router-link-active router-link-exact-active"><!--[-->Ragdoll<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#%E3%83%86%E3%82%A4%E3%82%AF%E3%83%80%E3%82%A6%E3%83%B3" class="router-link-active router-link-exact-active"><!--[-->テイクダウン<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#ai%E3%81%AEattack-distance%E3%81%A8combat-distance%E3%81%AE%E8%A8%AD%E5%AE%9A" class="router-link-active router-link-exact-active"><!--[-->AIのAttack DistanceとCombat Distanceの設定<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#%E3%83%9C%E3%82%BF%E3%83%B3%E5%90%8C%E6%99%82%E6%8A%BC%E3%81%97" class="router-link-active router-link-exact-active"><!--[-->ボタン同時押し<!--]--></a><!--]--></li><li><!--[--><a aria-current="page" href="/unity-docs/invector/top#%E8%BF%BD%E5%8A%A0%E3%83%80%E3%83%A1%E3%83%BC%E3%82%B8%E8%A8%AD%E5%AE%9A%E7%AD%89" class="router-link-active router-link-exact-active"><!--[-->追加ダメージ設定等<!--]--></a><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><h2 id="melee"><a href="#melee"><!--[-->Melee<!--]--></a></h2><h3 id="ローリング"><a href="#ローリング"><!--[-->ローリング<!--]--></a></h3><ul><!--[--><li><!--[-->RollTransition: 0<!--]--></li><li><!--[-->RollSpeed: 1.5<!--]--></li><li><!--[-->RollRotationSpeed: 55<!--]--></li><!--]--></ul><h3 id="ローリングキャンセル"><a href="#ローリングキャンセル"><!--[-->ローリングキャンセル<!--]--></a></h3><!--[--><pre><code><span class="line" line="1"><span>// RollInput()
+</span></span><span class="line" line="2"><span>if (rollInput.GetButtonDown() &amp;&amp; cc.IsAnimatorTag(&quot;Attack&quot;))
+</span></span><span class="line" line="3"><span>{
+</span></span><span class="line" line="4"><span>  if (rollInput.GetButtonDown() &amp;&amp; RollConditions())
+</span></span><span class="line" line="5"><span>  {
+</span></span><span class="line" line="6"><span>    cc.Roll();
+</span></span><span class="line" line="7"><span>  }
+</span></span><span class="line" line="8"><span>}</span></span></code></pre><!--]--><h3 id="ragdoll"><a href="#ragdoll"><!--[-->Ragdoll<!--]--></a></h3><ul><!--[--><li><!--[-->vRagdollをアタッチ<!--]--></li><li><!--[-->vThirdPersonController &gt; Health &gt; Death by ragdoll<!--]--></li><!--]--></ul><h3 id="テイクダウン"><a href="#テイクダウン"><!--[-->テイクダウン<!--]--></a></h3><ul><!--[--><li><!--[-->AI側のDetection(MinDistance)を0にする<ul><!--[--><li><!--[-->接近時にプレイヤーを検知しないようにするため<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->AIへTriggerGenericAction.csを設置<ul><!--[--><li><!--[-->Animation &gt;&gt;&gt; プレイヤー側のアニメーション<!--]--></li><li><!--[-->Event &gt; OnPressedAction &gt;&gt;&gt; AI.Animator.PlayFixedTime()<!--]--></li><li><!--[-->Event &gt; OnPressedAction &gt;&gt;&gt; AI.vEventWithDelay.DoEvent(0)<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->vEventWithDelay.cs<ul><!--[--><li><!--[-->AI.vHealthController.AddHealth(-100)など<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->AnimatorControllerにはテイクダウンモーションを追加<ul><!--[--><li><!--[-->vAnimatorTag.cs追加 &gt;&gt;&gt; Death / CustomActionタグ追加<!--]--></li><li><!--[-->vSetInteger.cs追加 &gt;&gt;&gt; ActionStateを-1に変更する<ul><!--[--><li><!--[-->通常時の死亡モーションを再生しないようにするため<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><h4 id="カメラ"><a href="#カメラ"><!--[-->カメラ<!--]--></a></h4><!--[--><pre><code><span class="line" line="1"><span>public bool IsExecuting {
+</span></span><span class="line" line="2"><span> get { return this.isExecuting; }
+</span></span><span class="line" line="3"><span> set { this.isExecuting = value }
+</span></span><span class="line" line="4"><span>}  
+</span></span><span class="line" line="5"><span>*vThirdPersonInput 425行目 
+</span></span><span class="line" line="6"><span>　else if (cc.isExecuting) {
+</span></span><span class="line" line="7"><span>  tpCamera.ChangeState(&quot;Execution&quot;, true)
+</span></span><span class="line" line="8"><span>}</span></span></code></pre><!--]--><h3 id="aiのattack-distanceとcombat-distanceの設定"><a href="#aiのattack-distanceとcombat-distanceの設定"><!--[-->AIのAttack DistanceとCombat Distanceの設定<!--]--></a></h3><ul><!--[--><li><!--[-->Attack Distance &gt; Combat Distanceの関係になるように設定する<!--]--></li><!--]--></ul><h3 id="ボタン同時押し"><a href="#ボタン同時押し"><!--[-->ボタン同時押し<!--]--></a></h3><!--[--><pre><code><span class="line" line="1"><span>// LB + Xボタンの例
+</span></span><span class="line" line="2"><span>if (exampleInput.GetButtonDown() &amp;&amp; isBlocking)
+</span></span><span class="line" line="3"><span>{
+</span></span><span class="line" line="4"><span>  同時押しの処理
+</span></span><span class="line" line="5"><span>}</span></span></code></pre><!--]--><ul><!--[--><li><!--[-->ジャンプと競合しないようにガード中はジャンプしないように変更<!--]--></li><!--]--></ul><!--[--><pre><code><span class="line" line="1"><span>// vMeleeInput.cs &gt; JumpCondition()
+</span></span><span class="line" line="2"><span>return !isAttacking &amp;&amp; base.JumpConditions() &amp;&amp; !isBlocking;</span></span></code></pre><!--]--><h3 id="追加ダメージ設定等"><a href="#追加ダメージ設定等"><!--[-->追加ダメージ設定等<!--]--></a></h3><ul><!--[--><li><!--[--><code><!--[-->vMeleeAttackObject.cs<!--]--></code> &gt; ApplyDamage()の処理を変更するとダメージが変わる<!--]--></li><li><!--[-->meleeWeapon.damageが武器<!--]--></li><li><!--[-->meleeWeapon.damageModifierが追加ダメージ設定<!--]--></li><li><!--[-->武器ダメージのみにしたい場合は<code><!--[-->MeleeManager.cs<!--]--></code> &gt; defaultDamageを0にする<!--]--></li><li><!--[-->属性や増加値はvItemAttributeを増やして対応<!--]--></li><!--]--></ul></div><!--]--></div><!--]--></div><!--]--></main><!--]--></div><!--]--></div><script type="module">import p from "/unity-docs/invector/top/_payload.js";window.__NUXT__={...p,...((function(a,b){return {state:{},_errors:{"content-query-tZMqAfKOa5":null},serverRendered:true,prerenderedAt:1684578786663,config:{public:{content:{locales:[],defaultLocale:b,integrity:1684578764373,experimental:{stripQueryParameters:a,clientDB:a,advancedIgnoresPattern:a},api:{baseURL:"\u002Fapi\u002F_content"},navigation:{fields:[]},tags:{p:"prose-p",a:"prose-a",blockquote:"prose-blockquote","code-inline":"prose-code-inline",code:"prose-code",em:"prose-em",h1:"prose-h1",h2:"prose-h2",h3:"prose-h3",h4:"prose-h4",h5:"prose-h5",h6:"prose-h6",hr:"prose-hr",img:"prose-img",ul:"prose-ul",ol:"prose-ol",li:"prose-li",strong:"prose-strong",table:"prose-table",thead:"prose-thead",tbody:"prose-tbody",td:"prose-td",th:"prose-th",tr:"prose-tr"},highlight:{theme:"github-light"},wsUrl:b,documentDriven:a,host:b,trailingSlash:a,anchorLinks:{depth:4,exclude:[1]}}},app:{baseURL:"\u002Funity-docs",buildAssetsDir:"\u002F_nuxt\u002F",cdnURL:b}}}}(false,"")))}</script><script type="module" src="/unity-docs/_nuxt/entry.2ee64055.js" crossorigin></script></body>
+</html>
