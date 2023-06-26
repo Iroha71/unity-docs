@@ -11,6 +11,15 @@
   - [ボタン同時押し](#ボタン同時押し)
   - [追加ダメージ設定等](#追加ダメージ設定等)
 
+## 基本フロー
+
+### キャラクター自身に機能追加する場合
+
+- interfaceを作成する
+- vThirdPersonMotor or vThirdPersonControllerに実装を行う
+  - Motor: スタミナ・ローリングなどの動作定義・TakeDamage()の実装が行われている
+- vEditorToolBarでインスペクタ上でグリッド表示が行える
+
 ## 共通
 
 ### DeathBy.AnimationWithRagdollのタイミング調整
