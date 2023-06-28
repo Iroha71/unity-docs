@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html >
+<head><meta charset="utf-8">
+<title>ゲームデザイン資料</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style id="vuetify-theme-stylesheet">:root {
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--light {
+      color-scheme: normal;
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--dark {
+      color-scheme: dark;
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 189,189,189;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 66,66,66;
+      --v-theme-primary: 187,134,252;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 1;
+      --v-theme-secondary: 3,218,197;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 3,218,197;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 0,0,0;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background)) !important;
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface)) !important;
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant)) !important;
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error)) !important;
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info)) !important;
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success)) !important;
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning)) !important;
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+    .text-background {
+      color: rgb(var(--v-theme-background)) !important;
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface)) !important;
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant)) !important;
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary)) !important;
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1)) !important;
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1)) !important;
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error)) !important;
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info)) !important;
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success)) !important;
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning)) !important;
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+</style>
+<meta property="og:title" content="ゲームデザイン資料"><link rel="modulepreload" href="/unity-docs/game_design/_payload.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/entry.eb6f46d5.js"><link rel="preload" as="style" href="/unity-docs/_nuxt/entry.4e76a045.css"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/default.2541fb46.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/index.1e3004b4.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentDoc.f2328010.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRenderer.6701ea84.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRendererMarkdown.0db2bb8a.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/index.a6ef77ff.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/preview.49eae2b6.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentQuery.fd0605b0.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/query.c5bbe2b4.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/utils.58a5cc2f.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH1.9c28387d.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH2.f24b3879.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseHr.d4379a10.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH3.4a221190.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseUl.b9a72a0a.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseLi.2745148d.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseA.8f736c54.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/nuxt-link.a38141dd.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseTable.40265c53.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseThead.5071eb4f.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseTr.14694c87.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseTh.e407eb1d.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseTbody.01295574.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseTd.b5c536e6.js"><link rel="prefetch" as="image" type="image/svg+xml" href="/unity-docs/_nuxt/materialdesignicons-webfont.87f88639.svg"><link rel="prefetch" as="script" crossorigin href="/unity-docs/_nuxt/error-component.2459366b.js"><link rel="stylesheet" href="/unity-docs/_nuxt/entry.4e76a045.css"><style>.page-enter-active,.page-leave-active{transition:all .4s}.page-enter-from,.page-leave-to{filter:blur(1rem);opacity:0}</style><style>.container{padding:1rem}p{margin-right:1rem}</style></head>
+<body ><div id="__nuxt"><!--[--><div class="v-layout" style="z-index:1000;"><!--[--><header class="v-toolbar v-toolbar--density-default v-theme--light v-app-bar" style="background-color:#19A7CE;top:0;z-index:1004;transform:translateY(0%);position:fixed;transition:none !important;"><!----><!--[--><div class="v-toolbar__content" style="height:64px;"><!----><div class="v-toolbar-title" style=""><div class="v-toolbar-title__placeholder">Unity 古エッダ<!----></div></div><!--[--><div class="flex-grow-1" style=""></div><p>ver.1.1.0</p><!--]--><!----></div><!--]--><!--[--><!----><!--]--></header><!--[--><nav class="v-navigation-drawer v-navigation-drawer--left v-navigation-drawer--floating v-theme--light" style="background-color:#AFD3E2;left:0;z-index:1006;transform:translateX(-110%);position:fixed;transition:none !important;"><!----><div class="v-navigation-drawer__prepend"><!--[--><div class="v-list-item v-list-item--link v-theme--light v-list-item--density-default v-list-item--two-line v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-home-circle mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">ホームへ</div><!----><!----></div><!----></div><!--]--></div><div class="v-navigation-drawer__content"><!--[--><!--[--><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">Invector</div><!----><!----></div><!----></div><!--]--></div><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">ゲームデザイン関連</div><!----><!----></div><!----></div><!--]--></div><!--]--><!--]--></div><!----></nav><!----><!--]--><main class="v-main" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;"><!--[--><div class="container"><!--[--><div class="md-container"><!--[--><div><h1 id="ゲームデザイン資料"><!--[-->ゲームデザイン資料<!--]--></h1><h2 id="ダメージ計算"><a href="#ダメージ計算"><!--[-->ダメージ計算<!--]--></a></h2><hr><h3 id="基本の計算式"><a href="#基本の計算式"><!--[-->基本の計算式<!--]--></a></h3><ul><!--[--><li><!--[-->ダメージ = （（攻撃）-（防御）） x 補正値<!--]--></li><li><!--[-->ダメージ = （攻撃 x 補正値）-（防御 x 補正値）<!--]--></li><!--]--></ul><h3 id="詳細"><a href="#詳細"><!--[-->詳細<!--]--></a></h3><ul><!--[--><li><!--[--><a href="https://note.com/daraneko_games/n/n9819dda2698a#nNtKY" rel="nofollow"><!--[-->頭が痛くならないダメージ計算式<!--]--></a><!--]--></li><li><!--[-->ダメージ = 攻撃力<ul><!--[--><li><!--[-->処理がシンプル<!--]--></li><li><!--[-->インフレが激しい（HP）<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->ダメージ = 攻撃力 - 防御力<ul><!--[--><li><!--[-->インフレを抑えられる<!--]--></li><li><!--[-->防御力の変動によるダメージ増減が激しい<!--]--></li><li><!--[-->攻撃力 &lt; 防御力の場合、攻撃が一切入らない<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->ダメージ = (攻撃力 / 2) - (防御力 / 4)<ul><!--[--><li><!--[-->ドラクエ式<!--]--></li><li><!--[-->値に補正をかけることで攻撃・防御力の影響度を下げる<!--]--></li><li><!--[-->掛け算に読み替えることを推奨<ul><!--[--><li><!--[-->ダメージ = (攻撃力 x 0.5) - (防御力 x 0.25)<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->影響度を下げる→ステータス増減によるダメージ増減の幅を抑えられる<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><h3 id="装備ステータスとキャラステータスの掛け合わせ"><a href="#装備ステータスとキャラステータスの掛け合わせ"><!--[-->装備ステータスとキャラステータスの掛け合わせ<!--]--></a></h3><ul><!--[--><li><!--[-->攻撃力 = 装備 + キャラ攻撃力<ul><!--[--><li><!--[-->装備によるダメージ加算が大きい<!--]--></li><li><!--[-->僧侶でも戦士なみの攻撃力になることがある<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><table><!--[--><thead><!--[--><tr><!--[--><th><!--[-->タイプ<!--]--></th><th><!--[-->攻撃力<!--]--></th><th><!--[-->武器<!--]--></th><th><!--[-->総攻撃力<!--]--></th><!--]--></tr><!--]--></thead><tbody><!--[--><tr><!--[--><td><!--[-->勇者<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->20<!--]--></td><!--]--></tr><tr><!--[--><td><!--[-->僧侶<!--]--></td><td><!--[-->5<!--]--></td><td><!--[-->20<!--]--></td><td><!--[-->25<!--]--></td><!--]--></tr><tr><!--[--><td><!--[-->戦士<!--]--></td><td><!--[-->15<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->25<!--]--></td><!--]--></tr><!--]--></tbody><!--]--></table><ul><!--[--><li><!--[-->攻撃力 = 装備 x キャラ攻撃力<ul><!--[--><li><!--[-->インフレの影響を受けやすい<!--]--></li><li><!--[-->装備と攻撃力の両方の影響を受けやすい<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><table><!--[--><thead><!--[--><tr><!--[--><th><!--[-->タイプ<!--]--></th><th><!--[-->攻撃力<!--]--></th><th><!--[-->武器<!--]--></th><th><!--[-->総攻撃力<!--]--></th><!--]--></tr><!--]--></thead><tbody><!--[--><tr><!--[--><td><!--[-->勇者<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->100<!--]--></td><!--]--></tr><tr><!--[--><td><!--[-->僧侶<!--]--></td><td><!--[-->5<!--]--></td><td><!--[-->20<!--]--></td><td><!--[-->100<!--]--></td><!--]--></tr><tr><!--[--><td><!--[-->戦士<!--]--></td><td><!--[-->15<!--]--></td><td><!--[-->10<!--]--></td><td><!--[-->150<!--]--></td><!--]--></tr><!--]--></tbody><!--]--></table><h3 id="属性倍率などを掛ける場所"><a href="#属性倍率などを掛ける場所"><!--[-->属性倍率などを掛ける場所<!--]--></a></h3><ul><!--[--><li><!--[-->ダメージ = ( 攻撃力 - 防御力 ) × 属性耐性<ul><!--[--><li><!--[-->攻撃力 &lt;= 防御力の場合ダメージは通らない<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->ダメージ = ( 攻撃力 × 属性耐性 ) - 防御力<ul><!--[--><li><!--[-->攻撃力 &lt;= 防御力でもダメージが発生<ul><!--[--><li><!--[-->弱点を突けば倒せるという戦略も可能<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul></div><!--]--></div><!--]--></div><!--]--></main><!--]--></div><!--]--></div><script type="module">import p from "/unity-docs/game_design/_payload.js";window.__NUXT__={...p,...((function(a,b){return {state:{},_errors:{"content-query-0GVbtOmWxA":null},serverRendered:true,prerenderedAt:1687914649207,config:{public:{content:{locales:[],defaultLocale:b,integrity:1687914628035,experimental:{stripQueryParameters:a,clientDB:a,advancedIgnoresPattern:a},api:{baseURL:"\u002Fapi\u002F_content"},navigation:{fields:[]},tags:{p:"prose-p",a:"prose-a",blockquote:"prose-blockquote","code-inline":"prose-code-inline",code:"prose-code",em:"prose-em",h1:"prose-h1",h2:"prose-h2",h3:"prose-h3",h4:"prose-h4",h5:"prose-h5",h6:"prose-h6",hr:"prose-hr",img:"prose-img",ul:"prose-ul",ol:"prose-ol",li:"prose-li",strong:"prose-strong",table:"prose-table",thead:"prose-thead",tbody:"prose-tbody",td:"prose-td",th:"prose-th",tr:"prose-tr"},highlight:{theme:"github-light"},wsUrl:b,documentDriven:a,host:b,trailingSlash:a,anchorLinks:{depth:4,exclude:[1]}}},app:{baseURL:"\u002Funity-docs",buildAssetsDir:"\u002F_nuxt\u002F",cdnURL:b}}}}(false,"")))}</script><script type="module" src="/unity-docs/_nuxt/entry.eb6f46d5.js" crossorigin></script></body>
+</html>
