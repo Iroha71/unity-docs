@@ -1,5 +1,5 @@
 <template>
-  <div class="md-container">
+  <div>
     <ContentDoc />
   </div>
 </template>
