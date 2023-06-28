@@ -2,7 +2,7 @@
   <v-layout>
     <VAppBar color="#19A7CE" title="Unity 古エッダ" >
       <VSpacer />
-      <p>ver.1.0.0</p>
+      <p>ver.1.1.0</p>
     </VAppBar>
     <SideNavbar />
     <VMain>
