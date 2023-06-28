@@ -9,3 +9,10 @@
       :path="category.contentPath" />
   </div>
 </template>
+
+<style lang="scss">
+.v-card {
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
