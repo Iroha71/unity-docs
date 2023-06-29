@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html >
+<head><meta charset="utf-8">
+<title>Melee Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style id="vuetify-theme-stylesheet">:root {
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--light {
+      color-scheme: normal;
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--dark {
+      color-scheme: dark;
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 189,189,189;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 66,66,66;
+      --v-theme-primary: 187,134,252;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 1;
+      --v-theme-secondary: 3,218,197;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 3,218,197;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 0,0,0;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background)) !important;
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface)) !important;
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant)) !important;
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error)) !important;
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info)) !important;
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success)) !important;
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning)) !important;
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+    .text-background {
+      color: rgb(var(--v-theme-background)) !important;
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface)) !important;
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant)) !important;
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary)) !important;
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1)) !important;
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1)) !important;
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error)) !important;
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info)) !important;
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success)) !important;
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning)) !important;
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+</style>
+<meta property="og:title" content="Melee Template"><link rel="modulepreload" href="/unity-docs/invector/melee/_payload.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/entry.ef8f090c.js"><link rel="preload" as="style" href="/unity-docs/_nuxt/entry.c3de155c.css"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/default.0f403d2a.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/melee.977f41d8.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentDoc.3432cfc1.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRenderer.b5d4b541.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentRendererMarkdown.a35e48dd.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/index.a6ef77ff.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/preview.85d5feb3.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ContentQuery.0eb96b7d.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/query.36491d75.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/utils.1041a8a7.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH1.6f3c0a66.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseH2.1f70e4b2.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseUl.c5ae9432.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseLi.1f096d2c.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseCode.4d2aa91c.js"><link rel="modulepreload" as="script" crossorigin href="/unity-docs/_nuxt/ProseCodeInline.001ed9f3.js"><link rel="prefetch" as="image" type="image/svg+xml" href="/unity-docs/_nuxt/materialdesignicons-webfont.87f88639.svg"><link rel="prefetch" as="script" crossorigin href="/unity-docs/_nuxt/error-component.5194cf91.js"><link rel="stylesheet" href="/unity-docs/_nuxt/entry.c3de155c.css"><style>.page-enter-active,.page-leave-active{transition:all .4s}.page-enter-from,.page-leave-to{filter:blur(1rem);opacity:0}</style><style>.container{padding:1rem}p{margin-right:1rem}</style><style>pre code .line{display:block;min-height:1rem}</style></head>
+<body ><div id="__nuxt"><!--[--><div class="v-layout" style="z-index:1000;"><!--[--><header class="v-toolbar v-toolbar--density-default v-theme--light v-app-bar" style="background-color:#19A7CE;top:0;z-index:1004;transform:translateY(0%);position:fixed;transition:none !important;"><!----><!--[--><div class="v-toolbar__content" style="height:64px;"><!----><div class="v-toolbar-title" style=""><div class="v-toolbar-title__placeholder">Unity 古エッダ<!----></div></div><!--[--><div class="flex-grow-1" style=""></div><p>ver.1.1.0</p><!--]--><!----></div><!--]--><!--[--><!----><!--]--></header><!--[--><nav class="v-navigation-drawer v-navigation-drawer--left v-navigation-drawer--floating v-theme--light" style="background-color:#AFD3E2;left:0;z-index:1006;transform:translateX(-110%);position:fixed;transition:none !important;"><!----><div class="v-navigation-drawer__prepend"><!--[--><div class="v-list-item v-list-item--link v-theme--light v-list-item--density-default v-list-item--two-line v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-home-circle mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">ホームへ</div><!----><!----></div><!----></div><!--]--></div><div class="v-navigation-drawer__content"><!--[--><!--[--><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">Invector</div><!----><!----></div><!----></div><!--]--></div><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">シーンセットアップ</div><!----><!----></div><!----></div><!--]--></div><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">ゲームデザイン関連</div><!----><!----></div><!----></div><!--]--></div><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">Quest Machine</div><!----><!----></div><!----></div><!--]--></div><div class="v-list v-list--nav v-theme--light bg-transparent v-list--density-default v-list--one-line" style="" role="listbox"><!--[--><div class="v-list-item v-list-item--link v-list-item--nav v-theme--light v-list-item--density-default v-list-item--one-line v-list-item--rounded v-list-item--variant-text" style="" tabindex="0"><!--[--><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span><!--]--><div class="v-list-item__prepend"><!--[--><!----><i class="mdi-book-multiple mdi v-icon notranslate v-theme--light v-icon--size-default" style="" aria-hidden="true" density="default"></i><!--]--></div><div class="v-list-item__content" data-no-activator><div class="v-list-item-title" style="">Dialogue System</div><!----><!----></div><!----></div><!--]--></div><!--]--><!--]--></div><!----></nav><!----><!--]--><main class="v-main" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;"><!--[--><div class="container"><!--[--><div><!--[--><div><h1 id="melee-template"><!--[-->Melee Template<!--]--></h1><h2 id="ローリング"><a href="#ローリング"><!--[-->ローリング<!--]--></a></h2><ul><!--[--><li><!--[-->RollTransition: 0<!--]--></li><li><!--[-->RollSpeed: 1.5<!--]--></li><li><!--[-->RollRotationSpeed: 55<!--]--></li><li><!--[-->ローリングキャンセル<!--]--></li><!--]--></ul><!--[--><pre><code><span class="line" line="1"><span class="ct-367dce">// RollInput()
+</span></span><span class="line" line="2"><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (rollInput.</span><span class="ct-89b4ee">GetButtonDown</span><span class="ct-5abadb">() </span><span class="ct-b5bb32">&amp;&amp;</span><span class="ct-5abadb"> cc.</span><span class="ct-89b4ee">IsAnimatorTag</span><span class="ct-5abadb">(</span><span class="ct-76a4e1">&quot;Attack&quot;</span><span class="ct-5abadb">))
+</span></span><span class="line" line="3"><span class="ct-5abadb">{
+</span></span><span class="line" line="4"><span class="ct-5abadb">  </span><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (rollInput.</span><span class="ct-89b4ee">GetButtonDown</span><span class="ct-5abadb">() </span><span class="ct-b5bb32">&amp;&amp;</span><span class="ct-5abadb"> </span><span class="ct-89b4ee">RollConditions</span><span class="ct-5abadb">())
+</span></span><span class="line" line="5"><span class="ct-5abadb">  {
+</span></span><span class="line" line="6"><span class="ct-5abadb">    cc.</span><span class="ct-89b4ee">Roll</span><span class="ct-5abadb">();
+</span></span><span class="line" line="7"><span class="ct-5abadb">  }
+</span></span><span class="line" line="8"><span class="ct-5abadb">}</span></span></code></pre><!--]--><h2 id="ragdoll"><a href="#ragdoll"><!--[-->Ragdoll<!--]--></a></h2><ul><!--[--><li><!--[-->Invector &gt; Basic Locomotion &gt; vRagdoll<!--]--></li><!--]--></ul><h2 id="death-by-animationwithragdollのタイミング調整"><a href="#death-by-animationwithragdollのタイミング調整"><!--[-->Death By AnimationWithRagdollのタイミング調整<!--]--></a></h2><ul><!--[--><li><!--[-->vAIMotor.cs<ul><!--[--><li><!--[--><code><!--[-->info.normalizedTime &gt;= 0.8f<!--]--></code>の値を大きくする<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><pre><code><span class="line" line="1"><span class="ct-b5bb32">protected</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">virtual</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">void</span><span class="ct-5abadb"> </span><span class="ct-89b4ee">AnimatorDeath</span><span class="ct-5abadb">()
+</span></span><span class="line" line="2"><span class="ct-5abadb">  {
+</span></span><span class="line" line="3"><span class="ct-5abadb">      </span><span class="ct-367dce">// death by animation &amp; ragdoll after a time
+</span></span><span class="line" line="4"><span class="ct-5abadb">      </span><span class="ct-b5bb32">else</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (deathBy </span><span class="ct-b5bb32">==</span><span class="ct-5abadb"> DeathBy.AnimationWithRagdoll)
+</span></span><span class="line" line="5"><span class="ct-5abadb">      {
+</span></span><span class="line" line="6"><span class="ct-5abadb">          </span><span class="ct-b5bb32">int</span><span class="ct-5abadb"> </span><span class="ct-36b965">deadLayer</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">=</span><span class="ct-5abadb"> </span><span class="ct-1345d6">0</span><span class="ct-5abadb">;
+</span></span><span class="line" line="7"><span class="ct-5abadb">          </span><span class="ct-b5bb32">var</span><span class="ct-5abadb"> </span><span class="ct-36b965">info</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">=</span><span class="ct-5abadb"> animatorStateInfos.</span><span class="ct-89b4ee">GetStateInfoUsingTag</span><span class="ct-5abadb">(</span><span class="ct-76a4e1">&quot;Dead&quot;</span><span class="ct-5abadb">);
+</span></span><span class="line" line="8"><span class="ct-5abadb">          </span><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (info </span><span class="ct-b5bb32">!=</span><span class="ct-5abadb"> </span><span class="ct-1345d6">null</span><span class="ct-5abadb">)
+</span></span><span class="line" line="9"><span class="ct-5abadb">          {
+</span></span><span class="line" line="10"><span class="ct-5abadb">              </span><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (</span><span class="ct-b5bb32">!</span><span class="ct-5abadb">animator.</span><span class="ct-89b4ee">IsInTransition</span><span class="ct-5abadb">(deadLayer) </span><span class="ct-b5bb32">&amp;&amp;</span><span class="ct-5abadb"> info.normalizedTime </span><span class="ct-b5bb32">&gt;=</span><span class="ct-5abadb"> </span><span class="ct-1345d6">0.95f</span><span class="ct-5abadb"> </span><span class="ct-b5bb32">&amp;&amp;</span><span class="ct-5abadb"> GroundDistanceAnim </span><span class="ct-b5bb32">&lt;=</span><span class="ct-5abadb"> </span><span class="ct-1345d6">0.1f</span><span class="ct-5abadb">)
+</span></span><span class="line" line="11"><span class="ct-5abadb">              {                      
+</span></span><span class="line" line="12"><span class="ct-5abadb">                  onActiveRagdoll.</span><span class="ct-89b4ee">Invoke</span><span class="ct-5abadb">(</span><span class="ct-1345d6">null</span><span class="ct-5abadb">);
+</span></span><span class="line" line="13"><span class="ct-5abadb">                  </span><span class="ct-89b4ee">RemoveComponents</span><span class="ct-5abadb">();
+</span></span><span class="line" line="14"><span class="ct-5abadb">              }
+</span></span><span class="line" line="15"><span class="ct-5abadb">          }
+</span></span><span class="line" line="16"><span class="ct-5abadb">      }
+</span></span><span class="line" line="17"><span class="ct-5abadb">  }</span></span></code></pre><!--]--><h2 id="テイクダウン"><a href="#テイクダウン"><!--[-->テイクダウン<!--]--></a></h2><ul><!--[--><li><!--[-->AI側のDetection(MinDistance)を0にする<ul><!--[--><li><!--[-->接近時にプレイヤーを検知しないようにするため<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->AIへTriggerGenericAction.csを設置<ul><!--[--><li><!--[-->Animation &gt;&gt;&gt; プレイヤー側のアニメーション<!--]--></li><li><!--[-->Event &gt; OnPressedAction &gt;&gt;&gt; AI.Animator.PlayFixedTime()<!--]--></li><li><!--[-->Event &gt; OnPressedAction &gt;&gt;&gt; AI.vEventWithDelay.DoEvent(0)<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->vEventWithDelay.cs<ul><!--[--><li><!--[-->AI.vHealthController.AddHealth(-100) / Rigidbody.isKinematic = false<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->AnimatorControllerにはテイクダウンモーションを追加<ul><!--[--><li><!--[-->vAnimatorTag.cs追加 &gt;&gt;&gt; Death / CustomActionタグ追加<!--]--></li><li><!--[-->vSetInteger.cs追加 &gt;&gt;&gt; ActionStateを-1に変更する<ul><!--[--><li><!--[-->通常時の死亡モーションを再生しないようにするため<!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><h2 id="ボタン同時押し"><a href="#ボタン同時押し"><!--[-->ボタン同時押し<!--]--></a></h2><!--[--><pre><code><span class="line" line="1"><span class="ct-367dce">// LB + Xボタンの例
+</span></span><span class="line" line="2"><span class="ct-b5bb32">if</span><span class="ct-5abadb"> (exampleInput.</span><span class="ct-89b4ee">GetButtonDown</span><span class="ct-5abadb">() </span><span class="ct-b5bb32">&amp;&amp;</span><span class="ct-5abadb"> otherInput.</span><span class="ct-89b4ee">GetButton</span><span class="ct-5abadb">())
+</span></span><span class="line" line="3"><span class="ct-5abadb">{
+</span></span><span class="line" line="4"><span class="ct-5abadb">  同時押しの処理
+</span></span><span class="line" line="5"><span class="ct-5abadb">}</span></span></code></pre><!--]--><h2 id="追加ダメージ設定"><a href="#追加ダメージ設定"><!--[-->追加ダメージ設定<!--]--></a></h2><ul><!--[--><li><!--[--><code><!--[-->vMeleeAttackObject.cs<!--]--></code> &gt; <code><!--[-->ApplyDamage()<!--]--></code>の処理を変更するとダメージが変わる<!--]--></li><li><!--[-->meleeWeapon.damageが武器<!--]--></li><li><!--[-->meleeWeapon.damageModifierが追加ダメージ設定<!--]--></li><li><!--[-->武器ダメージのみにしたい場合は<code><!--[-->MeleeManager.cs<!--]--></code> &gt; defaultDamageを0にする<!--]--></li><li><!--[-->属性や増加値はvItemAttributeを増やして対応<!--]--></li><!--]--></ul><style>.ct-1345d6{color:#0550AE}
+.ct-36b965{color:#953800}
+.ct-76a4e1{color:#0A3069}
+.ct-89b4ee{color:#8250DF}
+.ct-5abadb{color:#24292F}
+.ct-b5bb32{color:#CF222E}
+.ct-367dce{color:#6E7781}</style></div><!--]--></div><!--]--></div><!--]--></main><!--]--></div><!--]--></div><script type="module">import p from "/unity-docs/invector/melee/_payload.js";window.__NUXT__={...p,...((function(a,b){return {state:{},_errors:{"content-query-h8fgiIx9cX":null},serverRendered:true,prerenderedAt:1688033787108,config:{public:{content:{locales:[],defaultLocale:b,integrity:1688033764652,experimental:{stripQueryParameters:a,clientDB:a,advancedIgnoresPattern:a},api:{baseURL:"\u002Fapi\u002F_content"},navigation:{fields:[]},tags:{p:"prose-p",a:"prose-a",blockquote:"prose-blockquote","code-inline":"prose-code-inline",code:"prose-code",em:"prose-em",h1:"prose-h1",h2:"prose-h2",h3:"prose-h3",h4:"prose-h4",h5:"prose-h5",h6:"prose-h6",hr:"prose-hr",img:"prose-img",ul:"prose-ul",ol:"prose-ol",li:"prose-li",strong:"prose-strong",table:"prose-table",thead:"prose-thead",tbody:"prose-tbody",td:"prose-td",th:"prose-th",tr:"prose-tr"},highlight:{theme:"github-light"},wsUrl:b,documentDriven:a,host:b,trailingSlash:a,anchorLinks:{depth:4,exclude:[1]}}},app:{baseURL:"\u002Funity-docs",buildAssetsDir:"\u002F_nuxt\u002F",cdnURL:b}}}}(false,"")))}</script><script type="module" src="/unity-docs/_nuxt/entry.ef8f090c.js" crossorigin></script></body>
+</html>
