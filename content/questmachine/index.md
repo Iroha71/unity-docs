@@ -6,6 +6,8 @@
 2. QuestMachine > Quest Databaseをアタッチ
    - クエスト設定方法
 3. プレイヤーへ`QuestJournal`をアタッチ
+4. Quest Journal UI > MessageEventsに**PausePlayer / UnPausePlayer**イベントを設定
+5. UIPanel > OnOpen: QuestJournalUI.MessageEvents.SendToMessageSystem(0) / OnClose: QuestJournalUI.MessageEvents.SendToMessageSystem(1)
 
 ## クエスト設定方法
 
