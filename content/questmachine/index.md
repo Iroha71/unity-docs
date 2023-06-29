@@ -28,19 +28,20 @@
 ## クエスト状態変更時に任意のイベントを実行する
 
 ``` cs[HUD.cs]
+[SerializeField]
+private StringField questActivate;
+[SerializeField]
+private StringField questFinished;
+
 // Start is called before the first frame update
 void Start()
 {
-    areaMapSystem = FindObjectOfType<AreaMapSystem>();
-    areaMapSystem.OnPutMarker += ((worldpos) => ActivateMarker(true));
-    areaMapSystem.OnDeleteMarker += (() => ActivateMarker(false));
-
-    mainCamera = Camera.main;
-
+    // MessageSystemに特定のメッセージを登録する
     MessageSystem.AddListener(this, questActivate.value, string.Empty);
     MessageSystem.AddListener(this, questFinished.value, string.Empty);
 }
 
+// メッセージが発行された際に呼び出される
 public void OnMessage(MessageArgs args)
   {
       if (args.message.Equals(questActivate.value))
@@ -57,6 +58,9 @@ public void OnMessage(MessageArgs args)
       }
   }
 ```
+
+- クエストオブジェクト > States > 各State > Actions > Messageで↑で指定したメッセージを入力
+  - Sender: Quest Giver or Questerer, Target: Questerer, parameter: クエスト名など
 
 ## Journal UIを任意のUIに組み込む
 
