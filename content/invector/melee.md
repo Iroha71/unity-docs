@@ -13,16 +13,29 @@
 
 ## パリィ
 
+1. Player > Animator > Fullbody > Hit Recoilに以下のステートを追加する
+
+    |項目|値|
+    |---|---|
+    |アニメーション|パリィモーション|
+    |遷移条件|ActionState = -1, TriggerRecoil|
+
+2. 以下のスクリプトを作成
+3. vMeleeWeapon.cs > OnDefenceへParry()を設定する
+
 ### 仕様
 
 - パリィ受付開始時
-        ![parry-enable](/img/parry-enable.png)
+
+    ![parry-enable](/img/parry-enable.png)
 
 - パリィ発生時
-        ![parry](/img/parry.png)
+
+    ![parry](/img/parry.png)
 
 - パリィ受付終了
-        ![parry-disable](/img/parry-disable.png)
+
+    ![parry-disable](/img/parry-disable.png)
 
 - 毎フレームの動作
 
