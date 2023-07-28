@@ -2,6 +2,7 @@
 
 ## 目次
 
+- [パリィ](#パリィ)
 - [ローリング](#ローリング)
 - [Ragdoll](#ragdoll)
 - [Death By AnimationWithRagdollのタイミング調整](#death-by-animationwithragdollのタイミング調整)
@@ -9,6 +10,100 @@
 - [ボタン同時押し](#ボタン同時押し)
 - [追加ダメージ設定](#追加ダメージ設定)
 - [無敵化](#無敵化)
+
+## パリィ
+
+### 仕様
+
+- パリィ受付開始時
+        ![parry-enable](/img/parry-enable.png)
+
+- パリィ発生時
+        ![parry](/img/parry.png)
+
+- パリィ受付終了
+        ![parry-disable](/img/parry-disable.png)
+
+- 毎フレームの動作
+
+    ``` cs[Shield.cs]
+    void Update()
+    {
+        if (tpInput.isBlocking)
+        {
+            CountParryTime();
+        }
+
+        if (!tpInput.isBlocking && isReceivingParry)
+        {
+            DisableParry();
+        }
+    }
+    ```
+
+- パリィの有効化
+
+    ``` cs[Shield.cs]
+    private void EnableParry()
+    {
+        isReceivingParry = true;
+        weapon.breakAttack = true;
+        // FullBody > Hit RecoilにParryアニメーションを追加（トリガー: ActionState -1を追加）
+        anim.SetInteger("ActionState", -1);
+    }
+    ```
+
+- パリィの無効化
+
+    ``` cs[Shield.cs]
+    private void DisableParry()
+    {
+        isReceivingParry = false;
+        weapon.breakAttack = false;
+        anim.SetInteger("ActionState", 0);
+        elapsedTime = 0f;
+    }
+    ```
+
+- パリィ受付時間の計測
+
+    ``` cs[Shield.cs]
+    private void CountParryTime()
+    {
+        if (elapsedTime == 0f)
+            EnableParry();
+
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > parriableTime)
+        {
+            DisableParry();
+        }
+    }
+    ```
+
+- パリィ演出
+
+    ``` cs[Shield.cs]
+    private async void Parry()
+    {
+        if (isReceivingParry == false)
+        {
+            ParticleSystem _defenceEffect = Instantiate(defenceEffect, this.transform);
+            _defenceEffect.transform.localPosition = Vector3.zero;
+
+            return;
+        }
+
+        ParticleSystem _parryEffect = Instantiate(parryEffect, this.transform);
+        _parryEffect.transform.localPosition = Vector3.zero;
+        cc.IsInvincible = true;
+        await UniTask.Delay(300);
+        Time.timeScale = 0.3f;
+        await UniTask.Delay(500, DelayType.Realtime);
+        cc.IsInvincible = false;
+        Time.timeScale = 1f;
+    }    
+    ```
 
 ## ローリング
 
