@@ -3,6 +3,7 @@ export default defineNuxtPlugin (nuxtApp => {
     { title: "Invector", contentPath: "/invector", descShort: "TPSコントローラ", text: "" },
     { title: "シーンセットアップ", contentPath: "/scene_setup", descShort: "セットアップ手順", text: ""},
     { title: "ゲームデザイン関連", contentPath: "/game_design", descShort: "ゲームデザイン", text: "" },
+    { title: "自作スクリプト", contentPath: "/original", descShort: "自作スクリプト", text: "" },
     { title: "Quest Machine", contentPath: "/questmachine", descShort: "クエスト管理アセット", text: ""},
     { title: "Dialogue System", contentPath: "/dialoguesystem", descShort: "会話アセット", text: ""},
     { title: "Enviro", contentPath: "/enviro", descShort: "天候管理アセット", text: ""},
