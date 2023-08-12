@@ -74,7 +74,12 @@ public void OnMessage(MessageArgs args)
 ```
 
 - クエストオブジェクト > States > 各State > Actions > Messageで↑で指定したメッセージを入力
-  - Sender: Quest Giver or Questerer, Target: Questerer, parameter: クエスト名など
+
+    |項目|値|
+    |---|---|
+    |Sender|Quest Giver or Questerer|
+    |Target|Questerer|
+    |parameter|クエスト名など|
 
 ## Journal UIを任意のUIに組み込む
 
