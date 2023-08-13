@@ -1,7 +1,6 @@
 # Invector Template
 
 - [Melee](invector/melee.md)
-- [Shooter](invector/shooter.md)
 - [Item Manager](invector/item-manager.md)
 - [FSM AI](invector/ai.md)
 
