@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   app: {
     baseURL: '/unity-docs',
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/fabicon.ico'},
+      ]
+    }
   },
   modules: [
     '@nuxt/content',

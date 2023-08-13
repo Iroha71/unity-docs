@@ -9,12 +9,12 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/content": "^2.6.0",
-    "@types/node": "^18",
-    "gh-pages": "^5.0.0",
-    "nuxt": "^3.4.3",
-    "sass": "^1.62.1",
-    "vuetify": "^3.2.2"
+    "@nuxt/content": "^2.7.2",
+    "@types/node": "^20",
+    "gh-pages": "^6.0.0",
+    "nuxt": "^3.6.5",
+    "sass": "^1.65.1",
+    "vuetify": "^3.3.12"
   },
   "dependencies": {
     "mdi": "^2.2.43"
