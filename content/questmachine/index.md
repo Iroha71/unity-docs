@@ -41,6 +41,8 @@
 
 ## クエスト状態変更時に任意のイベントを実行する
 
+- 対象クラスに`IMessageHandler`を実装
+
 ``` cs[HUD.cs]
 [SerializeField]
 private StringField questActivate;
