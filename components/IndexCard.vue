@@ -4,7 +4,7 @@
     :title="Props.title"
     :subtitle="Props.subtitle"
     :text="Props.text"
-    prepend-icon="mdi-book-multiple"
+    :prepend-icon="Props.prependIcon"
     color="#F6F1F1">
     <VCardActions class="d-flex justify-center">
       <VBtn color="#146C94" variant="outlined" @click="router.push({path: Props.path})">閲覧</VBtn>
@@ -19,6 +19,7 @@ interface Props {
   subtitle: string,
   text: string,
   path: string,
+  prependIcon: string,
 }
 
 const Props = withDefaults(defineProps<Props>(), {

@@ -11,7 +11,7 @@
       <VListItem 
         :title="category.title" 
         :value="category.contentPath"
-        prepend-icon="mdi-book-multiple"
+        :prepend-icon="category.prependIcon"
         @click="router.push({path: category.contentPath})" />
     </VList>    
   </VNavigationDrawer>
