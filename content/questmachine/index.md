@@ -10,6 +10,7 @@
   - [クエスト状態変更時に任意のイベントを実行する](#クエスト状態変更時に任意のイベントを実行する)
   - [Journal UIを任意のUIに組み込む](#journal-uiを任意のuiに組み込む)
   - [LUAの拡張](#luaの拡張)
+  - [外部セーブシステムを使う場合](#外部セーブシステムを使う場合)
 
 ## セットアップ
 
@@ -137,3 +138,7 @@ public void OnMessage(MessageArgs args)
           }
       }
     ```
+
+## 外部セーブシステムを使う場合
+
+- [コミュニティ](https://www.pixelcrushers.com/phpbb/viewtopic.php?t=5284)
