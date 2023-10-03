@@ -8,6 +8,8 @@ export default defineNuxtPlugin (nuxtApp => {
     { title: "Dialogue System", contentPath: "/dialoguesystem", descShort: "会話アセット", text: "", prependIcon: "mdi-forum-outline" },
     { title: "Enviro", contentPath: "/enviro", descShort: "天候管理アセット", text: "", prependIcon: "mdi-cloud" },
     { title: "Gaia2", contentPath: "/gaia", descShort: "地形編集アセット", text: "", prependIcon: "mdi-image-filter-hdr" },
+    { title: "X-Weapon Trail", contentPath: "/xweapon_trail", descShort: "武器追従エフェクト", text: "", prependIcon: "mdi-sword"},
+    { title: "Ultimate Clean GUI", contentPath: "/ultimate_clean_gui", descShort: "GUIの通知等を記載", text: "", prependIcon: "mdi-animation"},
   ]
   return {
     provide: {
