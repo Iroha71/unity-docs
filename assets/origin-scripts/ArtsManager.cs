@@ -1,4 +1,4 @@
-using Invector;
+ï»¿using Invector;
 using Invector.vCharacterController;
 using Invector.vItemManager;
 using System.Collections;
@@ -46,7 +46,7 @@ public class ArtsManager : MonoBehaviour, ISavable
     }
 
     /// <summary>
-    /// –‚p‚ğ”­“®‚·‚é
+    /// é­”è¡“ã‚’ç™ºå‹•ã™ã‚‹
     /// </summary>
     private async void IgniteArts()
     {
@@ -55,7 +55,7 @@ public class ArtsManager : MonoBehaviour, ISavable
         if (displayArts == null)
             return;
 
-        // ‘I‘ğ’†‚Ì–‚p‚ÌArtsID‚ÅŒŸõ
+        // é¸æŠä¸­ã®é­”è¡“ã®ArtsIDã§æ¤œç´¢
         Skill arts = FindSkill(displayArts.attributes[0].value);
 
         if (arts.isLocked == 1)
@@ -76,7 +76,7 @@ public class ArtsManager : MonoBehaviour, ISavable
         {
             GameObject target = GetTarget(effectType);
 
-            // effectType–ˆ‚Ìˆ—
+            // effectTypeæ¯ã®å‡¦ç†
             switch (effectType.effectType)
             {
                 case SkillEffectType.EffectType.HP:
@@ -96,20 +96,20 @@ public class ArtsManager : MonoBehaviour, ISavable
     }
 
     /// <summary>
-    /// ID‚É‚æ‚Á‚ÄƒXƒLƒ‹‚ğŒŸõ‚·‚é
+    /// IDã«ã‚ˆã£ã¦ã‚¹ã‚­ãƒ«ã‚’æ¤œç´¢ã™ã‚‹
     /// </summary>
     /// <param name="id">ID</param>
-    /// <returns>ID‚ªˆê’v‚·‚éƒXƒLƒ‹</returns>
+    /// <returns>IDãŒä¸€è‡´ã™ã‚‹ã‚¹ã‚­ãƒ«</returns>
     private Skill FindSkill(int id)
     {
         return runtimeDataList.skills.Find(_skill => _skill.id == id);
     }
 
     /// <summary>
-    /// –‚p‘ÎÛ‚ğæ“¾‚·‚é
+    /// é­”è¡“å¯¾è±¡ã‚’å–å¾—ã™ã‚‹
     /// </summary>
-    /// <param name="effectType">ƒGƒtƒFƒNƒgî•ñ</param>
-    /// <returns>‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg</returns>
+    /// <param name="effectType">ã‚¨ãƒ•ã‚§ã‚¯ãƒˆæƒ…å ±</param>
+    /// <returns>å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</returns>
     private GameObject GetTarget(SkillEffectType effectType)
     {
         switch (effectType.targetType)
