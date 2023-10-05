@@ -3,6 +3,7 @@
 - [Melee](invector/melee.md)
 - [Item Manager](invector/item-manager.md)
 - [FSM AI](invector/ai.md)
+- [魔術などの拡張](invector/arts.md)
 
 ## 基本フロー
 
