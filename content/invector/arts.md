@@ -60,6 +60,7 @@
 ## 魔術の実行
 
 - 参考スクリプト
+  - [ArtsManager.cs](https://github.com/Iroha71/unity-docs/blob/develop/assets/origin-scripts/ArtsManager.cs){:target="_blank"}
 
 ### TIPS
 
