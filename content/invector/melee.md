@@ -2,14 +2,18 @@
 
 ## 目次
 
-- [パリィ](#パリィ)
-- [ローリング](#ローリング)
-- [Ragdoll](#ragdoll)
-- [Death By AnimationWithRagdollのタイミング調整](#death-by-animationwithragdollのタイミング調整)
-- [テイクダウン](#テイクダウン)
-- [ボタン同時押し](#ボタン同時押し)
-- [追加ダメージ設定](#追加ダメージ設定)
-- [無敵化](#無敵化)
+- [Melee Template](#melee-template)
+  - [目次](#目次)
+  - [パリィ](#パリィ)
+    - [仕様](#仕様)
+  - [ローリング](#ローリング)
+  - [Ragdoll](#ragdoll)
+  - [Death By AnimationWithRagdollのタイミング調整](#death-by-animationwithragdollのタイミング調整)
+  - [テイクダウン](#テイクダウン)
+  - [ボタン同時押し](#ボタン同時押し)
+  - [追加ダメージ設定](#追加ダメージ設定)
+    - [ダメージに新たな要素を追加する場合](#ダメージに新たな要素を追加する場合)
+  - [無敵化](#無敵化)
 
 ## パリィ
 
@@ -120,9 +124,17 @@
 
 ## ローリング
 
-- RollTransition: 0
-- RollSpeed: 1.5
-- RollRotationSpeed: 55
+|設定項目|値|
+|---|---|
+|Roll Transition|0|
+|Roll Speed|1.5|
+|Roll RotationSpeed|55|
+
+- ローリング後の硬直解消
+  1. Rollステート選択
+  2. インスペクタ > Transitions > 各遷移を選択
+  3. 遷移間隔を調整する
+
 - ローリングキャンセル
 
     ``` cs[vThirdPersonInput.cs]
@@ -167,18 +179,40 @@
 
 ## テイクダウン
 
+- AnimatorControllerにはテイクダウンモーションを追加
+  - `vAnimatorTag.cs`追加
+
+    |設定値|値|
+    |---|---|
+    |1|Dead|
+    |2|IgnoreIK|
+
+  - `vAnimatorSetInt.cs`追加
+    - 通常時の死亡モーションを再生しないようにするため
+
+    |設定値|値|
+    |---|---|
+    |Parameter|ActionState|
+    |Set On Enter|true|
+    |Enter Value|-1|
+
 - AI側のDetection(MinDistance)を0にする
   - 接近時にプレイヤーを検知しないようにするため
+- AIへ`vEventWithDelay.cs`追加
+
+    |設定値|値|
+    |---|---|
+    |Delay|テイクダウン後、死亡判定を発生させる時間|
+    |Event1つ目|vHealthController.AddHealth(-100)|
+    |Event2つ目|Rigidbody.isKinematic = false|
+
 - AIへTriggerGenericAction.csを設置
-  - Animation >>> プレイヤー側のアニメーション
-  - Event > OnPressedAction >>> AI.Animator.PlayFixedTime()
-  - Event > OnPressedAction >>> AI.vEventWithDelay.DoEvent(0)
-- vEventWithDelay.cs
-  - AI.vHealthController.AddHealth(-100) / Rigidbody.isKinematic = false
-- AnimatorControllerにはテイクダウンモーションを追加
-  - vAnimatorTag.cs追加 >>> Death / CustomActionタグ追加
-  - vSetInteger.cs追加 >>> ActionStateを-1に変更する
-    - 通常時の死亡モーションを再生しないようにするため
+
+    |設定値|値|
+    |---|---|
+    |Animation|プレイヤーで再生したいアニメーションステート名|
+    |Event > OnPressedAction|AI.Animator.PlayFixedTime("AI側のアニメーションステート名")|
+    |Event > OnPressedAction|AI.vEventWithDelay.DoEvent(0)|
 
 ## ボタン同時押し
 
@@ -196,7 +230,24 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 - meleeWeapon.damageが武器
 - meleeWeapon.damageModifierが追加ダメージ設定
 - 武器ダメージのみにしたい場合は`MeleeManager.cs` > defaultDamageを0にする
-- 属性や増加値はvItemAttributeを増やして対応
+- 属性や増加値はvItemAttributeを増やして対応（vMeleeEquipment.csでAttribute→武器ダメージ反映が実行されるため）
+
+### ダメージに新たな要素を追加する場合
+
+- `vDamage.cs` にプロパティを追加
+  - `public AttributeCompatibleDataList.Attribute attribute;`
+- Inspectorに表示するために`vDamageDrawer.cs`に以下を追加
+
+    ```cs[vDamageDrawer.cs]
+    var attribute = property.FindPropertyRelative("attribute");
+
+    // 66行目以降
+    if (attribute != null)
+    {
+        position.y += 20;
+        EditorGUI.PropertyField(position, attribute);
+    }
+    ```
 
 ## 無敵化
 
