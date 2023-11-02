@@ -17,6 +17,7 @@
     "vuetify": "^3.3.12"
   },
   "dependencies": {
-    "mdi": "^2.2.43"
+    "mdi": "^2.2.43",
+    "update-browserslist-db": "^1.0.13"
   }
 }
