@@ -1,5 +1,11 @@
 # Invector-AI
 
+- [Invector-AI](#invector-ai)
+  - [新しいパラメータの追加（スタミナなど）](#新しいパラメータの追加スタミナなど)
+  - [ステートの追加](#ステートの追加)
+    - [Actionの追加（メッセンジャー利用）](#actionの追加メッセンジャー利用)
+  - [ノイズ機能](#ノイズ機能)
+
 ## 新しいパラメータの追加（スタミナなど）
 
 - Interfaceの作成
@@ -81,3 +87,18 @@ namespace Invector.vCharacterController.AI
 
 - スクリプトで任意のタイミングでメッセージを送りたい場合
   - `fsmBehaviour.messageReceiver.Send("Listener Name")`
+
+## ノイズ機能
+
+- 音を出すオブジェクト
+
+1. vNoiseObjectを取り付け
+2. 音を発するタイミングで**vNoiseObject.TriggerNoise()**を呼び出し
+   1. プレイヤーの足音 → **footTrigger.OnStep**で呼び出し
+
+- 音を聞き取るオブジェクト
+
+1. vNoiseListenerを取り付け
+2. AIのステート作成
+
+  ![noise-state](/img/noise-state.png)
