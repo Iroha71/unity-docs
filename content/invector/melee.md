@@ -11,9 +11,11 @@
   - [Death By AnimationWithRagdollのタイミング調整](#death-by-animationwithragdollのタイミング調整)
   - [スタン状態の実装](#スタン状態の実装)
   - [テイクダウン](#テイクダウン)
+  - [長押し・単押し出し分け](#長押し単押し出し分け)
   - [ボタン同時押し](#ボタン同時押し)
   - [追加ダメージ設定](#追加ダメージ設定)
     - [ダメージに新たな要素を追加する場合](#ダメージに新たな要素を追加する場合)
+    - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
 
 ## パリィ
@@ -285,6 +287,35 @@
     |Event > OnPressedAction|AI.Animator.PlayFixedTime("AI側のアニメーションステート名")|
     |Event > OnPressedAction|AI.vEventWithDelay.DoEvent(0)|
 
+## 長押し・単押し出し分け
+
+- 強攻撃出し分ける例
+
+    ``` cs[SameButton.cs]
+    public virtual void MeleeStrongAttackInput()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        if (strongAttackInput.GetButtonTimer(0.7f) && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        {
+            isArtsReady = true;
+            OnInputArtsAttack?.Invoke();
+            return;
+        }
+
+        if (strongAttackInput.GetButtonDown() && isArtsReady)
+            isArtsReady = false;
+
+        if (strongAttackInput.GetButtonUp() && isArtsReady == false && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        {
+            TriggerStrongAttack();
+        }
+    }
+    ```
+
 ## ボタン同時押し
 
 ``` cs[SameButton.cs]
@@ -319,6 +350,10 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
         EditorGUI.PropertyField(position, attribute);
     }
     ```
+
+### 状態異常等の実装
+
+![abnormal-status](/img/abnormal-status.png)
 
 ## 無敵化
 
