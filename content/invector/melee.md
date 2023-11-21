@@ -11,10 +11,13 @@
   - [Death By AnimationWithRagdollのタイミング調整](#death-by-animationwithragdollのタイミング調整)
   - [スタン状態の実装](#スタン状態の実装)
   - [テイクダウン](#テイクダウン)
+  - [長押し・単押し出し分け](#長押し単押し出し分け)
   - [ボタン同時押し](#ボタン同時押し)
   - [追加ダメージ設定](#追加ダメージ設定)
     - [ダメージに新たな要素を追加する場合](#ダメージに新たな要素を追加する場合)
+    - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
+  - [戦闘状態移行](#戦闘状態移行)
 
 ## パリィ
 
@@ -25,8 +28,120 @@
     |アニメーション|パリィモーション|
     |遷移条件|ActionState = -1, TriggerRecoil|
 
-2. 以下のスクリプトを作成
-3. vMeleeWeapon.cs > OnDefenceへParry()を設定する
+    1. AIにパリィを実装する場合はPlayer側に以下を追加
+
+        |項目|値|
+        |---|---|
+        |アニメーション|パリィされたときのモーション|
+        |遷移条件|ActionState = -2, TriggerRecoil|
+
+2. 敵側 > Animator > Fullbody > Hit Recoilに以下のステートを追加する
+
+    |項目|値|
+    |---|---|
+    |アニメーション|パリィされたときのモーション|
+    |遷移条件|ActionState = -1, TriggerRecoil|
+
+    1. AIにパリィを実装する場合はAI側に以下を追加
+
+        |項目|値|
+        |---|---|
+        |アニメーション|パリィモーション|
+        |遷移条件|ActionState = -2, TriggerRecoil|
+
+3. 以下のスクリプトを作成
+
+    ``` cs
+    private vIMeleeFighter fighter;
+    [SerializeField] private vMeleeWeapon weapon;
+    [SerializeField] private float receiveTime = 0.5f;
+    [SerializeField] private ParticleSystem defenceEffect;
+    [SerializeField] private ParticleSystem parryEffect;
+    private CancellationToken token;
+    private float elapsedTime = 0f;
+    private int originalRecoilID;
+    private Animator anim;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        fighter = GetComponentInParent<vIMeleeFighter>();
+        weapon.onDefense.AddListener(CheckParriable);
+        token = this.destroyCancellationToken;
+        anim = fighter.gameObject.GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (fighter.isBlocking)
+        {
+            // ガード開始時に受付開始
+            if (elapsedTime <= 0)
+                EnableParry();
+            elapsedTime += Time.deltaTime;
+            // 受付時間を越えたら無効化
+            if (elapsedTime >= receiveTime)
+                DisableParry();
+        }
+
+        // パリィ受付中且つガード解除時
+        if (elapsedTime > 0 && !fighter.isBlocking)
+        {
+            elapsedTime = 0f;
+            DisableParry();
+        }
+    }
+
+    // パリィ受付開始
+    private void EnableParry()
+    {
+        weapon.breakAttack = true;
+        originalRecoilID = weapon.recoilID;
+        weapon.recoilID = -1;
+        anim.SetInteger("ActionState", -1);
+    }
+
+    // パリィ解除
+    private void DisableParry()
+    {
+        weapon.breakAttack = false;
+        weapon.recoilID = originalRecoilID;
+        anim.SetInteger("ActionState", 0);
+    }
+
+    // 防御時にパリィ可能か判断し、実行する
+    private async void CheckParriable()
+    {
+        // パリィ時
+        if (elapsedTime <= receiveTime)
+        {
+            // パリィエフェクト
+            ParticleSystem _effect = Instantiate(parryEffect);
+            _effect.transform.localPosition = (transform.forward * 0.5f) + transform.position;
+            try
+            {
+                // スロー演出
+                Time.timeScale = 0.3f;
+                await UniTask.Delay(500, DelayType.Realtime, cancellationToken: token);
+                Time.timeScale = 1f;
+            }
+            catch (OperationCanceledException e)
+            {
+                Time.timeScale = 1f;
+            }
+        }
+        // 通常ガード時
+        else if (elapsedTime > receiveTime)
+        {
+            ParticleSystem _effect = Instantiate(defenceEffect);
+            _effect.transform.localPosition = (transform.forward * 0.5f) + transform.position;
+        }
+
+        // パリィ受付時間を加算し、1度のみパリィ受付を行うようにする
+        elapsedTime += receiveTime;
+    }
+    ```
 
 ### 仕様
 
@@ -41,87 +156,6 @@
 - パリィ受付終了
 
     ![parry-disable](/img/parry-disable.png)
-
-- 毎フレームの動作
-
-    ``` cs[Shield.cs]
-    void Update()
-    {
-        if (tpInput.isBlocking)
-        {
-            CountParryTime();
-        }
-
-        if (!tpInput.isBlocking && isReceivingParry)
-        {
-            DisableParry();
-        }
-    }
-    ```
-
-- パリィの有効化
-
-    ``` cs[Shield.cs]
-    private void EnableParry()
-    {
-        isReceivingParry = true;
-        weapon.breakAttack = true;
-        // FullBody > Hit RecoilにParryアニメーションを追加（トリガー: ActionState -1を追加）
-        anim.SetInteger("ActionState", -1);
-    }
-    ```
-
-- パリィの無効化
-
-    ``` cs[Shield.cs]
-    private void DisableParry()
-    {
-        isReceivingParry = false;
-        weapon.breakAttack = false;
-        anim.SetInteger("ActionState", 0);
-        elapsedTime = 0f;
-    }
-    ```
-
-- パリィ受付時間の計測
-
-    ``` cs[Shield.cs]
-    private void CountParryTime()
-    {
-        if (elapsedTime == 0f)
-            EnableParry();
-
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > parriableTime)
-        {
-            DisableParry();
-        }
-    }
-    ```
-
-- パリィ演出
-
-    ``` cs[Shield.cs]
-    private async void Parry()
-    {
-        if (isReceivingParry == false)
-        {
-            ParticleSystem _defenceEffect = Instantiate(defenceEffect, this.transform);
-            _defenceEffect.transform.localPosition = Vector3.zero;
-
-            return;
-        }
-
-        ParticleSystem _parryEffect = Instantiate(parryEffect, this.transform);
-        _parryEffect.transform.localPosition = Vector3.zero;
-        cc.IsInvincible = true;
-        await UniTask.Delay(300);
-        Time.timeScale = 0.3f;
-        await UniTask.Delay(500, DelayType.Realtime);
-        cc.IsInvincible = false;
-        Time.timeScale = 1f;
-    }    
-    ```
 
 ## ローリング
 
@@ -285,6 +319,35 @@
     |Event > OnPressedAction|AI.Animator.PlayFixedTime("AI側のアニメーションステート名")|
     |Event > OnPressedAction|AI.vEventWithDelay.DoEvent(0)|
 
+## 長押し・単押し出し分け
+
+- 強攻撃出し分ける例
+
+    ``` cs[SameButton.cs]
+    public virtual void MeleeStrongAttackInput()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        if (strongAttackInput.GetButtonTimer(0.7f) && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        {
+            isArtsReady = true;
+            OnInputArtsAttack?.Invoke();
+            return;
+        }
+
+        if (strongAttackInput.GetButtonDown() && isArtsReady)
+            isArtsReady = false;
+
+        if (strongAttackInput.GetButtonUp() && isArtsReady == false && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        {
+            TriggerStrongAttack();
+        }
+    }
+    ```
+
 ## ボタン同時押し
 
 ``` cs[SameButton.cs]
@@ -320,6 +383,10 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
     }
     ```
 
+### 状態異常等の実装
+
+![abnormal-status](/img/abnormal-status.png)
+
 ## 無敵化
 
 1. 以下のようなフラグを実装するインターフェースを作成する
@@ -345,3 +412,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
                 return;
             }
     ```
+
+## 戦闘状態移行
+
+![phase-control](/img/phase-control.png)
