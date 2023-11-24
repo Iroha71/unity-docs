@@ -29,7 +29,7 @@ public class RiderInput : MonoBehaviour
     }
 
     /// <summary>
-    /// HAP‚Ì“ü—Í‚ğó‚¯•t‚¯‚é
+    /// HAPã®å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹
     /// </summary>
     private void InputHadle()
     {
@@ -39,7 +39,7 @@ public class RiderInput : MonoBehaviour
             rider.CallAnimalToggle();
         }
 
-        if (mountInput.GetButtonTimer(1) && rider.IsMounting)
+        if (mountInput.GetButtonTimer(1))
         {
             rider.DismountAnimal();
         }
@@ -54,9 +54,9 @@ public class RiderInput : MonoBehaviour
     }
 
     /// <summary>
-    /// æ”n‚ÌˆÚ“®•û–@‚ğƒL[‚ÆƒXƒeƒBƒbƒN‚ÅØ‚è‘Ö‚¦‚é
+    /// ä¹—é¦¬æ™‚ã®ç§»å‹•æ–¹æ³•ã‚’ã‚­ãƒ¼ã¨ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã§åˆ‡ã‚Šæ›¿ãˆã‚‹
     /// </summary>
-    /// <param name="isKey">ƒL[“ü—Í‚É‚·‚é‚©</param>
+    /// <param name="isKey">ã‚­ãƒ¼å…¥åŠ›ã«ã™ã‚‹ã‹</param>
     public void SwitchInputType(bool isKey)
     {
         malbersInput = FindObjectOfType<MalbersInput>();
