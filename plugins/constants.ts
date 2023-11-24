@@ -1,6 +1,7 @@
 export default defineNuxtPlugin (nuxtApp => {
   const categories = [
     { title: "Invector", contentPath: "/invector", descShort: "TPSコントローラ", text: "", prependIcon: "mdi-run" },
+    { title: "Horse Animset", contentPath: "/hap", descShort: "馬コントローラ", text: "", prependIcon: "mdi-horse"},
     { title: "シーンセットアップ", contentPath: "/scene_setup", descShort: "セットアップ手順", text: "", prependIcon: "mdi-tune" },
     { title: "ゲームデザイン関連", contentPath: "/game_design", descShort: "ゲームデザイン", text: "", prependIcon: "mdi-palette" },
     { title: "自作スクリプト", contentPath: "/original", descShort: "自作スクリプト", text: "", prependIcon: "mdi-account" },
