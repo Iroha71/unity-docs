@@ -33,14 +33,14 @@
         |項目|値|
         |---|---|
         |アニメーション|パリィされたときのモーション|
-        |遷移条件|ActionState = -2, TriggerRecoil|
+        |遷移条件|RecoilId = -2, TriggerRecoil|
 
 2. 敵側 > Animator > Fullbody > Hit Recoilに以下のステートを追加する
 
     |項目|値|
     |---|---|
     |アニメーション|パリィされたときのモーション|
-    |遷移条件|ActionState = -1, TriggerRecoil|
+    |遷移条件|RecoilId = -1, TriggerRecoil|
 
     1. AIにパリィを実装する場合はAI側に以下を追加
 
