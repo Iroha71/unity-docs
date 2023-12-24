@@ -12,7 +12,9 @@
 
 1. NPCにGenericTrigger・DialogueSystemTriggerをアタッチする
    - OnPressActionInput > DialogueSystemTrigger.OnUse()を設定
-   - DialogueSystemTrigger > Show Cursor During Conversionsをオンにする
+   - **Dialogue System Trigger** > **Conversation Actor** と **Conversation Conversant**を設定する
+     - Actor…Playerなど
+   - DialogueSystemTrigger > Show Cursor During Conversionsをオフにする
 
 ## Databaseを分割する
 
