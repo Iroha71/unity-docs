@@ -7,7 +7,6 @@
   - [セットアップ](#セットアップ)
   - [Journal UIを任意のUIに組み込む](#journal-uiを任意のuiに組み込む)
   - [Dialogue System連携](#dialogue-system連携)
-  - [クエストノードの進め方](#クエストノードの進め方)
     - [Quest Machine -\> Dialogue Systemへのクエスト共有](#quest-machine---dialogue-systemへのクエスト共有)
   - [クエスト設定方法](#クエスト設定方法)
   - [クエスト発行者の設定](#クエスト発行者の設定)
@@ -19,7 +18,6 @@
 
 1. QuestMachineプレハブを設置
 2. QuestMachine > Quest Databaseをアタッチ
-   - クエスト設定方法
 3. プレイヤーへ`QuestJournal`をアタッチ
 4. Quest Journal UI へ MessageEventsをアタッチ
 5. MessageEvents > Snederへ**PausePlayer / UnPausePlayer**イベントを設定
@@ -69,18 +67,6 @@
 
 - DialogueSystemで使えるLuaはQuestMachineのPDFに記載（Lua functions）
 
-## クエストノードの進め方
-
-- Messaging Systemを利用するやり方
-  - ノード > Conditionに**Message**追加
-    - Message: 任意の値
-    - Parameter: 任意の値
-  - 任意のオブジェトでメッセージを送る
-    - 例）QuestControl.SendToMessageSystem("Message:Parameter:Value")
-- Luaを利用するやり方
-  - ダイアログノード > Scriptで以下を追加
-    - **SetQuestNodeState("Quest ID", "Node ID", "active")**
-
 ### Quest Machine -> Dialogue Systemへのクエスト共有
 
 1. プレイヤー > Dialogue System Bridgeのすべての項目がオンになっていることを確認する
@@ -90,15 +76,33 @@
 ## クエスト設定方法
 
 1. ID / Titleを入力
-2. State毎にアクションを設定
-   - Dialogue Text: QuestMachineの依頼ダイアログで表示される
-     - Dialogue Systemと合わせるなら不要
-   - Journal Text: クエストジャーナル（メニュー）で表示される
-     - クエスト詳細が表示されるため、要設定
-   - HUD Text: 画面上に表示されるクエスト名等を表示する
-   - Conditions
-     - 次ノードの遷移条件を設定する
-     - SendMessage: TalkToNPC）←どこかでTalkToNPCがSendMessageされれば移行する
+2. クエスト情報の設定
+   1. States > Active
+
+    |項目|設定|備考|
+    |---|---|---|
+    |Journal Text|Heading|Use Quest TitleをON|
+    |HUD Text|Heading|Use Quest TitleをON|
+
+3. ノード毎にアクションを設定
+   1. Body Textを設定
+
+      |アクション項目|説明|必須か|
+      |---|---|---|
+      |Dialogue Text|Quest Machineの依頼ダイアログ表示文|×|
+      |Journal Text|Quest Journalの表示文|〇|
+      |HUD Text|画面上に表示される|〇|
+
+   2. Condition（ノードを進める条件）の設定
+       1. 例）**Messaging Systemを利用するやり方**
+       2. ノード > Conditionに**Message**追加
+          - Message: 任意の値
+          - Parameter: 任意の値
+       3. 任意のオブジェトでメッセージを送る
+          - 例）QuestControl.SendToMessageSystem("Message:Parameter:Value")
+       4. 例）**Luaを利用するやり方**
+          - ダイアログノード > Scriptで以下を追加
+          - **SetQuestNodeState("Quest ID", "Node ID", "active")**
 
 ## クエスト発行者の設定
 
@@ -109,17 +113,19 @@
 
 - 対象クラスに`IMessageHandler`を実装
 
-``` cs[HUD.cs]
+``` cs
 [SerializeField]
 private StringField questActivate;
 [SerializeField]
+private StringField questUpdated;
+[SerializeField]
 private StringField questFinished;
 
-// Start is called before the first frame update
 void Start()
 {
     // MessageSystemに特定のメッセージを登録する
     MessageSystem.AddListener(this, questActivate.value, string.Empty);
+    MessageSystem.AddListener(this, questUpdated.value, string.Empty);
     MessageSystem.AddListener(this, questFinished.value, string.Empty);
 }
 
@@ -130,7 +136,7 @@ public void OnMessage(MessageArgs args)
       {
           DirectActivateQuest(questId: args.parameter, args.message);
       }
-      else if (args.message.Equals(nextQuest.value))
+      else if (args.message.Equals(questUpdated.value))
       {
           // クエスト更新時の処理
       }
@@ -141,13 +147,10 @@ public void OnMessage(MessageArgs args)
   }
 ```
 
-- クエストオブジェクト > States > 各State > Actions > Messageで↑で指定したメッセージを入力
+- クエストオブジェクト > State > Actions等でメッセージを設定
+  - 画像ではTrueに設定しているが、Activeでも問題ない
 
-    |項目|値|
-    |---|---|
-    |Sender|Quest Giver or Questerer|
-    |Target|Questerer|
-    |parameter|クエスト名など|
+    ![message-system-config](/img/message-system-config.png)
 
 ## LUAの拡張
 
