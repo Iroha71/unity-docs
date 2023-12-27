@@ -9,6 +9,7 @@ using DG.Tweening;
 //using Language.Lua;
 using Invector;
 using Invector.vShooter;
+using System.Threading;
 
 /// <summary>
 /// 攻撃時の補正を行う
@@ -19,46 +20,30 @@ public class BattleSenceStrengthen : MonoBehaviour
     private float maxMatchDistance = 5f;
     private float attackDistance = 0.5f;
     private vLockOn lockon;
-    private Rigidbody rb;
     private Animator anim;
     private vMeleeManager mm;
     [SerializeField]
     private Transform tpCamera;
-    //private SceneStateController sc;
     [SerializeField]
     private vDrawHideShooterWeapons drawHideWeapon;
+    [SerializeField]
+    private float shakeDuration = 0.1f;
+    [SerializeField]
+    private float shakeStrength = 0.1f;
+    private CancellationToken token;
 
     // Start is called before the first frame update
     void Start()
     {
+        token = this.destroyCancellationToken;
         lockon = GetComponentInParent<vLockOn>();
-        rb = GetComponentInParent<Rigidbody>();
         anim = GetComponentInParent<Animator>();
         mm = GetComponentInParent<vMeleeManager>();
         mm.onDamageHit.AddListener(IgnitHitStop);
-        mm.onDamageHit.AddListener((hitinfo) => ShakeCamera(duration: 0.2f, strength: 0.05f));
+        mm.onDamageHit.AddListener((hitinfo) => ShakeCamera(shakeDuration, shakeStrength));
         
         //sc = FindObjectOfType<SceneStateController>();
         //sc.OnChangedState += ReadyWeapon;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private async void ReadyWeapon(string state)
-    {
-        if (state.Equals("battle"))
-        {
-            drawHideWeapon.DrawWeapons();
-        }
-        else if (state.Equals("normal"))
-        {
-            await UniTask.Delay(1000);
-            drawHideWeapon.HideWeapons();
-        }
     }
 
     /// <summary>
@@ -124,7 +109,7 @@ public class BattleSenceStrengthen : MonoBehaviour
 
         float defaultSpeed = anim.speed;
         anim.speed = 0f;
-        await UniTask.Delay((int)(hitstopTime * 1000f));
+        await UniTask.Delay((int)(hitstopTime * 1000f), cancellationToken: token);
         anim.speed = defaultSpeed;
     }
 }
