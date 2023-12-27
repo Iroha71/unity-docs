@@ -12,7 +12,9 @@
 
 1. NPCにGenericTrigger・DialogueSystemTriggerをアタッチする
    - OnPressActionInput > DialogueSystemTrigger.OnUse()を設定
-   - DialogueSystemTrigger > Show Cursor During Conversionsをオンにする
+   - **Dialogue System Trigger** > **Conversation Actor** と **Conversation Conversant**を設定する
+     - Actor…Playerなど
+   - DialogueSystemTrigger > Show Cursor During Conversionsをオフにする
 
 ## Databaseを分割する
 
@@ -25,9 +27,3 @@
   - Text Per Second = 25辺りに設定しておく
 - StandardUIContinueButtonFastForward > OnFastForwardにPlayOneShot追加
 - StandardUIResponseButton > OnClickにPlayOneShot追加
-
-## QuestMachine連携
-
-1. プレイヤー > Dialogue System Bridgeのすべての項目がオンになっていることを確認する
-2. Pixel Crushers > Quest Machine > Third Party > Dialogue System > Quest DB To Dialogue DBを実行する
-   - Dialogue側にクエスト情報が流し込まれ、Dialogue System上で操作できる

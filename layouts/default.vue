@@ -1,8 +1,8 @@
 <template>
   <v-layout>
-    <VAppBar color="#19A7CE" title="Unity 古エッダ" >
-      <VSpacer />
-      <p>ver.1.1.0</p>
+    <VAppBar color="#19A7CE" >
+      <VAppBarNavIcon icon="mdi-home-circle" @click="pushHome" />
+      <VAppBarTitle>Unity Docs</VAppBarTitle>
     </VAppBar>
     <SideNavbar />
     <VMain>
@@ -15,6 +15,12 @@
 
 <script setup>
 const router = useRouter()
+
+const pushHome = () => {
+  return navigateTo({
+    path: '/',
+  })
+}
 </script>
 
 <style>
