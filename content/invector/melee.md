@@ -335,7 +335,10 @@
             return;
         }
 
-        if (strongAttackInput.GetButtonTimer(0.7f) && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        if (strongAttackInput.GetButtonTimer(0.7f) && 
+            (!meleeManager.CurrentActiveAttackWeapon || 
+            meleeManager.CurrentActiveAttackWeapon.useStrongAttack) 
+            && MeleeAttackStaminaConditions())
         {
             isArtsReady = true;
             OnInputArtsAttack?.Invoke();
@@ -345,7 +348,11 @@
         if (strongAttackInput.GetButtonDown() && isArtsReady)
             isArtsReady = false;
 
-        if (strongAttackInput.GetButtonUp() && isArtsReady == false && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
+        if (strongAttackInput.GetButtonUp() && 
+            isArtsReady == false && 
+            (!meleeManager.CurrentActiveAttackWeapon ||
+            meleeManager.CurrentActiveAttackWeapon.useStrongAttack)
+            && MeleeAttackStaminaConditions())
         {
             TriggerStrongAttack();
         }

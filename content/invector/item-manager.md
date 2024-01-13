@@ -2,9 +2,11 @@
 
 ## 目次
 
-- [装備スロットの追加](#装備スロットの追加)
-- [装備切り替えショートカットの追加](#装備切り替えショートカットの追加)
-- [アイテムウィンドウを増やす](#アイテムウィンドウを増やす)
+- [Item Manager](#item-manager)
+  - [目次](#目次)
+  - [装備スロットの追加](#装備スロットの追加)
+  - [装備切り替えショートカットの追加](#装備切り替えショートカットの追加)
+  - [アイテムウィンドウを増やす](#アイテムウィンドウを増やす)
 
 ## 装備スロットの追加
 
@@ -16,9 +18,10 @@
 
 - Inventory Master > `vInventry.cs` > Change Equipment Controllersで要素を追加する
 
-``` vInventory.cs
+``` cs
 // UseItemInput()のif文
-&& (changeEquip.display.item.type == vItemType.Consumable || changeEquip.display.item.type == vItemType.Majinai)
+&& (changeEquip.display.item.type == vItemType.Consumable 
+|| changeEquip.display.item.type == vItemType.Majinai)
 ```
 
 ## アイテムウィンドウを増やす
