@@ -284,40 +284,44 @@
 
 ## テイクダウン
 
-- AnimatorControllerにはテイクダウンモーションを追加
-  - `vAnimatorTag.cs`追加
+1. Animator設定（プレイヤー）
+   1. **Base Layer** > テイクダウンアニメーション追加
+   2. テイクダウンアニメーションに**vAnimatorTag**を追加し、**CustomAction**追加
+2. Animator設定（敵側）
+   1. **Fullbody** > テイクダウンされた際のアニメーション追加
+   2. アニメーションに**vAnimatorTag**を追加し、以下を追加
+      1. Dead / LockRotation / LockMovement （CustomActionだとRootがロックされる）
+   3. アニメーションに**vAnimatorSetInt**を追加し、以下を設定
 
-    |設定値|値|
-    |---|---|
-    |1|Dead|
-    |2|IgnoreIK|
+        |項目|値|
+        |---|---|
+        |Animator Parameter|ActionState|
+        |Set On Enter|true|
+        |Enter Value|-1|
 
-  - `vAnimatorSetInt.cs`追加
-    - 通常時の死亡モーションを再生しないようにするため
+   4. Deadステートへの遷移条件に**ActionState Equals 0**を追加
+3. 敵側に**vTriggerGenericAction**オブジェクト追加
+4. **vTriggerGenericAction**オブジェクトに**vEventWithDelay**追加
+5. **vTriggerGenericAction**を以下のように設定
 
-    |設定値|値|
-    |---|---|
-    |Parameter|ActionState|
-    |Set On Enter|true|
-    |Enter Value|-1|
+    |タブ名|設定項目|値|備考|
+    |---|---|---|---|
+    |Animation|Play Animation|1で追加アニメーション名|-|
+    |Events|On Pressed Action Input|Animator.PlayFixedTime(2で追加したアニメーション名)|敵テイクダウン時のアニメーション再生|
+    |^  |^  |vEventWithDelay.DoEvent(0)|-|
+    |^  |^  |(Triggerオブジェクトの)BoxCollider.enabled = false|Triggerの無効化|
+    |^  |^  |Rigidbody.isKinematic = true|重力の無効化|
+    |^  |^  |StunManager.UnlockStun|スタンモジュールがある場合はスタンを解除するメソッドを←のように呼び出す|
 
-- AI側のDetection(MinDistance)を0にする
-  - 接近時にプレイヤーを検知しないようにするため
-- AIへ`vEventWithDelay.cs`追加
+6. **vEventWithDelay**を以下のように設定
 
-    |設定値|値|
-    |---|---|
-    |Delay|テイクダウン後、死亡判定を発生させる時間|
-    |Event1つ目|vHealthController.AddHealth(-100)|
-    |Event2つ目|Rigidbody.isKinematic = false|
+    |要素番号|ディレイ|値|備考|
+    |---|---|---|---|
+    |0|0.8|vControlAI.AddHealth(-maxHealth)|強制的にHPを0にする(ディレイはどのタイミングで死亡判定を起こすかで決める)|
 
-- AIへTriggerGenericAction.csを設置
-
-    |設定値|値|
-    |---|---|
-    |Animation|プレイヤーで再生したいアニメーションステート名|
-    |Event > OnPressedAction|AI.Animator.PlayFixedTime("AI側のアニメーションステート名")|
-    |Event > OnPressedAction|AI.vEventWithDelay.DoEvent(0)|
+7. （任意）ステルスの場合
+   1. AI側のDetection > MinDistanceを0にする
+      1. 背後に接近時プレイヤーを検知しないようにするため
 
 ## 長押し・単押し出し分け
 
