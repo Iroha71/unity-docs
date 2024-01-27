@@ -4,6 +4,7 @@
 
 - [Melee Template](#melee-template)
   - [目次](#目次)
+  - [ガードブレイク](#ガードブレイク)
   - [パリィ](#パリィ)
     - [仕様](#仕様)
   - [ローリング](#ローリング)
@@ -18,6 +19,30 @@
     - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
   - [戦闘状態移行](#戦闘状態移行)
+
+## ガードブレイク
+
+- ダメージ設定の**IgnoreDefence**をオンにする
+
+- **vControlAICombat** > **TryBlockAttack()**を以下のように変更
+
+    ```cs
+    protected virtual void TryBlockAttack(vDamage damage)
+    {
+        var canBlock = !ignoreDefenseDamageTypes.Contains(damage.damageType) && !damage.ignoreDefense;
+        if (string.IsNullOrEmpty(damage.damageType) && canBlock)
+        {
+            ImmediateBlocking();              
+        }
+
+        // 新しく追加
+        if (damage.ignoreDefense)
+        {
+            isBlocking = false;
+        }
+        damage.hitReaction = !isBlocking || !canBlock;
+    }
+    ```
 
 ## パリィ
 
