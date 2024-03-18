@@ -326,7 +326,8 @@
 
    4. Deadステートへの遷移条件に**ActionState Equals 0**を追加
 3. 敵側に**vTriggerGenericAction**オブジェクト追加
-4. **vTriggerGenericAction**オブジェクトに**vEventWithDelay**追加
+4. vTriggerGenericActionの**親**オブジェクトに**vEventWithDelay**追加
+   1. TriggerにつけるとTrigger発動後、スクリプトが無効化されるため
 5. **vTriggerGenericAction**を以下のように設定
 
     |タブ名|設定項目|値|備考|
