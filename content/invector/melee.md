@@ -4,6 +4,7 @@
 
 - [Melee Template](#melee-template)
   - [目次](#目次)
+  - [ガードブレイク](#ガードブレイク)
   - [パリィ](#パリィ)
     - [仕様](#仕様)
   - [ローリング](#ローリング)
@@ -18,6 +19,30 @@
     - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
   - [戦闘状態移行](#戦闘状態移行)
+
+## ガードブレイク
+
+- ダメージ設定の**IgnoreDefence**をオンにする
+
+- **vControlAICombat** > **TryBlockAttack()**を以下のように変更
+
+    ```cs
+    protected virtual void TryBlockAttack(vDamage damage)
+    {
+        var canBlock = !ignoreDefenseDamageTypes.Contains(damage.damageType) && !damage.ignoreDefense;
+        if (string.IsNullOrEmpty(damage.damageType) && canBlock)
+        {
+            ImmediateBlocking();              
+        }
+
+        // 新しく追加
+        if (damage.ignoreDefense)
+        {
+            isBlocking = false;
+        }
+        damage.hitReaction = !isBlocking || !canBlock;
+    }
+    ```
 
 ## パリィ
 
@@ -301,7 +326,8 @@
 
    4. Deadステートへの遷移条件に**ActionState Equals 0**を追加
 3. 敵側に**vTriggerGenericAction**オブジェクト追加
-4. **vTriggerGenericAction**オブジェクトに**vEventWithDelay**追加
+4. vTriggerGenericActionの**親**オブジェクトに**vEventWithDelay**追加
+   1. TriggerにつけるとTrigger発動後、スクリプトが無効化されるため
 5. **vTriggerGenericAction**を以下のように設定
 
     |タブ名|設定項目|値|備考|

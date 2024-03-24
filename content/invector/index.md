@@ -5,6 +5,25 @@
 - [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
 
+## 強制歩行
+
+``` cs
+vThirdPersonController cc = GetComponent<vThirdPersonController>();
+cc.alwaysWalkByDefault = true;
+```
+
+## ロックオンの強制解除
+
+- **vLockOn**に以下を追記
+
+    ``` cs
+    public void UnLockForce()
+    {
+        isLockingOn = false;
+        LockOn(false);
+    }
+    ```
+
 ## キャラクター自身に機能追加する場合
 
 - interfaceを作成する
