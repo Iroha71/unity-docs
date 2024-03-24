@@ -23,7 +23,7 @@ public class BattleSenceStrengthen : MonoBehaviour
     [SerializeField]
     private vDrawHideShooterWeapons drawHideWeapon;
     [SerializeField, Header("ヒットストップ")]
-    private float hitstopTime = 0.1f;
+    private float hitstopTime = 0.15f;
     [SerializeField]
     private bool activateHitStop = true;
     [SerializeField, Header("振動")]
