@@ -4,10 +4,28 @@
 
 - [Item Manager](#item-manager)
   - [目次](#目次)
+  - [アイテムをスクリプトから使用する参考コード](#アイテムをスクリプトから使用する参考コード)
   - [HPが満タン時にアイテムを消費しない例](#hpが満タン時にアイテムを消費しない例)
   - [装備スロットの追加](#装備スロットの追加)
   - [装備切り替えショートカットの追加](#装備切り替えショートカットの追加)
   - [アイテムウィンドウを増やす](#アイテムウィンドウを増やす)
+
+## アイテムをスクリプトから使用する参考コード
+
+```cs
+if (changeEquip.display != null && changeEquip.display.item != null && changeEquip.display.item.type == vItemType.Consumable)
+{
+    if (changeEquip.useItemInput.GetButtonDown() && changeEquip.display.item.amount > 0)
+    {
+        OnUseItem(changeEquip.display.item);
+    }
+}
+
+internal virtual void OnUseItem(vItem item)
+{
+    onUseItem.Invoke(item);
+}
+```
 
 ## HPが満タン時にアイテムを消費しない例
 
