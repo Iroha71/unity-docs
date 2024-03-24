@@ -1,8 +1,8 @@
-# Enviro
+# Enviro3
 
 ## セットアップ
 
-1. “Assets” -> “Create” -> “Enviro” -> “Enviro Sky Manager”
+- Document.pdfを参照
 
 ## タイムラプスの実装
 

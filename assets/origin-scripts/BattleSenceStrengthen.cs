@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Invector.vCharacterController;
 using Invector.vMelee;
-using Unity.VisualScripting;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
-//using Language.Lua;
-using Invector;
+using Cysharp.Threading.Tasks;
 using Invector.vShooter;
 using System.Threading;
 
@@ -16,20 +13,25 @@ using System.Threading;
 /// </summary>
 public class BattleSenceStrengthen : MonoBehaviour
 {
-    private float hitstopTime = 0.2f;
-    private float maxMatchDistance = 5f;
-    private float attackDistance = 0.5f;
+    
+    private const float MAX_MATCH_DISTANCE = 5f;
+    private const float ATTACK_DISTANCE = 0.5f;
     private vLockOn lockon;
     private Animator anim;
     private vMeleeManager mm;
-    [SerializeField]
-    private Transform tpCamera;
+    
     [SerializeField]
     private vDrawHideShooterWeapons drawHideWeapon;
+    [SerializeField, Header("ヒットストップ")]
+    private float hitstopTime = 0.15f;
     [SerializeField]
+    private bool activateHitStop = true;
+    [SerializeField, Header("振動")]
     private float shakeDuration = 0.1f;
     [SerializeField]
     private float shakeStrength = 0.1f;
+    [SerializeField]
+    private Camera tpCamera;
     private CancellationToken token;
 
     // Start is called before the first frame update
@@ -53,29 +55,8 @@ public class BattleSenceStrengthen : MonoBehaviour
     /// <param name="strength">振動の強さ</param>
     public void ShakeCamera(float duration, float strength)
     {
-        StartCoroutine(VibrationCamera(duration, strength));
-    }
-
-    /// <summary>
-    /// カメラを一定時間ランダムに振動させる
-    /// </summary>
-    /// <param name="duration">振動時間</param>
-    /// <param name="strength">振動の強さ</param>
-    /// <returns></returns>
-    private IEnumerator VibrationCamera(float duration, float strength)
-    {
-        Vector3 origin = tpCamera.localPosition;
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            float x = origin.x + Random.Range(-1f, 1f) * strength;
-            float y = origin.y + Random.Range(-1f, 1f) * strength;
-            tpCamera.localPosition = new Vector3(x, y, origin.z);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-        tpCamera.localPosition = origin;
+        tpCamera.DOKill(true);
+        tpCamera.DOShakePosition(shakeDuration, strength, vibrato: 3, randomness: 90f, fadeOut: false);
     }
 
     /// <summary>
@@ -89,10 +70,10 @@ public class BattleSenceStrengthen : MonoBehaviour
             return;
         Transform player = transform.parent;
         float distanceFromTarget = Vector3.Distance(player.position, target.position);
-        if (distanceFromTarget > maxMatchDistance)
+        if (distanceFromTarget > MAX_MATCH_DISTANCE)
             return;
         player.LookAt(new Vector3(target.position.x, player.position.y, target.position.z));
-        distanceFromTarget -= attackDistance;
+        distanceFromTarget -= ATTACK_DISTANCE;
         Vector3 goal = player.forward * distanceFromTarget + player.position;
 
         player.DOMove(goal, 0.1f);
@@ -104,7 +85,7 @@ public class BattleSenceStrengthen : MonoBehaviour
     /// <param name="hitinfo">ヒット対象情報</param>
     private async void IgnitHitStop(vHitInfo hitinfo)
     {
-        if (anim.speed == 0f)
+        if (anim.speed == 0f || !activateHitStop)
             return;
 
         float defaultSpeed = anim.speed;
