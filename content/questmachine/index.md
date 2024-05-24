@@ -132,9 +132,10 @@ void Start()
 // メッセージが発行された際に呼び出される
 public void OnMessage(MessageArgs args)
   {
+      Quest quest = QuestMachine.GetQuestAsset(artgs.parameter);
       if (args.message.Equals(questActivate.value))
       {
-          DirectActivateQuest(questId: args.parameter, args.message);
+          DirectActivateQuest(questName: quest.title.value, args.message);
       }
       else if (args.message.Equals(questUpdated.value))
       {
@@ -142,7 +143,7 @@ public void OnMessage(MessageArgs args)
       }
       else if (args.message.Equals(questFinished.value))
       {
-          DirectFinishedQuest(questId: args.parameter, args.message);
+          // クエスト終了時の処理
       }
   }
 ```
@@ -163,7 +164,7 @@ public void OnMessage(MessageArgs args)
     |Return Value|戻り値|
 3. 以下のようなスクリプトを作成する
 
-    ``` cs[Sample.cs]
+    ``` cs [Sample.cs]
       using UnityEngine;
       using PixelCrushers.QuestMachine;
       using PixelCrushers.DialogueSystem;
@@ -173,11 +174,14 @@ public void OnMessage(MessageArgs args)
           // Start is called before the first frame update
           void Start()
           {
+              // 会話終了時にクエスト発行処理を行うイベントを実行
               eventer.conversationEvents.onConversationEnd.AddListener(IgniteQuest);
+
               // Custom Lua Functionへメソッドを登録
               Lua.RegisterFunction("AddThisQuest", this, SymbolExtensions.GetMethodInfo(() => AddThisQuest(string.Empty)));
           }
 
+          // Queueに詰められたクエストを順次発行する
           public async void IgniteQuest(Transform npc)
           {
               if (tempQuestId.Count <= 0)
@@ -187,6 +191,7 @@ public void OnMessage(MessageArgs args)
               QuestMachine.GiveQuestToQuester(tempQuestId[0], "player");
           }
 
+          // 会話中に発生したクエストをQueueに追加する
           public void AddThisQuest(string id)
           {
               tempQuestId.Add(id);
@@ -197,4 +202,16 @@ public void OnMessage(MessageArgs args)
 
 ## 外部セーブシステムを使う場合
 
-- [コミュニティ](https://www.pixelcrushers.com/phpbb/viewtopic.php?t=5284)
+- 【セーブ時】クエスト情報を文字列として取得する
+
+    ```cs
+    string s = QuestMachine.GetQuestJournal().RecordData();
+    ```
+
+- 【ロード時】文字列をクエスト情報として反映する
+
+    ```cs
+    QuestMachine.GetQuestJournal().ApplyData(s);
+    ```
+
+- 参考: [コミュニティ](https://www.pixelcrushers.com/phpbb/viewtopic.php?t=5284)
