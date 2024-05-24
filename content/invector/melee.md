@@ -407,9 +407,21 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 - `vDamage.cs` にプロパティを追加
   - `public AttributeCompatibleDataList.Attribute attribute;`
+- `vDamage.cs` > `public vDamage(vDamage damage)` のコンストラクタに新しいプロパティを追加
+
+    ```cs [vDamage.cs]
+    public vDamage(vDamage damage)
+    {
+        this.damageValue = damage.damageValue;
+        ~~~
+        // 追加
+        this.attribute = damage.attribute;
+    }
+    ```
+
 - Inspectorに表示するために`vDamageDrawer.cs`に以下を追加
 
-    ```cs[vDamageDrawer.cs]
+    ```cs [vDamageDrawer.cs]
     var attribute = property.FindPropertyRelative("attribute");
 
     // 66行目以降
@@ -417,6 +429,13 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
     {
         position.y += 20;
         EditorGUI.PropertyField(position, attribute);
+    }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        // return !isOpen ? 25 : (valid ? 210 : 130 + helpBoxHeight);
+        // ↓に変更（+40部分を20ずつ加算する）
+        return !isOpen ? 25 : (valid ? 210 + 40 : 130 + helpBoxHeight);
     }
     ```
 
