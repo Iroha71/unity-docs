@@ -4,6 +4,7 @@
 - [Item Manager](invector/item-manager.md)
 - [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
+- [投擲物の実装](invector/throwable.md)
 
 ## 強制歩行
 
