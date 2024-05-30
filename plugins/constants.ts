@@ -11,7 +11,7 @@ export default defineNuxtPlugin (nuxtApp => {
       title: "シーンセットアップ",
       contentName: "scene_setup",
       descShort: "セットアップ手順",
-      text: "シーンに必要な配置オブジェクトの説明",
+      text: "初期配置オブジェクトについて",
       prependIcon: "mdi-tune",
     },
     {
@@ -74,7 +74,7 @@ export default defineNuxtPlugin (nuxtApp => {
       title: "X-Weapon Trail",
       contentName: "xweapon_trail",
       descShort: "武器追従エフェクト",
-      text: "トレイルエフェクトのセットアップ方法",
+      text: "セットアップ方法",
       prependIcon: "mdi-sword",
     },
   ];
