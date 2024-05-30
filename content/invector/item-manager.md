@@ -17,13 +17,8 @@ if (changeEquip.display != null && changeEquip.display.item != null && changeEqu
 {
     if (changeEquip.useItemInput.GetButtonDown() && changeEquip.display.item.amount > 0)
     {
-        OnUseItem(changeEquip.display.item);
+        itemManager.inventory.onUseItem.Invoke(changeEquip.display.item);
     }
-}
-
-internal virtual void OnUseItem(vItem item)
-{
-    onUseItem.Invoke(item);
 }
 ```
 
@@ -45,13 +40,10 @@ namespace Invector.vItemManager
     using UnityEngine;
     using vCharacterController;
 
-    [vClassHeader("Check if can Add Health", "Simple Example to verify if the health item can be used based on the character's health is full or not.", openClose = false)]
     public class vCheckCanAddHealth : vMonoBehaviour
     {
         public vItemManager itemManager;
         public vThirdPersonController tpController;
-
-        public bool getInParent = true;
 
         protected bool canUse;
         protected bool firstRun;
@@ -59,7 +51,6 @@ namespace Invector.vItemManager
         protected virtual void Start()
         {
             itemManager = GetComponentInParent<vItemManager>();
-            tpController = GetComponentInParent<vThirdPersonController>();
 
             // if a itemManager is founded, we use this event to call our CanUseItem method 
             if (itemManager)
@@ -85,7 +76,7 @@ namespace Invector.vItemManager
                 var valid = tpController.currentHealth < tpController.maxHealth;
 
                 /** valid != canUse…既存のcanUseと状態が違うとき（体力が全快ではなくなった or 全快になった）
-                    !firstRun…アイテムの初回仕様時のみ実行
+                    !firstRun…アイテムの初回アイテム使用時のみ実行（validの値が空であるため）
                  */
                 if (valid != canUse || !firstRun)
                 {
