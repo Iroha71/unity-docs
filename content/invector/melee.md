@@ -15,6 +15,7 @@
   - [長押し・単押し出し分け](#長押し単押し出し分け)
   - [ボタン同時押し](#ボタン同時押し)
   - [追加ダメージ設定](#追加ダメージ設定)
+    - [vDamageObjectのTips](#vdamageobjectのtips)
     - [ダメージに新たな要素を追加する場合](#ダメージに新たな要素を追加する場合)
     - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
@@ -402,6 +403,14 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 - meleeWeapon.damageModifierが追加ダメージ設定
 - 武器ダメージのみにしたい場合は`MeleeManager.cs` > defaultDamageを0にする
 - 属性や増加値はvItemAttributeを増やして対応（vMeleeEquipment.csでAttribute→武器ダメージ反映が実行されるため）
+
+### vDamageObjectのTips
+
+ダメージオブジェクトそのものにアタッチすると複数回ヒット判定が起こることがある。
+→そのため子要素にvDamageObjectを設置する。
+
+- 子要素に空のオブジェクトを作成し、vDamageObjectをアタッチする
+- vDamageObject > OnHitで自身のオブジェクトのSetActive(false)等を呼び出す
 
 ### ダメージに新たな要素を追加する場合
 
