@@ -10,7 +10,7 @@ h2 {
 
 pre {
   padding: 0.5rem;
-  background-color: #AFD3E2;
+  background-color: #272727;
 }
 
 table {
@@ -21,3 +21,7 @@ th, td {
   padding: 5px;
   border: 1px solid;
 }
+
+.v-application code {
+  all: unset !important;
+} 
