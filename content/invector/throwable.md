@@ -28,3 +28,4 @@
   |~-Standalone|ItemManagerとは独立して管理|
 
 - vThrowManagerInventory > Throwable > Default Handlerを設定する
+  - 場所: RightHand配下に作成
