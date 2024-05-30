@@ -3,9 +3,9 @@
     <VList nav v-for="category in $categories()">
       <VListItem 
         :title="category.title" 
-        :value="category.contentPath"
+        :value="category.contentName"
         :prepend-icon="category.prependIcon"
-        @click="router.push({path: category.contentPath})" />
+        @click="router.push({path: `/${category.contentName}`})" />
     </VList>    
   </VNavigationDrawer>
 </template>
