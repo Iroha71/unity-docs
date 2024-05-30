@@ -7,8 +7,8 @@
         :title="category.title"
         :subtitle="category.descShort"
         :text="category.text"
-        :path="category.contentPath"
-        :prependIcon="category.prependIcon" />
+        :content-name="category.contentName"
+      />
     </v-row>
   </v-container>
 </template>
