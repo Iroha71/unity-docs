@@ -220,22 +220,24 @@
 
     ``` cs[vAIMotor.cs]
     protected virtual void AnimatorDeath()
-      {
-          // death by animation & ragdoll after a time
-          else if (deathBy == DeathBy.AnimationWithRagdoll)
-          {
-              int deadLayer = 0;
-              var info = animatorStateInfos.GetStateInfoUsingTag("Dead");
-              if (info != null)
-              {
-                  if (!animator.IsInTransition(deadLayer) && info.normalizedTime >= 0.95f && GroundDistanceAnim <= 0.1f)
-                  {                      
-                      onActiveRagdoll.Invoke(null);
-                      RemoveComponents();
-                  }
-              }
-          }
-      }
+    {
+        // death by animation & ragdoll after a time
+        else if (deathBy == DeathBy.AnimationWithRagdoll)
+        {
+            int deadLayer = 0;
+            var info = animatorStateInfos.GetStateInfoUsingTag("Dead");
+            if (info != null)
+            {
+                if (!animator.IsInTransition(deadLayer) 
+                    && info.normalizedTime >= 0.95f 
+                    && GroundDistanceAnim <= 0.1f)
+                {                      
+                    onActiveRagdoll.Invoke(null);
+                    RemoveComponents();
+                }
+            }
+        }
+    }
     ```
 
 ## スタン状態の実装
@@ -398,11 +400,14 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 ## 追加ダメージ設定
 
-- `vMeleeAttackObject.cs` > `ApplyDamage()`の処理を変更するとダメージが変わる
-- meleeWeapon.damageが武器
-- meleeWeapon.damageModifierが追加ダメージ設定
+- 攻撃ダメージの追加処理
+  - `vMeleeAttackObject.cs` > `ApplyDamage()`の処理を変更するとダメージが変わる
+  - meleeWeapon.damageが武器
+  - meleeWeapon.damageModifierが追加ダメージ設定
 - 武器ダメージのみにしたい場合は`MeleeManager.cs` > defaultDamageを0にする
 - 属性や増加値はvItemAttributeを増やして対応（vMeleeEquipment.csでAttribute→武器ダメージ反映が実行されるため）
+- 防御力の処理（アーマー値など）
+  - vHealthController > `TakeDamage(vDamage damage)`の処理を変更する
 
 ### vDamageObjectのTips
 
