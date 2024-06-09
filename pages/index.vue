@@ -8,6 +8,7 @@
         :subtitle="category.descShort"
         :text="category.text"
         :content-name="category.contentName"
+        :color-variant="category.colorVariant"
       />
     </v-row>
   </v-container>
