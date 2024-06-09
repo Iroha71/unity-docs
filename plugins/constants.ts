@@ -6,6 +6,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "ゲームデザイン",
       text: "ダメージ計算式など",
       prependIcon: "mdi-palette",
+      colorVariant: "purple-lighten-1",
     },
     {
       title: "シーンセットアップ",
@@ -13,6 +14,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "セットアップ手順",
       text: "初期配置オブジェクトについて",
       prependIcon: "mdi-tune",
+      colorVariant: "indigo-darken-1",
     },
     {
       title: "自作スクリプト",
@@ -20,6 +22,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "自作スクリプト",
       text: "戦闘拡張、他の工夫など",
       prependIcon: "mdi-account",
+      colorVariant: "brown-lighten-1",
     },
     {
       title: "Dialogue System",
@@ -27,6 +30,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "会話アセット",
       text: "セットアップ方法など",
       prependIcon: "mdi-forum-outline",
+      colorVariant: "cyan-darken-1",
     },
     {
       title: "Enviro",
@@ -34,6 +38,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "天候管理アセット",
       text: "タイムラプス等の実装",
       prependIcon: "mdi-cloud",
+      colorVariant: "light-green-darken-1",
     },
     {
       title: "Gaia2",
@@ -41,6 +46,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "地形編集アセット",
       text: "うまく地形を作るためのTIPS",
       prependIcon: "mdi-image-filter-hdr",
+      colorVariant: "green-lighten-1",
     },
     {
       title: "Horse Animset",
@@ -48,6 +54,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "馬コントローラ",
       text: "セットアップ時の補足情報",
       prependIcon: "mdi-horse",
+      colorVariant: "amber-darken-1",
     },
     {
       title: "Invector",
@@ -55,6 +62,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "TPSコントローラ",
       text: "拡張に必要な情報",
       prependIcon: "mdi-run",
+      colorVariant: "grey-darken-1",
     },
     {
       title: "Quest Machine",
@@ -62,6 +70,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "クエスト管理アセット",
       text: "セーブ方法やイベント通知実装",
       prependIcon: "mdi-book-variant",
+      colorVariant: "amber-darken-4",
     },
     {
       title: "Ultimate Clean GUI",
@@ -69,6 +78,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "GUIの通知等を記載",
       text: "GUIの通知の実装",
       prependIcon: "mdi-animation",
+      colorVariant: "deep-purple-darken-1",
     },
     {
       title: "X-Weapon Trail",
@@ -76,6 +86,7 @@ export default defineNuxtPlugin (nuxtApp => {
       descShort: "武器追従エフェクト",
       text: "セットアップ方法",
       prependIcon: "mdi-sword",
+      colorVariant: "light-blue-darken-4",
     },
   ];
   return {
