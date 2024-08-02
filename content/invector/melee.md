@@ -496,7 +496,17 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
         var meleeManager = animator.GetComponent<vMeleeManager>();
         if (meleeManager)
         {
-            meleeManager.SetActiveAttack(bodyParts, meleeAttackType, value, damageMultiplier, recoilID, reactionID, ignoreDefense, activeRagdoll, senselessTime, damageType);
+            meleeManager.SetActiveAttack(
+                bodyParts,
+                meleeAttackType, 
+                value, 
+                damageMultiplier, 
+                recoilID, 
+                reactionID, 
+                ignoreDefense, 
+                activeRagdoll, 
+                senselessTime, 
+                damageType);
             meleeManager.SetStrongAttack(isStrongAttack);
             meleeManager.SetHitStopState(disableHitStop);
         }   
