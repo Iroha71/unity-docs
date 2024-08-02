@@ -473,6 +473,53 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
     }
     ```
 
+### ダメージに新たな要素を追加する場合（vMeleeControlに追加）
+
+- **vMeleeAttackControl**にプロパティを追加
+  - 例）public int isStrongAttack
+- 攻撃側：**vMeleeManager**にプロパティを追加し、セッターを追加
+
+  ```cs
+    protected virtual bool IsStrongAttacking { get; set; }
+
+    public virtual void SetStrongAttack(bool isStrongAttack)
+    {
+        this.IsStrongAttacking = isStrongAttack;
+    }
+  ```
+
+- **vMeleeAttackControl** > ActiveDamageで呼び出し
+
+  ``` cs
+    void ActiveDamage(Animator animator, bool value)
+    {
+        var meleeManager = animator.GetComponent<vMeleeManager>();
+        if (meleeManager)
+        {
+            meleeManager.SetActiveAttack(bodyParts, meleeAttackType, value, damageMultiplier, recoilID, reactionID, ignoreDefense, activeRagdoll, senselessTime, damageType);
+            meleeManager.SetStrongAttack(isStrongAttack);
+            meleeManager.SetHitStopState(disableHitStop);
+        }   
+    }
+  ```
+
+- 攻撃側：**vMeleeManager** > OnDamageHit()でdamageやhitinfoに代入する
+
+  ``` cs
+    public virtual void OnDamageHit(ref vHitInfo hitInfo)
+    {
+        vDamage damage = new vDamage(hitInfo.attackObject.damage);
+        ~~~
+        damage.isStrongAttack = IsStrongAttacking;
+        ~~~
+        hitInfo.isStrongAttacking = damage.isStrongAttack;
+        ~~~
+    }
+  ```
+
+- damage/hitinfoにそれぞれプロパティを追加する
+- 攻撃側vMeleeWeaponのonDamageHitイベント等で取り出す
+
 ### 状態異常等の実装
 
 ![abnormal-status](/img/abnormal-status.png)
