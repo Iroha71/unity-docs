@@ -6,6 +6,14 @@
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
 
+## カスタムタグがあるアニメーションか確認する
+
+- プレイヤー
+  - vThirdPersonController.IsAnimatorTag
+
+- AI
+  - vAIMotor.IsAnimatorTag
+
 ## 強制歩行
 
 ``` cs
