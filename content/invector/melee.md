@@ -197,15 +197,28 @@
   3. 遷移間隔を調整する
 
 - ローリングキャンセル
+  - RollサブステートをFullbodyレイヤーに移動する
+  - vThirdPersonController > Roll()のアニメーションレイヤーをfullbodyに変更
 
-    ``` cs[vThirdPersonInput.cs]
-    // RollInput()
-    if (rollInput.GetButtonDown() && cc.IsAnimatorTag("Attack"))
+   ``` cs
+   public virtual void Roll()
     {
-      if (rollInput.GetButtonDown() && RollConditions())
-      {
-        cc.Roll();
-      }
+        OnRoll.Invoke();
+        isRolling = true;
+        // fullbodyLayerに変更
+        animator.CrossFadeInFixedTime("Roll", rollTransition, fullbodyLayer);
+        ReduceStamina(rollStamina, false);
+        currentStaminaRecoveryDelay = 2f;
+    }
+   ```
+
+  - vMeleeCombatInput > RollConditions()の&& !isAttackingを削除
+    - IsAnimatorHasTagを使ってタイミングを制御してもいい
+
+    ``` cs
+    public override bool RollConditions()
+    {
+        return base.RollConditions() && !animator.IsInTransition(cc.upperBodyLayer) && !animator.IsInTransition(cc.fullbodyLayer);
     }
     ```
 
