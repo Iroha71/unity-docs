@@ -1,0 +1,59 @@
+@startuml anim_tag_class
+
+class StateMachineBehaviour {
+    + OnStateEnter(): void
+    + OnStateUpdate(): void
+    + OnStateExit(): void
+}
+
+class vAnimatorStateInfos {
+    + animator: Animator
+    + stateInfo: vStateInfo[]
+}
+
+note right of vAnimatorStateInfos : 各レイヤー情報をまとめて管理
+
+class vStateInfo {
+    + layer: int
+    + tags: List<string>
+}
+
+vAnimatorStateInfos --> vStateInfo : 参照
+
+note right of vStateInfo : stateInfoには各レイヤーのタグ情報が格納される
+
+class vAnimatorTagBase {
+    + OnStateTrigger(tags: List<string>): delegate
+    + stateInfos: List<vAnimatorStateInfos>
+    + onStateEnter: OnStateTrigger
+    + onStateExit: OnStateTrigger
+    + AddStateInfoListener(stateInfo: vAnimatorStateInfos): void
+    + RemoveStateInfoListener(): void
+}
+
+vAnimatorStateInfos <-- vAnimatorTagBase : 参照
+
+note right of vAnimatorTagBase : stateInfosはAnimatorにつき1つ
+
+class vAnimatorTagAdvanced {
+    + tags: List<vAdvancedTags>
+
+}
+
+class vAdvancedTags {
+    + tagName: string
+    + tagType: EventTriggerType
+    + normalizedTime: Vector2
+    + AddTag(): void
+    + RemoveTag(): void
+    + Init(): void
+}
+
+note right of vAdvancedTags : AddTagで対象レイヤーのvStateInfoにtag登録
+note bottom of vAdvancedTags : インスペクタ上に表示されるタグ（CustomActionなど）
+
+StateMachineBehaviour <|-- vAnimatorTagBase
+vAnimatorTagBase <|-- vAnimatorTagAdvanced
+vAdvancedTags <-- vAnimatorTagAdvanced : 参照
+
+@enduml

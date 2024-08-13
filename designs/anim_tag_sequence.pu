@@ -1,0 +1,27 @@
+@startuml anim_tag_sequence
+
+participant Animator
+participant vAnimatorTagAdvanced
+participant vAnimatorTags
+participant vAnimatorStateInfos
+participant vStateInfo
+
+== Enter ==
+
+Animator -> vAnimatorTagAdvanced++ : OnStateEnter(animator, stateInfo, layerIndex)
+loop tagsの要素数分 => tag
+    vAnimatorTagAdvanced -> vAnimatorTags++ : Init(stateInfos, layerIndex)
+    vAnimatorTags -> vAnimatorTags : isEnter/isExit=false, loopCount=0
+    alt  tag.tagTypeがEnterStateで発動する
+        vAnimatorTagAdvanced -> vAnimatorTags : AddTag(stateInfos, layerIndex)
+        loop stateInfosの要素分 => stateInfo
+            vAnimatorTags -> vAnimatorStateInfos++ : AddStateInfo(tagName, layer)
+            vAnimatorStateInfos -> vStateInfo** : stateInfo[layer]
+            vStateInfo -> vStateInfo : normalizedTime=0, tags.Add(tagName)
+        end
+        vAnimatorTags -> vAnimatorTags : isEnter=true
+    else
+        vAnimatorTagAdvanced -> vAnimatorTags : UpdateEventTrigger()
+    end
+end
+@enduml

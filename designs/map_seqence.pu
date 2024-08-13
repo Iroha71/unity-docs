@@ -1,0 +1,38 @@
+@startuml EnableMap
+title マップ（起動・描画）
+actor Player
+Participant MapLayout
+participant MapPresenter
+participant MapModel
+participant MapMarker
+participant MapCamera
+
+Player -> MapPresenter : Mキー押下
+activate MapPresenter
+    MapPresenter -> MapModel : OpenMap()
+    MapModel -> MapCamera ** : 有効化
+    MapPresenter -> MapLayout ** : 有効化
+    MapLayout -> Canvas ** : 有効化
+
+    MapPresenter -> MapModel : GetAllMarker()
+    activate MapModel
+        MapModel -> MapModel : existMarkers = FindObjectsOfType<MapMarker>()
+        MapModel --> MapPresenter : existMarkers: MapMarker[]
+    deactivate MapModel
+
+    loop 1..existMarkers
+        MapModel -> MapPresenter : OnAddMarker通知
+    end
+deactivate MapPresenter
+
+activate MapPresenter
+    alt OnAddMarker通知時
+        MapPresenter -> MapLayout : CreateMarker(source: MapMarker)
+        activate MapLayout
+            MapLayout -> MapMarkerIcon ** : 生成
+            MapMarkerIcon --> MapLayout : _icon
+            MapLayout -> MapMarker : displayer = _icon
+        deactivate MapLayout
+    end 
+deactivate MapPresenter
+@enduml
