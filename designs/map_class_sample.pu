@@ -1,0 +1,11 @@
+@startuml map
+package Model <<Frame>> {
+    class MapModel {
+        + mapCamera: Camera
+        + isOpened: bool
+        + OpenMap(): void
+        + CloseMap(): void
+        
+    }
+}
+@enduml

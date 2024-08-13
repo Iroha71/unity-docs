@@ -1,0 +1,77 @@
+@startuml MapPutMarker
+title マップ / マーカー描画
+actor Player
+
+Participant MapLayout
+Participant MapPresenter
+Participant MapModel
+
+== マーカー生成 ==
+Player -> MapLayout : Eキー押下
+activate MapLayout
+    MapLayout -> MapPresenter : OnInputMarker通知
+    activate MapPresenter
+        MapPresenter -> MapModel : PutCustomMarker()
+        activate MapModel
+            MapModel -> Ray ** : mapCamera.ViewportPointToRay(0.5, 0.5)
+            alt Rayが衝突した物体 != null
+                Ray --> MapModel : 衝突した物体の座標
+                MapModel -> MapMarker ** : 座標に生成
+                MapModel -> MapModel : existMarkers.Add(MapMarker)
+                MapModel -> MapPresenter : OnAddMarker通知
+            end
+        deactivate MapModel
+        alt Rayが衝突した物体 != null
+            MapPresenter -> MapLayout : CreateIcon(MapMarker: marker)
+            MapLayout -> MapMarkerIcon ** : 生成
+            MapLayout --> MapPresenter : _markerIcon
+            MapPresenter -> MapMarker : _markerIcon代入
+        end
+
+    deactivate MapPresenter
+deactivate MapLayout
+
+== 描画 ==
+activate MapLayout
+    MapLayout -> MapPresenter : OnUpdate通知
+    activate MapPresenter
+        MapModel --> MapPresenter : existMarkers: List<MapMarker>
+        loop 1..existMarkers.Count
+            alt MapMarker.displayer != null
+                MapPresenter -> MapMarkerIcon : Show(parentUI: RectTransform)
+            end
+        end
+    deactivate MapPresenter
+deactivate MapLayout
+
+== マーカー削除 ==
+Player -> MapPresenter : 削除イベント通知(削除マーカー名: string)
+activate MapPresenter
+    MapPresenter -> MapModel : DeleteMarker(name: string)
+    MapModel -> MapMarker : （一致したマーカー）DeleteDisplayer()
+    MapMarker -> MapMarkerIcon : インスタンス削除
+deactivate MapPresenter
+' activate Canvas
+' activate MapLayout
+
+' activate MapPresenter
+' activate MapModel
+
+
+
+' Player -> MapLayout : Eキー押下
+' MapLayout -> MapPresenter : OnPutMarker.Invoke()
+' MapPresenter -> MapModel : PutCustomMarker()
+' MapModel -> Ray ** : MapCameraからrayを生成
+' Ray --> MapModel : 衝突したオブジェクト
+' alt rayが衝突したオブジェクト != null
+' MapModel -> MapMarker ** : 衝突地点に生成
+' MapModel -> MapPresenter : OnAddMarker通知（生成座標: Vector3）
+' MapPresenter -> MapLayout : UI上のマーカー作成
+' MapLayout -> MapLayout : 生成座標→Canvas座標に変換
+' MapLayout -> MapMarkerIcon ** : マーカー生成
+' MapMarkerIcon -> MapMarker : displayerにセット
+' end
+
+
+@enduml
