@@ -1,0 +1,5 @@
+{
+    "plantuml.exportOutDir": "public/uml",
+    "plantuml.exportIncludeFolderHeirarchy": false,
+    "plantuml.exportSubFolder": false
+}
