@@ -1,0 +1,53 @@
+@startuml ui_framework_weapon_select
+title スタック可能MVPモデル　武器選択例
+
+actor Player
+participant View
+participant PageParts
+participant Presenter
+participant Presenter_Histories
+participant Model
+
+== 対象武器の選択 ==
+
+Player -> View++ : 武器スロットホバー
+View -> Presenter++ : OnHovered.Invoke(item)
+Presenter -> Model++ : currentWeaponにitemを代入
+Model --> Presenter-- : OnChangeWeapon.Invoke(item)
+Presenter --> View-- : 武器詳細画面.UpdateItem(item)
+View --> Player-- : 武器詳細の表示
+
+== 戦技選択の流れ ==
+Player -> View++ : 武器を選択
+View -> Presenter++ : OnSelected.Invoke()
+Presenter -> Presenter : GoTo("ArtsModal")
+Presenter -> PageParts++ : ArtsModalのPageParts取得
+PageParts --> Presenter : ArtsModalのPageParts
+Presenter -> Presenter_Histories : Push(artsModal)
+Presenter -> PageParts : Render()
+PageParts -> PageParts : canvas.enabled = true
+PageParts -> PageParts-- : OnRendered.Invoke()
+Presenter -> Model++ : GetAllArts()
+Model --> Presenter-- : 所持戦技リスト
+Presenter --> View-- : ViewList(戦技リスト)
+View --> Player-- : 戦技一覧モーダル表示
+Player -> View++ : 戦技スロットホバー
+View -> Presenter++ : OnSelectArts.Invoke(item)
+Presenter -> Model++ : currentArtsにitemを代入
+Model --> Presenter-- : OnChangeArts.Invoke(currentArts)
+Presenter --> View-- : 戦技詳細画面.UpdateItem(item)
+View --> Player : 戦技詳細の表示
+Player -> View : 戦技選択
+View -> Presenter++ : OnSubmitArts.Invoke(item)
+Presenter -> Model++ : 対象武器attributeへ戦技ID追加
+Model --> Presenter-- : 武器情報
+Presenter -> Presenter : BackHistory()
+Presenter -> Presenter_Histories++ : Pop()
+Presenter_Histories --> Presenter-- : 現在のページ
+Presenter --> PageParts : Close()
+Presenter --> View : 前のページ（武器一覧）.Render()
+View -> Presenter : OnRendered.Invoke()
+Presenter --> View-- : WeaponList.ViewList
+View --> Player-- : 武器一覧表示
+
+@enduml

@@ -88,6 +88,14 @@ export default defineNuxtPlugin (nuxtApp => {
       prependIcon: "mdi-sword",
       colorVariant: "light-blue-darken-4",
     },
+    {
+      title: "UI Tips",
+      contentName: "ui_tips",
+      descShort: "UIに関する情報",
+      text: "UIに関する情報",
+      prependIcon: "mdi-view-gallery",
+      colorVariant: "red-darken-1",
+    }
   ];
   return {
     provide: {
