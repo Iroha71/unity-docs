@@ -1,0 +1,31 @@
+@startuml ui_framework_stack
+title スタック可能MVPモデル　戦技画面（初期描画）
+
+actor Player
+participant View
+participant PageParts
+participant Presenter
+participant Presenter_Histories
+participant Model
+
+Player -> Presenter++ : OpenWindow()
+Presenter -> View** : Instantiate()
+Presenter -> Presenter : UI・モデル操作コールバック登録
+Presenter -> Presenter : GoTo("Home")
+Presenter -> PageParts++ : HomeのPageParts取得
+PageParts --> Presenter : HomeのPageParts
+Presenter -> Presenter_Histories : Push(home)
+Presenter -> PageParts-- : Render()
+PageParts -> PageParts : canvas.enabled = true
+PageParts -> PageParts-- : OnRendered.Invoke()
+
+== OnRendered時 ==
+PageParts -> Presenter++ : OnRendered.Invoke()
+Presenter -> Model++ : GetAllWeapons()
+Model --> Presenter-- : 所持武器リスト
+Presenter -> View++ : WeaponList.ViewList()
+Presenter -> Presenter : 1フレーム待機
+Presenter -> View-- : EventSystem.SetCurrentGameObject()
+View --> Player-- : 武器一覧表示
+
+@enduml

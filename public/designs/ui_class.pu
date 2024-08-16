@@ -1,0 +1,60 @@
+@startuml ui_class
+title スタック可能MVPモデル　クラス図（戦技設定画面の例）
+
+package Model <<Frame>> {
+    class CombatArtsModel {
+        - currentCombatArts: vItem
+        + OnChangedCombatArts: UnityAction<vItem>
+        + CurrentCombatArts {get; set;}
+        - currentWeapon: vItem
+        + OnChangedWeapon: UnityAction<vItem>
+        + CurrentWeapon {get; set;}
+    }
+}
+
+package Presenter <<Frame>> {
+    class CombatArtsPresenter {
+        - view: CombatArtsView
+        - model: CombatArtsModel
+        - allPages: List<PageParts>
+        - histories: Stack<IOverlapableUI>
+        + OpenCloseWindow(isOpen: bool): void
+        - BackHistory(): void
+        - RegistEvents(view: CombatArtsView, model: CombatArtsModel): void
+        - GetAllWeapons(): List<vItem>
+        - GetAllCombatArts(): List<vItem>
+        + GoTo(pageName: string): void
+    }
+}
+
+interface IOverlapableUI {
+    + OnRendered: UnityAction
+    + Render()
+    + Close()
+}
+
+package View <<Frame>> {
+    class CombatArtsView {
+        + rootPage: PageParts
+        + OnInputBack: UnityAction
+        + CloseInput(): void
+    }
+
+    class PageParts {
+        - pageName: string
+        + PageName {get;}
+        - background: Canvas
+        - isRootPage: bool
+        + OnRendered: UnityAction
+        + Render(): void
+        + Close(): void
+    }
+}
+
+CombatArtsPresenter --> CombatArtsModel : 参照
+CombatArtsPresenter --> CombatArtsView : 参照
+PageParts ..|> IOverlapableUI
+CombatArtsView --> PageParts : 参照
+CombatArtsPresenter --> IOverlapableUI : 参照
+
+@enduml
