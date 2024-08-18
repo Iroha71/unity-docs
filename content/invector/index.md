@@ -6,6 +6,14 @@
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
 
+## UIカーソルのパッド対応
+
+- カーソル用のImageを配置
+  - 最前面に配置する
+  - RaycastTargetをオフにする
+- background等のImageにvJoystickMouseInputをアタッチ
+  - cursorに配置したImageを設定する
+
 ## カスタムタグがあるアニメーションか確認する
 
 - プレイヤー
@@ -16,7 +24,7 @@
 
 ## 強制歩行
 
-``` cs
+``` csharp
 vThirdPersonController cc = GetComponent<vThirdPersonController>();
 cc.alwaysWalkByDefault = true;
 ```
@@ -25,7 +33,7 @@ cc.alwaysWalkByDefault = true;
 
 - **vLockOn**に以下を追記
 
-    ``` cs
+    ``` csharp
     public void UnLockForce()
     {
         isLockingOn = false;
@@ -71,7 +79,7 @@ cc.alwaysWalkByDefault = true;
 
 - エフェクトの発生を行うスクリプトを作成する
 
-    ```cs
+    ``` csharp
     public class EffectEmitter : MonoBehaviour
     {
         /// <summary>
@@ -99,7 +107,7 @@ cc.alwaysWalkByDefault = true;
 
 - 装備からエフェクトを発生させるスクリプトを作成し、装備に追加
 
-    ```cs
+    ``` csharp
     [RequireComponent(typeof(vAnimatorEventReceiver))]
     public class EquipmentEffectEmitter : MonoBehaviour
     {

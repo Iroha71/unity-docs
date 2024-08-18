@@ -24,7 +24,7 @@
 
 - 以下を含むスクリプトをDialogue Managerプレハブに追加
 
-  ``` cs
+  ``` csharp
   public void ChangeKey(bool isKey)
   {
       InputDevice device = isKey ? InputDevice.Mouse : InputDevice.Joystick;

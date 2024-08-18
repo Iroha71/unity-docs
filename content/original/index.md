@@ -36,7 +36,7 @@
 
 - 3d座標→2d座標に変換
 
-  ```cs[worldpos.cs]
+  ``` csharp[worldpos.cs]
   Vector3 screenPosition = mapCamera.WorldToScreenPoint(worldPosition);
   RectTransformUtility.ScreenPointToLocalPointInRectangle(mapImage, screenPosition, null, out Vector2 localpoint);
   transform.localPosition = localpoint;
@@ -47,7 +47,7 @@
 - シーン開始時に暗転状態から始める
   - Start時に呼び出し
 
-  ```cs[fade.cs]
+  ``` csharp[fade.cs]
   public async void HideScene()
   {
       canvas.enabled = GetComponent<Canvas>();

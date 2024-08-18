@@ -9,14 +9,16 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: [
-    '@nuxt/content',
-  ],
+  modules: ['@nuxt/content'],
 
   content: {
     // コードハイライト有効化
     highlight: {
       theme: "github-dark",
+      langs: [
+        'csharp',
+        'lua',
+      ]
     },
   },
 

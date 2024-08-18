@@ -6,7 +6,7 @@
 
 ## タイムラプスの実装
 
-    ```cs [TimeLapser.cs]
+    ``` csharp [TimeLapser.cs]
     public class TimelapseTester : MonoBehaviour
     {
         public float timelapseLength = 8f;
