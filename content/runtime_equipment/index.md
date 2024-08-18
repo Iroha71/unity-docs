@@ -13,7 +13,7 @@
 
 ## 服装変更スクリプト
 
-```cs [ClothTester.cs]
+``` csharp [ClothTester.cs]
 using System;
 using System.Collections;
 using System.Collections.Generic;

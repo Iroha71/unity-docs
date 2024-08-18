@@ -11,7 +11,7 @@
 
 1. `vThirdPersonMotor.cs`へ以下を実装
 
-    ``` cs[vThirdPersonMotor.cs]
+    ``` csharp[vThirdPersonMotor.cs]
     [vEditorToolBar("Arts", order=2)]
     protected int maxMp;
     public virtual int MaxMp { get { return maxMp; } set { maxMp = value; } }
@@ -66,7 +66,7 @@
 
 - 装備中のアイテムを取得する
 
-    ``` cs[arts.cs]
+    ``` csharp[arts.cs]
     vItem displayItem = FindObjectOfType<vInventory>().changeEquipmentControllers[0].display.item;
     // 添え字は各装備スロットに対応する番号
     ```

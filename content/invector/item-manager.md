@@ -12,7 +12,7 @@
 
 ## アイテムをスクリプトから使用する参考コード
 
-```cs
+``` csharp
 if (changeEquip.display != null && changeEquip.display.item != null && changeEquip.display.item.type == vItemType.Consumable)
 {
     if (changeEquip.useItemInput.GetButtonDown() && changeEquip.display.item.amount > 0)
@@ -26,13 +26,13 @@ if (changeEquip.display != null && changeEquip.display.item != null && changeEqu
 
 - アイテム使用デリゲートにメソッドを登録
 
-``` cs
+``` csharp
 itemManager.canUseItemDelegate += CheckUseItem;
 ```
 
 - 実装例（↓のスクリプトはInventory > EquipmentDisplayWindow > EquipDisplay_Downにアタッチされている
 
-``` cs
+``` csharp
 using System.Collections.Generic;
 
 namespace Invector.vItemManager
@@ -104,7 +104,7 @@ namespace Invector.vItemManager
 
 - Inventory Master > `vInventry.cs` > Change Equipment Controllersで要素を追加する
 
-``` cs
+``` csharp
 // UseItemInput()のif文
 && (changeEquip.display.item.type == vItemType.Consumable 
 || changeEquip.display.item.type == vItemType.Majinai)

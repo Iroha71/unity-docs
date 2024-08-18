@@ -27,7 +27,7 @@
 
 - **vControlAICombat** > **TryBlockAttack()**を以下のように変更
 
-    ```cs
+    ``` csharp
     protected virtual void TryBlockAttack(vDamage damage)
     {
         var canBlock = !ignoreDefenseDamageTypes.Contains(damage.damageType) && !damage.ignoreDefense;
@@ -77,7 +77,7 @@
 
 3. 以下のスクリプトを作成
 
-    ``` cs
+    ``` csharp
     private vIMeleeFighter fighter;
     [SerializeField] private vMeleeWeapon weapon;
     [SerializeField] private float receiveTime = 0.5f;
@@ -173,15 +173,15 @@
 
 - パリィ受付開始時
 
-    ![parry-enable](/img/parry-enable.png)
+  ![parry-enable](/img/parry-enable.png)
 
 - パリィ発生時
 
-    ![parry](/img/parry.png)
+  ![parry](/img/parry.png)
 
 - パリィ受付終了
 
-    ![parry-disable](/img/parry-disable.png)
+  ![parry-disable](/img/parry-disable.png)
 
 ## ローリング
 
@@ -200,7 +200,7 @@
   - RollサブステートをFullbodyレイヤーに移動する
   - vThirdPersonController > Roll()のアニメーションレイヤーをfullbodyに変更
 
-   ``` cs
+   ``` csharp
    public virtual void Roll()
     {
         OnRoll.Invoke();
@@ -215,7 +215,7 @@
   - vMeleeCombatInput > RollConditions()の&& !isAttackingを削除
     - IsAnimatorHasTagを使ってタイミングを制御してもいい
 
-    ``` cs
+    ``` csharp
     public override bool RollConditions()
     {
         return base.RollConditions() && !animator.IsInTransition(cc.upperBodyLayer) && !animator.IsInTransition(cc.fullbodyLayer);
@@ -231,7 +231,7 @@
 - vAIMotor.cs
   - `info.normalizedTime >= 0.8f`の値を大きくする
 
-    ``` cs[vAIMotor.cs]
+    ``` csharp[vAIMotor.cs]
     protected virtual void AnimatorDeath()
       {
           // death by animation & ragdoll after a time
@@ -261,7 +261,7 @@
 
 - スタン値を加算する
 
-    ``` cs[AddStun.cs]
+    ``` csharp[AddStun.cs]
     enum StunState { STUNNED, NOT_STUN };
 
     public void AddStun(int value)
@@ -281,7 +281,7 @@
 
 - スタン状態に変更
 
-    ``` cs[Stun.cs]
+    ``` csharp[Stun.cs]
     private void ChangeStunState(StunState state)
     {
         // AI挙動を停止
@@ -294,7 +294,7 @@
 - スタン監視
   - Unitaskはキャンセルが面倒のため、Updateを利用
 
-    ``` cs[Update.cs]
+    ``` csharp[Update.cs]
     void Update()
     {
         if (stunState == StunState.STUNNED)
@@ -311,7 +311,7 @@
 
 - スタン状態に遷移するスクリプト
 
-    ``` cs[Stun.cs]
+    ``` csharp[Stun.cs]
     private void ChangeStunState(StunState state)
     {
         // AI挙動を再開
@@ -348,7 +348,7 @@
 5. 敵側のルートモーション位置の反映を行うコードを追加
     - 敵の任意コンポーネントにコードを追加
 
-    ``` cs
+    ``` csharp
     private void OnAnimatorMove()
     {
         if (isTakedown == false) return;
@@ -392,7 +392,7 @@
 
 - 強攻撃出し分ける例
 
-    ``` cs[SameButton.cs]
+    ``` csharp[SameButton.cs]
     public virtual void MeleeStrongAttackInput()
     {
         if (animator == null)
@@ -426,7 +426,7 @@
 
 ## ボタン同時押し
 
-``` cs[SameButton.cs]
+``` csharp[SameButton.cs]
 // LB + Xボタンの例
 if (exampleInput.GetButtonDown() && otherInput.GetButton())
 {
@@ -456,7 +456,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
   - `public AttributeCompatibleDataList.Attribute attribute;`
 - `vDamage.cs` > `public vDamage(vDamage damage)` のコンストラクタに新しいプロパティを追加
 
-    ```cs [vDamage.cs]
+    ``` csharp [vDamage.cs]
     public vDamage(vDamage damage)
     {
         this.damageValue = damage.damageValue;
@@ -468,7 +468,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 - Inspectorに表示するために`vDamageDrawer.cs`に以下を追加
 
-    ```cs [vDamageDrawer.cs]
+    ``` csharp [vDamageDrawer.cs]
     var attribute = property.FindPropertyRelative("attribute");
 
     // 66行目以降
@@ -492,7 +492,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
   - 例）public int isStrongAttack
 - 攻撃側：**vMeleeManager**にプロパティを追加し、セッターを追加
 
-  ```cs
+  ``` csharp
     protected virtual bool IsStrongAttacking { get; set; }
 
     public virtual void SetStrongAttack(bool isStrongAttack)
@@ -503,7 +503,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 - **vMeleeAttackControl** > ActiveDamageで呼び出し
 
-  ``` cs
+  ``` csharp
     void ActiveDamage(Animator animator, bool value)
     {
         var meleeManager = animator.GetComponent<vMeleeManager>();
@@ -528,7 +528,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 - 攻撃側：**vMeleeManager** > OnDamageHit()でdamageやhitinfoに代入する
 
-  ``` cs
+  ``` csharp
     public virtual void OnDamageHit(ref vHitInfo hitInfo)
     {
         vDamage damage = new vDamage(hitInfo.attackObject.damage);
@@ -551,7 +551,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 1. 以下のようなフラグを実装するインターフェースを作成する
 
-    ``` cs[IInvicible.cs]
+    ``` csharp[IInvicible.cs]
     public interface IInvincible
     {
         bool IsInvincible { get; set; }
@@ -561,7 +561,7 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 2. `vThirdPersonMotor.cs`へ実装する
 3. `vThirdPersonMotor.cs` > `TakeDamage`の条件式にフラグを追加する
 
-    ``` cs[vThirdPersonMortor.cs]
+    ``` csharp[vThirdPersonMortor.cs]
     if (currentHealth <= 0 || (IgnoreDamageRolling()) || IsInvincible)
             {
                 if (damage.activeRagdoll && !IgnoreDamageActiveRagdollRolling())

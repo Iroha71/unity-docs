@@ -113,7 +113,7 @@
 
 - 対象クラスに`IMessageHandler`を実装
 
-``` cs
+``` csharp
 [SerializeField]
 private StringField questActivate;
 [SerializeField]
@@ -164,7 +164,7 @@ public void OnMessage(MessageArgs args)
     |Return Value|戻り値|
 3. 以下のようなスクリプトを作成する
 
-    ``` cs [Sample.cs]
+    ``` csharp [Sample.cs]
       using UnityEngine;
       using PixelCrushers.QuestMachine;
       using PixelCrushers.DialogueSystem;
@@ -204,13 +204,13 @@ public void OnMessage(MessageArgs args)
 
 - 【セーブ時】クエスト情報を文字列として取得する
 
-    ```cs
+    ``` csharp
     string s = QuestMachine.GetQuestJournal().RecordData();
     ```
 
 - 【ロード時】文字列をクエスト情報として反映する
 
-    ```cs
+    ``` csharp
     QuestMachine.GetQuestJournal().ApplyData(s);
     ```
 

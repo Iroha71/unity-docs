@@ -14,7 +14,7 @@
   - `vIControlAI.cs`を実装する
     - vControlAIはAIのパラメータを実装する
 
-``` cs[IStaminaAI.cs]
+``` csharp[IStaminaAI.cs]
 public partial interface IStaminaAI : vIControlAI
 {
     int Stamina { get; }
@@ -28,7 +28,7 @@ public partial interface IStaminaAI : vIControlAI
   - AIにパラメータを持たせたい場合は↓のように`partial class`にしておく
     - partialにした場合`Start() / Update()`は`vControlAI.cs`にある
 
-``` cs[vControlAICombatStamina.cs]
+``` csharp[vControlAICombatStamina.cs]
 namespace Invector.vCharacterController.AI
 {
     public partial class vControlAICombat : IStaminaAI
@@ -106,7 +106,7 @@ namespace Invector.vCharacterController.AI
 
 ## 予備動作実装
 
-```cs
+``` csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

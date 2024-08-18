@@ -15,7 +15,7 @@
 
 - AudioCLipListVar.cs
 
-    ```cs
+    ``` csharp
     // 追加
     private int index = 0;
 
