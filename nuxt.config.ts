@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     baseURL: '/unity-docs',
     head: {
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/fabicon.ico'},
+        { rel: 'icon', type: 'image/x-icon', href: '/unity-docs/fabicon.ico'},
       ]
     }
   },
