@@ -102,13 +102,16 @@ namespace Invector.vItemManager
 
 ## 装備切り替えショートカットの追加
 
-- Inventory Master > `vInventry.cs` > Change Equipment Controllersで要素を追加する
+- Inventory > `vInventry.cs` > Change Equipment Controllersを追加
+  - Use Input / Next Inputを設定
 
-``` csharp
-// UseItemInput()のif文
-&& (changeEquip.display.item.type == vItemType.Consumable 
-|| changeEquip.display.item.type == vItemType.Majinai)
-```
+- vInventory > UseItemInput()のif文にConsumable以外でもアイテムを使用できるように条件式を変更する
+
+    ``` csharp
+    // UseItemInput()のif文
+    && (changeEquip.display.item.type == vItemType.Consumable 
+    || changeEquip.display.item.type == vItemType.Majinai)
+    ```
 
 ## アイテムウィンドウを増やす
 

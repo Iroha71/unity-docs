@@ -2,18 +2,24 @@
 
 ## 投擲物の作成
 
-- 既存のプレハブをコピーする
+- 投擲物にするオブジェクトにコンポーネントをアタッチする
+  - **VThrowableObject**
+  - **Rigidbody**
+    - まっすぐ飛ばす場合はConstraints > Position > Y を固定する
+  - **Collider**
+    - TriggerをONでも可能
+  - **VSimpleTrigger**
+    - Tags to Detect / Layers to Detectを設定する
+- レイヤーをTriggersへ変更する
+- VThrowableObject > OnThrowにイベントを設定する
+  - Collider.enabled = true
+  - vSimpleTrigger.enabled = true
+- VSimpleTrigger > OnTriggerEnterにイベントを設定する
+  - (爆発エフェクト).gameobject.SetActive(true)
+    - エフェクトはRemoveParentで離脱するようにしておく
+
+- 各グレネードの参考
   - 場所: Inventor-3rdPersonController > Shooter > Scripts > ThrowSystem > Prefabs > Grenades
-- vGrenadeモデルを差し替え
-- vFragmentGrenade > Box Colliderのサイズを編集する
-
-## 投擲物の編集
-
-- 投擲物 > ThrowableObjectの編集
-  - エフェクト設定
-    - 投擲物配下にエフェクトを追加
-    - OnExplode() > vExplosive.RemoveParentOfOtherにエフェクトを設定
-    - OnExplode() > GameObject.SetActive等でエフェクトを有効化
 
 ## ThrowManagerの編集
 
