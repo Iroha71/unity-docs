@@ -5,6 +5,7 @@
 - 投擲物にするオブジェクトにコンポーネントをアタッチする
   - **VThrowableObject**
   - **Rigidbody**
+    - isKinematic = true
     - まっすぐ飛ばす場合はConstraints > Position > Y を固定する
   - **Collider**
     - TriggerをONでも可能
