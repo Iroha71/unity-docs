@@ -5,6 +5,7 @@
 - [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
+- [弓の実装](invector/bow.md)
 
 ## UIカーソルのパッド対応
 

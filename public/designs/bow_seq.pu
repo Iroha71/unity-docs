@@ -1,0 +1,35 @@
+@startuml bow_seq
+
+participant vShooterWeapon
+participant vBowControl
+participant Animator
+participant Arrow_GameObject
+
+
+[o-> vShooterWeapon++ : OnEnableAim()
+vShooterWeapon -> vBowControl--++ : EnableArrow()
+vBowControl -> Arrow_GameObject : SetActive(true)
+vBowControl -> Animator++ : SetFloat("PowerCharger") / ResetTrigger("Shot")
+return 弓のアニメーションをもとの状態に
+deactivate vBowControl
+
+[o-> vShooterWeapon++ : OnPowerChargerChanged()
+vShooterWeapon -> vBowControl--++ : OnChangedPowerCharger(charger: float)
+vBowControl -> Animator++ : SetFloat("PowerCharger", charger)
+return chargerをもとにBlendTreeで弦を変化させる
+deactivate vBowControl
+
+[o-> vShooterWeapon++ : OnFullPower()
+vShooterWeapon -> vShooterWeapon-- : SetPrecision(1: float)
+
+[o-> vShooterWeapon++ : OnShot()
+vShooterWeapon -> vShooterWeapon : SetPrecision(0.1: float)
+vShooterWeapon -> vBowControl--++ : Shot()
+vBowControl -> Animator++ : SetTrigger("Shot") / SetFloat("PowerCharger", 0)
+Animator --> vBowControl-- : 弦を元の状態に
+vBowControl -> vBowControl++ : StartCoroutine(ShootEffect())
+vBowControl -> vBowControl : delayToSpringAfterShot秒 待機
+vBowControl -> vBowControl : OnFinishShot.Invoke()
+return IEnumerator
+
+@enduml

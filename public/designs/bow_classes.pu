@@ -1,0 +1,24 @@
+@startuml bow_classes
+
+class vShooterWeapon {
+
+}
+
+class vBowControl {
+    - weapon: vShooterWeapon
+    - animator: Animator
+    + delayToSpringAfterShot: float
+    + minPenetration: float
+    + maxPenetration: float
+    + OnEnableArrow: UnityEvent
+    + OnDisableArrow: UnityEvent
+    + OnFinishShot: UnityEvent
+    + EnableArrow(): void
+    + DisableArrow(): void
+    + OnChangePowerCharger(charger: float): void
+    + Shot(): void
+    + OnInstantiateProjectile(pCtrl: vProjectileControl): void
+    + ShootEffect(): IEnumerator
+}
+
+@enduml
