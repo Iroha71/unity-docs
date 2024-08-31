@@ -200,3 +200,15 @@ public class AnticipationEmphasizerAdvanced : StateMachineBehaviour
     //}
 }
 ```
+
+## 参考にできるFSM
+
+- ダメージを受けたらアクションを起こしたい
+  - FSM_CivilianToShooterを参照
+
+- 武器を取りに行く
+  - FSM_CivilianToShooterを参照
+  - vAISendMessage→vMessageReceiver→vAIMoveToPosition.Move()
+  - vFSMChangeBehaviourでCivilianToShooter→ShooterSniperへ変更
+
+  ![sniper](/uml/take_item.png)

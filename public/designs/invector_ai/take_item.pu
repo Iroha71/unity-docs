@@ -1,0 +1,30 @@
+@startuml take_item
+title 所定位置のアイテムを取りに行く
+
+actor Enemy
+participant FSM
+participant vAISendMessage
+participant vMessageReceiver
+participant vAIMoveToPosition
+
+[o--> FSM++ : Search for Weaponステートへ遷移
+activate Enemy
+FSM -> vAISendMessage--++ : DoAction()
+vAISendMessage -> vMessageReceiver--++ : Send("SearchForWeapon")
+vMessageReceiver -> vAIMoveToPosition--++ : Move("SearchForWeapon")
+vAIMoveToPosition -> FSM : StopFSM()
+vAIMoveToPosition -> vAIMoveToPosition++ : 移動処理
+vAIMoveToPosition --> Enemy : Target位置まで移動する
+return OnFinishMove.Invoke()
+vAIMoveToPosition -> Enemy : 取得モーション再生
+vAIMoveToPosition -> Enemy : 子要素の武器有効化・フィールドの武器削除
+vAIMoveToPosition -> vAIMoveToPosition++ : Move("GoToSniperPosition")
+vAIMoveToPosition -> FSM : StopFSM()
+vAIMoveToPosition -> FSM : (Sniper用FSMに入れ替え)
+vAIMoveToPosition -> Enemy : Target位置まで移動する
+return OnFinishMove.Invoke()
+vAIMoveToPosition -> FSM--++ : StartFSM()
+FSM --> Enemy-- : スナイパーとしてふるまう
+deactivate Enemy
+
+@enduml
