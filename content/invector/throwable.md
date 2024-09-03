@@ -63,3 +63,18 @@ public async void Explode()
 
 - vThrowManagerInventory > Throwable > Default Handlerを設定する
   - 場所: RightHand配下に作成
+
+## 投擲軌道の修正
+
+- 軌道を水平に近づける場合
+  - ThrowSettings@Default > Min Max Timeの最大値を小さくする
+- 軌道を大きくする場合
+  - ThrowSettings@Default > Min Max Timeの最大値を大きくする
+
+![throw_settings](/img/throwable_settings.png)
+
+MinMaxTimeは放物線計算時の時間である。
+
+この時間を大きくすると滞空時間が増加＝滞空時間が長くなるように放物線が高くなる。
+
+小さくすると滞空時間は減少＝滞空時間が短くなるように放物線が低くなる。
