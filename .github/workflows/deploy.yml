@@ -34,7 +34,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: npm i
-      - Get Latest Tag
+      - name: Get Latest Tag
         run: |
           LATEST_TAG=$(git describe --tags --abbrev=0)
           echo "LATEST_TAG=$LATEST_TAG" >> %GITHUB_ENV
