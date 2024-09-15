@@ -10,14 +10,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-
-  hooks: {
-    'build:before': () => {
-      const latestTag = execSync('git describe --tags --abbrev=0', { encoding: 'utf-8' }).trim()
-      process.env.GIT_TAG = latestTag
-    }
-  },
-
+  
   runtimeConfig: {
     public: {
       gitTag: process.env.GIT_TAG || 'No version',
