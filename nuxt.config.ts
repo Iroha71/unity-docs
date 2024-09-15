@@ -35,6 +35,9 @@ export default defineNuxtConfig({
         'lua',
       ]
     },
+    markdown: {
+      remarkPlugins: ['remark-breaks',],
+    },
   },
 
   build: {

@@ -1,0 +1,48 @@
+@startuml invector_fsm_combat
+
+actor AI
+participant vSimpleCombatAction
+participant vIFSMBehaviourController
+participant vControlAIMelee
+participant vMeleeManager
+participant Animator
+participant NavMeshAgent
+
+== OnEnterCombat ==
+vSimpleCombatAction -> vIFSMBehaviourController : InitAttackTime()
+vSimpleCombatAction -> vIFSMBehaviourController : isInCombat = true
+
+== OnUpdateCombat ==
+vSimpleCombatAction -> vSimpleCombatAction++ : EngageTarget()
+alt 敵との距離が攻撃範囲以内
+    vSimpleCombatAction -> vIFSMBehaviourController++ : Stop()
+    vIFSMBehaviourController -> vControlAIMelee++ : Stop()
+    vControlAIMelee -> NavMeshAgent++ : 停止処理
+    note left
+        isStopped = true
+        controlAI.destination = transform.position
+        ResetPath()
+    end note
+    NavMeshAgent --> AI-- : 動作停止
+    vSimpleCombatAction -> vIFSMBehaviourController-- : Attack()
+    vIFSMBehaviourController -> vControlAIMelee-- : 攻撃処理
+    vControlAIMelee -> vMeleeManager++ : GetAttackID()
+    vMeleeManager --> vControlAIMelee-- : 攻撃ID
+    vControlAIMelee -> Animator-- : SetTrigger("WeakAttack")
+    activate Animator
+    Animator --> AI-- : 攻撃モーション
+else 攻撃可能状態ではない
+    vSimpleCombatAction -> vIFSMBehaviourController++ : StrafeCombatMovement()
+    vIFSMBehaviourController -> vControlAIMelee++ : StrafeCombatMovement()
+    deactivate vIFSMBehaviourController
+    vControlAIMelee -> vControlAIMelee : 移動処理
+    note left
+        相手が戦闘範囲*0.8mから外にいるか
+        →前進
+        相手がminDistanceOfTheTargetより近くにいるか
+        →後退
+    end note
+    vControlAIMelee --> AI-- : 移動実行
+end
+
+@enduml

@@ -17,9 +17,11 @@
   - [追加ダメージ設定](#追加ダメージ設定)
     - [vDamageObjectのTips](#vdamageobjectのtips)
     - [ダメージに新たな要素を追加する場合](#ダメージに新たな要素を追加する場合)
+    - [ダメージに新たな要素を追加する場合（vMeleeControlに追加）](#ダメージに新たな要素を追加する場合vmeleecontrolに追加)
     - [状態異常等の実装](#状態異常等の実装)
   - [無敵化](#無敵化)
   - [戦闘状態移行](#戦闘状態移行)
+  - [左手にも武器を装備する](#左手にも武器を装備する)
 
 ## ガードブレイク
 
@@ -545,7 +547,15 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 ### 状態異常等の実装
 
-![abnormal-status](/img/abnormal-status.png)
+![status_effect_class](/uml/status_effect_class.png)
+
+- 攻撃側の処理
+
+    ![status_effect_attacker](/uml/status_effect_attacker.png)
+
+- 被弾側の処理
+
+    ![status_effect](/uml/status_effect_sequence.png)
 
 ## 無敵化
 
@@ -576,3 +586,89 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 ## 戦闘状態移行
 
 ![phase-control](/img/phase-control.png)
+
+## 左手にも武器を装備する
+
+武器を左手で振るうにはvMeleeCombatInputの防御入力を
+防御可能武器以外ならWeakAttackを実行するように変更する。
+<br/>
+
+- **vMeleeWeapon**に**canLeftHandAttack: bool**を追加する
+  - 左手に装備時に攻撃を行うことを示すフラグ
+- **vMeleeCombatInput**に変数**lastAttackIsLeft: bool**を追加する
+  - 直前の攻撃がどちらの手で行われたか保持するフラグ
+  - 右攻撃→左攻撃のような流れの際に右攻撃の2段目が実行されるのを防ぐ
+- **vMeleeCombatInput** > **MeleeWeakAttackInput()**にlastAttackIsLeft切り替え処理を追加する
+
+    ``` csharp
+    public virtual void MeleeWeakAttackInput()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        if (weakAttackInput.GetButtonDown() 
+            && MeleeAttackStaminaConditions())
+        {
+            // 追加↓
+            if (lastAttackHandIsLeft)
+                ResetAttackTriggers();
+            lastAttackHandIsLeft = false;
+            // ↑
+            TriggerWeakAttack();
+        }
+    }
+    ```
+
+- 左手でも攻撃できるように**vMeleeCombatInput** > **BlockingInput**を変更する
+
+    ``` csharp
+     public virtual void BlockingInput()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        // 左が攻撃可能な武器か判断
+        if (meleeManager.leftWeapon != null 
+            && meleeManager.leftWeapon.canLeftAttack)
+        {
+            if (blockInput.GetButtonDown() 
+                && MeleeAttackStaminaConditions())
+            {
+                if (lastAttackHandIsLeft == false)
+                    ResetAttackTriggers();
+                lastAttackHandIsLeft = true;
+                // ↓WeakAttackを利用しなければCrossFadeを呼び出してもいい
+                animator.SetBool("IsFlipHand", true);
+                animator.SetInteger(
+                    vAnimatorParameters.AttackID, 
+                    meleeManager.leftWeapon.attackID
+                );
+                animator.SetTrigger(vAnimatorParameters.WeakAttack);
+            }
+            return;
+        }
+
+        isBlocking = blockInput.GetButton() && cc.currentStamina > 0 && !cc.customAction && !isAttacking;
+    }
+    ```
+
+- **vMeleeCombatInput** > **UpdateMeleeAnimations()**のAttackID操作部分を削除
+
+    ``` csharp
+    protected virtual void UpdateMeleeAnimations()
+    {
+        if (animator == null || meleeManager == null)
+        {
+            return;
+        }
+
+        //animator.SetInteger(vAnimatorParameters.AttackID, lastAttackHandIsLeft ? meleeManager.leftWeapon.attackID : AttackID);
+        animator.SetInteger(vAnimatorParameters.DefenseID, DefenseID);
+        animator.SetBool(vAnimatorParameters.IsBlocking, isBlocking);
+        animator.SetFloat(vAnimatorParameters.MoveSet_ID, meleeMoveSetID, .2f, vTime.fixedDeltaTime);
+        isEquipping = cc.IsAnimatorTag("IsEquipping");
+    }
+    ```

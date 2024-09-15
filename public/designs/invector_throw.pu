@@ -1,0 +1,38 @@
+@startuml invector_throw
+title 投擲物を投げる際の流れ
+
+|Main|
+start
+group Throw()
+:Throw();
+:Instantiate(投擲オブジェクト);
+:LaunchObject()呼び出し;
+end group
+
+group LaunchObject(投擲物)
+:startPoint計算;
+|startPoint|
+
+|Main|
+:投擲物を初期位置へ移動;
+:物理無効化;
+:初速を代入;
+end group
+
+stop
+' actor Player
+' participant Animator
+' participant vThrowAnimatorEvent
+' participant vThrowManagerInventory
+
+' Player -> vThrowManagerInventory : 
+
+' Player -> vThrowManagerInventory++ : aimThrowInput.GetButtonDown()
+' vThrowManagerInventory -> vThrowManagerInventory++ : EnterThrowMode()
+' vThrowManagerInventory -> Animator++ : CrossFadeInFixedTime(holdingAnimation, 0.2f)
+
+' Animator --> Player++ : アイテム取り出しアニメーション
+' Animator -> vThrowAnimatorEvent++ : (50%経過時)EquipThrowable発火
+' vThrowAnimatorEvent -> vThrowAnimatorEvent : 
+
+@enduml
