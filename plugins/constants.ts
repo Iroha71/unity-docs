@@ -1,5 +1,6 @@
 export default defineNuxtPlugin (nuxtApp => {
-  interface Category {
+
+  interface category {
     title: string,
     contentName: string,
     descShort: string,
@@ -8,7 +9,7 @@ export default defineNuxtPlugin (nuxtApp => {
     colorVariant: string,
   }
 
-  const categories: Category[] = [
+  const categories: category[] = [
     {
       title: "ゲームデザイン関連",
       contentName: "game_design",
@@ -108,7 +109,7 @@ export default defineNuxtPlugin (nuxtApp => {
   ];
   return {
     provide: {
-      categories(): Category[] {
+      categories(): category[] {
         return categories
       }
     }
