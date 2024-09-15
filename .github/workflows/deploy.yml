@@ -14,12 +14,29 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  GIT_TAG: ""
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Display Current Version
+        run: |
+          echo "tag name: $GIT_TAG"
+        env:
+          GIT_TAG: ${{ vars.GIT_TAG }}
+      - name: Set Latest Tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          echo "Tag: $LATEST_TAG"
+          $CUR_TAG=$LATEST_TAG
+        env:
+          CUR_TAG: ${{ vars.GIT_TAG }}
       - name: Setup Node
         uses: actions/setup-node@v4.0.1
         with:
