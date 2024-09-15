@@ -3,6 +3,8 @@
     <VAppBar color="#19A7CE" >
       <VAppBarNavIcon icon="mdi-home-circle" @click="pushHome" />
       <VAppBarTitle>Unity Docs</VAppBarTitle>
+      <VSpacer/>
+      <p>{{ currentVersion }}</p>
     </VAppBar>
     <SideNavbar />
     <VMain>
@@ -14,7 +16,9 @@
 </template>
 
 <script setup>
-const router = useRouter()
+const config = useRuntimeConfig()
+
+const currentVersion = config.public.gitTag
 
 const pushHome = () => {
   return navigateTo({
