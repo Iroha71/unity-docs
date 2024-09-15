@@ -89,11 +89,11 @@ export default defineNuxtPlugin (nuxtApp => {
       colorVariant: "light-blue-darken-4",
     },
     {
-      title: "UI Tips",
-      contentName: "ui_tips",
-      descShort: "UIに関する情報",
-      text: "UIに関する情報",
-      prependIcon: "mdi-view-gallery",
+      title: "役立つTips",
+      contentName: "useful_tips",
+      descShort: "役立つ情報を記載",
+      text: "役立つ情報を記載",
+      prependIcon: "mdi-lightbulb-on-10",
       colorVariant: "red-darken-1",
     }
   ];
