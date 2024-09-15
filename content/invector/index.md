@@ -5,6 +5,15 @@
 - [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
+- [弓の実装](invector/bow.md)
+
+## Invectorに依存するコンポーネントについて
+
+Invectorに依存するコンポーネント（Start時にGetComponentする）ものは
+
+**DefaultExecutionOrder(5)** などを利用し、Invectorコンポーネントより
+
+後にStartが実行されるようにする
 
 ## UIカーソルのパッド対応
 

@@ -9,6 +9,7 @@
         :text="category.text"
         :content-name="category.contentName"
         :color-variant="category.colorVariant"
+        :icon="category.prependIcon"
       />
     </v-row>
   </v-container>

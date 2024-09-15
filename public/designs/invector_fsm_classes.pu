@@ -1,0 +1,94 @@
+@startuml invector_fsm_classes
+title FSM AIのクラス一覧と構造
+
+class vControlAI {
+    + targetWayPoint: vWaypoint
+    + visitedWaypoints: List<vWaypoint>
+    + FindTarget(): void
+    + LookTo(point: Vector3, stayLookTime: float, offsetLookHeight: float): void
+    + MoveTo(destination: Vector3, speed: vAIMovementSpeed): void
+}
+
+class vAIMotor {
+    # currentSpeed: vAIMoveMentSpeed
+    # AnimatorDeath(): void
+    # ControlSpeed(velocity: float): void
+    + IsAnimatorTag(tag: string): bool
+    + Stop(): void
+    + Walk(): void
+    + Run(): void
+    + Sprint(): void
+    + JumpTo(jumpTarget: Vector3): void
+    + RollTo(direction: Vector3): void
+    + EnableAIController(): void
+    + DisableAIController(): void
+}
+
+class vCharacter {
+    + deathBy: DeathBy
+    + ragdolled: bold
+    + TakeDamage(damage: vDamage): void
+    + TriggerDamageReaction(damage: vDamage): void
+    - SetTriggerRoutine(trigger: int): IEnumerator
+}
+note right of vCharacter::TakeDamage
+    TriggerDamageReaction呼び出し
+end note
+note right of vCharacter::SetTriggerRoutine
+    0.1秒待機し、anim.ResetTriggerを呼び出す
+end note
+
+class vHealthController {
+    + maxHealth: int
+    + isDead: bool
+    + currentHealth: int
+    + AddHealth(value: int): void
+}
+
+class vControlAICombat {
+    # minAttackTime: float
+    # maxAttackTime: float
+    # minAttackCount: int
+    # maxAttackCount: int
+    # attackDistance: float
+    # combatBlockingChance: float
+    # combatDistance: float
+    + Attack(strongAttack: bool, attackID: int, forceCanAttack: bool)
+    + Blocking(): void
+    
+}
+
+vHealthController <|-- vCharacter
+vCharacter <|-- vAIMotor
+vAIMotor <|-- vControlAI
+vControlAI <|-- vControlAICombat
+
+' class vControlAICombat {
+'     # minAttackTime: int
+'     # maxAttackTime: int
+'     + FindTarget(checkForObstacles: bool): void
+
+' }
+
+' class vControlAIMelee {
+'     # moveSetID: int
+'     # attackID: int
+'     # defenseID: int
+'     # recoilID: int
+'     + Attack(strongAttack: bool, forceCanAttack: bool): void
+'     # TryBlockAttack(damage: vDamage): void
+'     # TryApplyRecoil(fighter: vIMeleeFighter): void
+'     + BreakAttack(breakAtkID: int): void
+'     + OnRecoil(recoilID: int): void
+'     + OnReceiveAttack(damage: vDamage, attacker: vIMeleeFighter): void
+' }
+
+' interface vIControlAIMelee {
+
+' }
+
+' interface vIMeleeFighter {
+
+' }
+
+@enduml

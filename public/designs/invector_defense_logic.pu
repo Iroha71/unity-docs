@@ -1,0 +1,34 @@
+@startuml invector_defense_logic
+title 左手武器（防御）
+
+actor Player
+participant vMeleeCombatInput
+participant vThirdPersonController
+participant vMeleeManager
+participant Animator
+
+Player -> vMeleeCombatInput++ : Update()
+loop Update内
+    vMeleeCombatInput -> vMeleeManager++ : GetDefenseID()
+    opt leftWeaponがOnlyAttack以外
+        vMeleeManager -> Animator : SetBool("FlipAnimation", false)
+        vMeleeManager --> vMeleeCombatInput : leftWeapon.defenseID
+    end
+    opt rightWeaponがOnlyAttack以外
+        vMeleeManager -> Animator : SetBool("FlipAnimation", true)
+        return rightWeapon.defenseID
+    end
+end
+
+Player -> vMeleeCombatInput : blockInput.GetButton()
+vMeleeCombatInput -> vThirdPersonController++ : 現在スタミナ取得
+return currentStamina
+alt スタミナ > 0 & カスタムアクション・攻撃中ではない
+    vMeleeCombatInput -> vMeleeCombatInput : isBlocking = true
+else
+    vMeleeCombatInput -> vMeleeCombatInput : isBlocking = false
+end
+vMeleeCombatInput -> Animator++ : SetInteger(isBlocking, isBlocking)
+Animator --> Player-- : 防御アニメーション反映
+
+@enduml

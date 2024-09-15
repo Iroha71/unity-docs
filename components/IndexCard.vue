@@ -1,13 +1,14 @@
 <template>
   <div>
     <VCard
+      :prepend-icon="Props.icon"
       :color="Props.colorVariant"
-      width="15rem"
+      min-width="15rem"
       :href="`/unity-docs/${Props.contentName}`"
     >
-      <VCardTitle class="text-white" style="height: 50px;" v-text="Props.title" />
-      <VCardSubtitle class="text-white" style="margin-bottom: 4px;">{{ Props.subtitle }}</VCardSubtitle>
-      <VCardText class="bg-grey-lighten-4">{{ Props.text }}</VCardText>
+      <template v-slot:title>{{ Props.title }}</template>
+      <template v-slot:subtitle>{{ Props.subtitle }}</template>
+      <VCardText class="bg-grey-lighten-4 pt-4">{{ Props.text }}</VCardText>
     </VCard>
   </div>
 </template>
@@ -20,12 +21,8 @@ interface Props {
   subtitle: string,
   text: string,
   colorVariant: string,
+  icon: string,
 }
 
-const Props = withDefaults(defineProps<Props>(), {
-  title: "",
-  subtitle: "",
-  contentName: "",
-  text: "",
-})
+const Props = defineProps<Props>()
 </script>

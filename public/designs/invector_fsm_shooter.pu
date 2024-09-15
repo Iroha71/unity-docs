@@ -1,0 +1,23 @@
+@startuml invector_fsm_shooter
+
+actor AI
+participant vShooterCombatAction
+participant vIControlAICombat
+
+alt 相手が攻撃範囲外
+    vShooterCombatAction -> vShooterCombatAction++ : EngageTarget()
+    opt 攻撃中・customAction中ではない
+        vShooterCombatAction -> vIControlAICombat++ : 相手座標へ移動
+        vIControlAICombat --> AI-- : 相手へ移動
+    end
+else
+    vShooterCombatAction -> vShooterCombatAction-- : CombatMovement()
+end
+
+vShooterCombatAction -> vShooterCombatAction++ : HandleShotAttack()
+vShooterCombatAction -> vIControlAICombat : AimToTarget()
+opt 攻撃可能な状態
+    vShooterCombatAction -> vIControlAICombat-- : Attack()
+end
+
+@enduml

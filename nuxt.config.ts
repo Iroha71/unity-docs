@@ -1,3 +1,5 @@
+import { execSync } from "child_process"
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -6,6 +8,19 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/unity-docs/favicon.ico'},
       ]
+    }
+  },
+
+  hooks: {
+    'build:before': () => {
+      const latestTag = execSync('git describe --tags --abbrev=0', { encoding: 'utf-8' }).trim()
+      process.env.GIT_TAG = latestTag
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      gitTag: process.env.GIT_TAG || 'No version',
     }
   },
 
@@ -19,6 +34,9 @@ export default defineNuxtConfig({
         'csharp',
         'lua',
       ]
+    },
+    markdown: {
+      remarkPlugins: ['remark-breaks',],
     },
   },
 

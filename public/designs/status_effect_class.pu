@@ -1,0 +1,70 @@
+@startuml status_effect_class
+title 状態異常の全体構成
+
+package 攻撃側 {
+    class EffectDamage {
+        + type: string
+        + accumulate: int
+        + effectValue: float
+        + lifeTime: float
+    }
+
+    class EffectGiver {
+        - damageConfig: EffectDamage
+        + ApplyEffect(hit: Collider): void
+    }
+}
+
+package 被弾側 {
+    class GameObject {
+        + ApplyEffect(damage: EffectDamage): void
+    }
+    note top of GameObject
+        拡張メソッド
+    end note
+    
+    class EffectBehaviour {
+        # effectValue: float
+        # lifeTime: float
+        # elapsedTime: float
+        # receiver: EffectReceiver
+        + OnRemoved: UnityAction
+        + Invoke(damage: EffectDamage): void
+        + Remove(): void
+    }
+
+    class EffectRegistData {
+        + type: string
+        + behaviour: EffectBehaviour
+        + applied: EffectBehaviour
+        + maxAccumulate: int
+        # accumulated: int
+        + AddAccumulated(value: int): void
+        + IsOverLimit(): bool
+    }
+
+    class EffectReceiver {
+        + regists: List<EffectRegistData>
+        + ApplyEffect(damage: EffectDamage): void
+        + RemoveEffect(type: string): void
+        - GetRegist(type: string): EffectRegistData
+    }
+
+    class FrozenBehaviour {
+        - originAnimSpeed: float
+        - TakeFrozenDamage(): UniTask
+    }
+
+    note right of FrozenBehaviour::TakeFrozenDamage
+        敵の動きを止める
+        などの効果を実装する
+    end note
+}
+
+EffectBehaviour <|-- FrozenBehaviour
+EffectGiver --> EffectDamage : 参照
+EffectReceiver --> EffectBehaviour : 参照
+EffectReceiver --> EffectRegistData : 参照
+EffectGiver --> GameObject : ヒット時に呼び出し
+
+@enduml
