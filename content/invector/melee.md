@@ -589,86 +589,68 @@ if (exampleInput.GetButtonDown() && otherInput.GetButton())
 
 ## 左手にも武器を装備する
 
-武器を左手で振るうにはvMeleeCombatInputの防御入力を
-防御可能武器以外ならWeakAttackを実行するように変更する。
+左武器での攻撃用ボタンには使用していないボタンか
+ボタンの組み合わせが必要。（LBやLT+RTなど）
+<br/>
+左攻撃の入力関数を作成し、
+Interfaceを通して目的のコンポーネントの関数を実行する。
+
+以下はLT+RTの例
 <br/>
 
-- **vMeleeWeapon**に**canLeftHandAttack: bool**を追加する
-  - 左手に装備時に攻撃を行うことを示すフラグ
-- **vMeleeCombatInput**に変数**lastAttackIsLeft: bool**を追加する
-  - 直前の攻撃がどちらの手で行われたか保持するフラグ
-  - 右攻撃→左攻撃のような流れの際に右攻撃の2段目が実行されるのを防ぐ
-- **vMeleeCombatInput** > **MeleeWeakAttackInput()**にlastAttackIsLeft切り替え処理を追加する
+- **vMeleeCombatInput**に左武器攻撃用の関数を作成する
 
     ``` csharp
-    public virtual void MeleeWeakAttackInput()
+    public virtual void MeleeExtendAttackInput()
     {
-        if (animator == null)
-        {
-            return;
-        }
+        if (!isBlocking) return;
 
-        if (weakAttackInput.GetButtonDown() 
-            && MeleeAttackStaminaConditions())
+        if (weakAttackInput.GetButtonDown() && MeleeAttackStaminaConditions())
         {
-            // 追加↓
-            if (lastAttackHandIsLeft)
-                ResetAttackTriggers();
-            lastAttackHandIsLeft = false;
-            // ↑
-            TriggerWeakAttack();
+            // interfaceにアクセス
+            extendAttackable.TriggerExtendAttack();
         }
     }
     ```
 
-- 左手でも攻撃できるように**vMeleeCombatInput** > **BlockingInput**を変更する
+- **vShooterMeleeInput** > InputHandleから関数を呼び出す
 
     ``` csharp
-     public virtual void BlockingInput()
+    public override void InputHandle()
     {
-        if (animator == null)
+        /// ～～省略～～
+        #region MeleeInput
+
+        if (MeleeAttackConditions() && !IsAiming && !isReloading && !lockMeleeInput && !CurrentActiveWeapon)
         {
-            return;
-        }
-        // 左が攻撃可能な武器か判断
-        if (meleeManager.leftWeapon != null 
-            && meleeManager.leftWeapon.canLeftAttack)
-        {
-            if (blockInput.GetButtonDown() 
-                && MeleeAttackStaminaConditions())
+            if (shooterManager.canUseMeleeWeakAttack_H || shooterManager.CurrentWeapon == null)
             {
-                if (lastAttackHandIsLeft == false)
-                    ResetAttackTriggers();
-                lastAttackHandIsLeft = true;
-                // ↓WeakAttackを利用しなければCrossFadeを呼び出してもいい
-                animator.SetBool("IsFlipHand", true);
-                animator.SetInteger(
-                    vAnimatorParameters.AttackID, 
-                    meleeManager.leftWeapon.attackID
-                );
-                animator.SetTrigger(vAnimatorParameters.WeakAttack);
+                MeleeWeakAttackInput();
             }
-            return;
-        }
 
-        isBlocking = blockInput.GetButton() && cc.currentStamina > 0 && !cc.customAction && !isAttacking;
-    }
+            if (shooterManager.canUseMeleeStrongAttack_H || shooterManager.CurrentWeapon == null)
+            {
+                MeleeStrongAttackInput();
+            }
+
+            // 追加
+            if (shooterManager.canUseMeleeWeakAttack_H || shooterManager.CurrentWeapon == null)
+            {
+                MeleeExtendAttackInput();
+            }
+        }
     ```
 
-- **vMeleeCombatInput** > **UpdateMeleeAnimations()**のAttackID操作部分を削除
+- 攻撃用関数の例
 
     ``` csharp
-    protected virtual void UpdateMeleeAnimations()
+    public void TriggerExtendAttack()
     {
-        if (animator == null || meleeManager == null)
-        {
+        if (cc.meleeManager.leftWeapon == null)
             return;
-        }
-
-        //animator.SetInteger(vAnimatorParameters.AttackID, lastAttackHandIsLeft ? meleeManager.leftWeapon.attackID : AttackID);
-        animator.SetInteger(vAnimatorParameters.DefenseID, DefenseID);
-        animator.SetBool(vAnimatorParameters.IsBlocking, isBlocking);
-        animator.SetFloat(vAnimatorParameters.MoveSet_ID, meleeMoveSetID, .2f, vTime.fixedDeltaTime);
-        isEquipping = cc.IsAnimatorTag("IsEquipping");
+        cc.animator.CrossFade("Null", 0f, 7);
+        cc.animator.SetBool("IsFlipHand", true);
+        cc.animator.SetInteger("AttackID", cc.meleeManager.leftWeapon.attackID);
+        cc.animator.SetTrigger("WeakAttack");
     }
     ```
