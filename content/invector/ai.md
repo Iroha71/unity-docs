@@ -6,6 +6,8 @@
     - [Actionの追加（メッセンジャー利用）](#actionの追加メッセンジャー利用)
   - [ノイズ機能](#ノイズ機能)
   - [予備動作実装](#予備動作実装)
+  - [参考にできるFSM](#参考にできるfsm)
+  - [弾き](#弾き)
 
 ## 新しいパラメータの追加（スタミナなど）
 
@@ -212,3 +214,25 @@ public class AnticipationEmphasizerAdvanced : StateMachineBehaviour
   - vFSMChangeBehaviourでCivilianToShooter→ShooterSniperへ変更
 
   ![sniper](/uml/take_item.png)
+
+## 弾き
+
+- vControlAI > Combat Settingsを編集
+  - On Damage Blocking Chanceを任意の値に変更
+  - Min Stay Blocking Time: 0
+  - Max Stay Blocking Time: 0.1
+
+- vConrolAICombat > ImmediateBlocking()
+
+  ``` csharp
+  protected virtual void ImmediateBlocking()
+  {
+      if (CheckChanceToBlock(_onDamageBlockingChance))
+      {                
+          _blockingTime = Random.Range(_minStayBlockingTime, _maxStayBlockingTime) + Time.time;
+          isBlocking = true;
+          // 弾き後の攻撃↓
+          Attack(forceCanAttack: true);
+      }          
+  }
+  ```

@@ -1,0 +1,40 @@
+@startuml just_guard
+
+actor Player
+participant vShooterMeleeInput
+participant vMeleeManager
+participant vMeleeWeapon
+participant BreakManager
+
+actor Enemy
+
+[o-> vShooterMeleeInput++ : ガードボタン押下
+vShooterMeleeInput -> vShooterMeleeInput : isBlocking=true
+vShooterMeleeInput --> Player : ガードアニメーション
+vShooterMeleeInput -> BreakManager--++ : ActiveParryMode()
+BreakManager -> BreakManager : isParring=true
+BreakManager -> BreakManager : ガード率を100%に
+BreakManager -> BreakManager : 〇秒待機
+BreakManager -> BreakManager-- : isParring=false
+
+Enemy -> Player++ : 攻撃
+Player -> vShooterMeleeInput++ : OnReceiveAttack()
+
+opt isParring
+    vShooterMeleeInput -> BreakManager++ : Parry(attacker: vIMeleeFighter)
+    vShooterMeleeInput --> vShooterMeleeInput : return
+    BreakManager --> Player : 弾きアニメーション
+    BreakManager -> Enemy-- : BreakAttack(recoilID: int)
+end
+
+activate vShooterMeleeInput
+opt isBlocking=true
+    
+    vShooterMeleeInput -> vShooterMeleeInput++ : ダメージ軽減処理
+    return 軽減後のダメージ
+    vShooterMeleeInput -> vMeleeManager++ : OnDefense()
+    vMeleeManager -> vMeleeWeapon-- : OnDefense.Invoke()
+end
+vShooterMeleeInput --> Player-- : TakeDamage()
+
+@enduml

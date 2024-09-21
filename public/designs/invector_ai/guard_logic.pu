@@ -1,0 +1,32 @@
+@startuml guard_logic
+title 弾き実装のためのAI防御ロジック解析
+
+actor Enemy
+participant Animator
+participant vControlAICombat
+
+[o-> Enemy++ : ダメージ受ける
+Enemy -> vControlAICombat++ : TakeDamage()
+vControlAICombat -> vControlAICombat++ : TryBlockAttack(damage)
+opt 防御不可攻撃ではない
+    vControlAICombat -> vControlAICombat++ : ImmediateBlocking()
+    vControlAICombat -> vControlAICombat : onDamageBlockingChanceをもとに防御可能か判断
+    opt 防御可能
+        vControlAICombat -> vControlAICombat : isBlocking = true
+        vControlAICombat -> vControlAICombat : blockingTime計測開始
+        vControlAICombat --> Animator++ : SetBool("isBlocking", true)
+        Animator --> Enemy-- : 防御アニメーション再生
+    end
+    return
+end
+vControlAICombat -> vControlAICombat : damage.hitReaction = 防御実行ならfalse
+return
+vControlAICombat -> vControlAICombat : TakeDamage(damage)
+return hitReaction=true→リアクション・false→リコイル再生
+
+opt 経過時間がblockingTimeを超過
+    vControlAICombat --> Animator++ : SetBool("isBlocking", false)
+    Animator --> Enemy-- : 防御解除
+end
+deactivate Enemy
+@enduml
