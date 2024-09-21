@@ -6,6 +6,8 @@
   - [目次](#目次)
   - [ガードブレイク](#ガードブレイク)
   - [パリィ](#パリィ)
+    - [アニメーション設定](#アニメーション設定)
+    - [パリィ用スクリプト作成](#パリィ用スクリプト作成)
     - [仕様](#仕様)
   - [ローリング](#ローリング)
   - [Ragdoll](#ragdoll)
@@ -49,141 +51,99 @@
 
 ## パリィ
 
-1. Player > Animator > Fullbody > Hit Recoilに以下のステートを追加する
+### アニメーション設定
 
-    |項目|値|
-    |---|---|
-    |アニメーション|パリィモーション|
-    |遷移条件|ActionState = -1, TriggerRecoil|
+- パリィされた際のRecoilIDを決めておく
+- プレイヤー
+  - アニメーターにパラメータを追加する
+    - TriggerParry: Trigger
+  - Fullbody > HitRecoilに弾きモーションを追加する
+    - 遷移条件にTriggerParryを設定する
+- 敵
+  - Fullbody > HitRecoilにパリィされた際のアニメーションを設定する
+    - 遷移条件にTriggerRecoil・RecoilID＝あらかじめ決めたIDを設定する
 
-    1. AIにパリィを実装する場合はPlayer側に以下を追加
 
-        |項目|値|
-        |---|---|
-        |アニメーション|パリィされたときのモーション|
-        |遷移条件|RecoilId = -2, TriggerRecoil|
+### パリィ用スクリプト作成
 
-2. 敵側 > Animator > Fullbody > Hit Recoilに以下のステートを追加する
-
-    |項目|値|
-    |---|---|
-    |アニメーション|パリィされたときのモーション|
-    |遷移条件|RecoilId = -1, TriggerRecoil|
-
-    1. AIにパリィを実装する場合はAI側に以下を追加
-
-        |項目|値|
-        |---|---|
-        |アニメーション|パリィモーション|
-        |遷移条件|ActionState = -2, TriggerRecoil|
-
-3. 以下のスクリプトを作成
+- 以下のスクリプトを作成し、プレイヤーに取り付ける
 
     ``` csharp
-    private vIMeleeFighter fighter;
-    [SerializeField] private vMeleeWeapon weapon;
-    [SerializeField] private float receiveTime = 0.5f;
-    [SerializeField] private ParticleSystem defenceEffect;
-    [SerializeField] private ParticleSystem parryEffect;
-    private CancellationToken token;
-    private float elapsedTime = 0f;
-    private int originalRecoilID;
-    private Animator anim;
-
-    // Start is called before the first frame update
-    void Start()
+    public class BreakManager : MonoBehaviour
     {
-        fighter = GetComponentInParent<vIMeleeFighter>();
-        weapon.onDefense.AddListener(CheckParriable);
-        token = this.destroyCancellationToken;
-        anim = fighter.gameObject.GetComponent<Animator>();
-    }
+        [SerializeField]
+        private int parryReceiveMs = 200;
+        public bool IsParring { get; set; } = false;
+        private Animator anim;
+        private vShooterMeleeInput tpInput;
+        private bool isPressingBlock = false;
+        private CancellationToken _token;
+        private CancellationTokenSource cts;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (fighter.isBlocking)
+        // Start is called before the first frame update
+        void Start()
         {
-            // ガード開始時に受付開始
-            if (elapsedTime <= 0)
-                EnableParry();
-            elapsedTime += Time.deltaTime;
-            // 受付時間を越えたら無効化
-            if (elapsedTime >= receiveTime)
-                DisableParry();
+            TryGetComponent(out anim);
+            TryGetComponent(out tpInput);
         }
 
-        // パリィ受付中且つガード解除時
-        if (elapsedTime > 0 && !fighter.isBlocking)
+        // Update is called once per frame
+        void Update()
         {
-            elapsedTime = 0f;
-            DisableParry();
+            if (tpInput.isBlocking && !isPressingBlock)
+            {
+                isPressingBlock = true;
+                ActivateParryMode();
+            }
+
+            if (!tpInput.isBlocking && isPressingBlock)
+            {
+                isPressingBlock = false;
+                cts.Cancel();
+            }
         }
-    }
 
-    // パリィ受付開始
-    private void EnableParry()
-    {
-        weapon.breakAttack = true;
-        originalRecoilID = weapon.recoilID;
-        weapon.recoilID = -1;
-        anim.SetInteger("ActionState", -1);
-    }
-
-    // パリィ解除
-    private void DisableParry()
-    {
-        weapon.breakAttack = false;
-        weapon.recoilID = originalRecoilID;
-        anim.SetInteger("ActionState", 0);
-    }
-
-    // 防御時にパリィ可能か判断し、実行する
-    private async void CheckParriable()
-    {
-        // パリィ時
-        if (elapsedTime <= receiveTime)
+        /// <summary>
+        /// パリィの受付開始
+        /// </summary>
+        public async void ActivateParryMode()
         {
-            // パリィエフェクト
-            ParticleSystem _effect = Instantiate(parryEffect);
-            _effect.transform.localPosition = (transform.forward * 0.5f) + transform.position;
+            cts = new CancellationTokenSource();
+            _token = cts.Token;
+            IsParring = true;
+            // UniTaskのためキャンセル例外をキャッチする
             try
             {
-                // スロー演出
-                Time.timeScale = 0.3f;
-                await UniTask.Delay(500, DelayType.Realtime, cancellationToken: token);
-                Time.timeScale = 1f;
+                await UniTask.Delay(parryReceiveMs, cancellationToken: _token);
+                IsParring = false;
             }
-            catch (OperationCanceledException e)
+            catch (OperationCanceledException)
             {
-                Time.timeScale = 1f;
+                IsParring = false;
             }
-        }
-        // 通常ガード時
-        else if (elapsedTime > receiveTime)
-        {
-            ParticleSystem _effect = Instantiate(defenceEffect);
-            _effect.transform.localPosition = (transform.forward * 0.5f) + transform.position;
         }
 
-        // パリィ受付時間を加算し、1度のみパリィ受付を行うようにする
-        elapsedTime += receiveTime;
+        /// <summary>
+        /// パリィ実行
+        /// </summary>
+        /// <param name="attacker">攻撃してきたオブジェクト</param>
+        public async void Parry(vIMeleeFighter attacker)
+        {
+            anim.SetTrigger("TriggerParry");
+            // あらかじめ決めたパリィされた際のRecoilIDを指定する
+            attacker.BreakAttack(1);
+            await UniTask.DelayFrame(20, cancellationToken: destroyCancellationToken);
+            Time.timeScale = 0.3f;
+            
+            await UniTask.Delay(200, cancellationToken: destroyCancellationToken, ignoreTimeScale: true);
+            Time.timeScale = 1f;
+        }
     }
     ```
 
 ### 仕様
 
-- パリィ受付開始時
-
-  ![parry-enable](/img/parry-enable.png)
-
-- パリィ発生時
-
-  ![parry](/img/parry.png)
-
-- パリィ受付終了
-
-  ![parry-disable](/img/parry-disable.png)
+![just_guard](/uml/just_guard.png)
 
 ## ローリング
 
