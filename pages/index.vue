@@ -28,9 +28,9 @@
   </v-container>  
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .v-card {
   margin-left: 1rem;
   margin-bottom: 0.5rem;
 }
-</style>
+</style> -->
