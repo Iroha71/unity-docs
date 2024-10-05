@@ -3,7 +3,6 @@
     <VCard
       :prepend-icon="Props.icon"
       :color="Props.colorVariant"
-      min-width="15rem"
       :href="`/unity-docs/${Props.contentName}`"
     >
       <template v-slot:title>{{ Props.title }}</template>
