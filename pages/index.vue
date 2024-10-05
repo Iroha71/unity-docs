@@ -3,7 +3,8 @@
     <VCard v-for="category in $categories()" 
       :key="category.name"
       variant="outlined"
-      color="grey-darken-1"
+      :color="category.color"
+      class="mb-1"
       >
       <VCardItem>
         <div class="text-overline mb-1">{{ category.name }}</div>
@@ -14,7 +15,7 @@
             <IndexCard 
               :key="content.title"
               :title="content.title"
-              :subtitle="content.description"
+              :subtitle="content.descShort"
               :text="content.text"
               :content-name="content.contentName"
               :color-variant="content.colorVariant"

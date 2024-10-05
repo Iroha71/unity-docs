@@ -11,13 +11,14 @@ export default defineNuxtPlugin (nuxtApp => {
 
   interface category {
     name: string,
+    color: string,
     contents: content[],
   }
 
   const categories: category[] = [
     {
       name: 'コントローラ',
-      
+      color: 'blue-grey-lighten-1',
       contents: [
         {
           title: "Invector",
@@ -25,7 +26,7 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "TPSコントローラ",
           text: "拡張に必要な情報",
           prependIcon: "mdi-run",
-          colorVariant: "grey-darken-1",
+          colorVariant: "blue-grey-darken-3",
         },
         {
           title: "Horse Animset",
@@ -33,12 +34,13 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "馬コントローラ",
           text: "セットアップ時の補足情報",
           prependIcon: "mdi-horse",
-          colorVariant: "amber-darken-1",
+          colorVariant: "blue-grey-darken-2",
         },
       ],
     },
     {
       name: 'セットアップと自作',
+      color: 'indigo-lighten-1',
       contents: [
         {
           title: "シーンセットアップ",
@@ -54,7 +56,7 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "ゲームデザイン",
           text: "ダメージ計算式など",
           prependIcon: "mdi-palette",
-          colorVariant: "purple-lighten-1",
+          colorVariant: "indigo-darken-2",
         },
         {
           title: "自作スクリプト",
@@ -62,7 +64,7 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "自作スクリプト",
           text: "戦闘拡張、他の工夫など",
           prependIcon: "mdi-account",
-          colorVariant: "brown-lighten-1",
+          colorVariant: "indigo-darken-3",
         },
         {
           title: "役立つTips",
@@ -70,12 +72,13 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "役立つ情報を記載",
           text: "役立つ情報を記載",
           prependIcon: "mdi-lightbulb-on-10",
-          colorVariant: "red-darken-1",
+          colorVariant: "indigo-darken-4",
         }
       ],
     },
     {
       name: 'RPG',
+      color: 'red-lighten-1',
       contents: [
         {
           title: "Dialogue System",
@@ -83,7 +86,7 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "会話アセット",
           text: "セットアップ方法など",
           prependIcon: "mdi-forum-outline",
-          colorVariant: "cyan-darken-1",
+          colorVariant: "red-darken-1",
         },
         {
           title: "Quest Machine",
@@ -91,12 +94,13 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "クエスト管理アセット",
           text: "セーブ方法やイベント通知実装",
           prependIcon: "mdi-book-variant",
-          colorVariant: "amber-darken-4",
+          colorVariant: "red-darken-2",
         },
       ]
     },
     {
       name: '地形',
+      color: 'green-lighten-1',
       contents: [
         {
           title: "Enviro",
@@ -104,7 +108,7 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "天候管理アセット",
           text: "タイムラプス等の実装",
           prependIcon: "mdi-cloud",
-          colorVariant: "light-green-darken-1",
+          colorVariant: "green-darken-1",
         },
         {
           title: "Gaia2",
@@ -112,12 +116,13 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "地形編集アセット",
           text: "うまく地形を作るためのTIPS",
           prependIcon: "mdi-image-filter-hdr",
-          colorVariant: "green-lighten-1",
+          colorVariant: "green-darken-2",
         },
       ]
     },
     {
       name: 'エフェクト',
+      color: 'amber-lighten-1',
       contents: [
         {
           title: "X-Weapon Trail",
@@ -125,12 +130,13 @@ export default defineNuxtPlugin (nuxtApp => {
           descShort: "武器追従エフェクト",
           text: "セットアップ方法",
           prependIcon: "mdi-sword",
-          colorVariant: "light-blue-darken-4",
+          colorVariant: "amber-darken-1",
         },
       ]
     },
     {
       name: 'UI',
+      color: 'deep-purple-lighten-1',
       contents: [
         {
           title: "Ultimate Clean GUI",
