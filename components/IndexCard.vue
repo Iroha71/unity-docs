@@ -3,8 +3,8 @@
     <VCard
       :prepend-icon="Props.icon"
       :color="Props.colorVariant"
-      min-width="15rem"
-      :href="`/unity-docs/${Props.contentName}`"
+      link
+      @click="router.push({path: `/${Props.contentName}`})"
     >
       <template v-slot:title>{{ Props.title }}</template>
       <template v-slot:subtitle>{{ Props.subtitle }}</template>
@@ -25,4 +25,5 @@ interface Props {
 }
 
 const Props = defineProps<Props>()
+const router = useRouter();
 </script>
