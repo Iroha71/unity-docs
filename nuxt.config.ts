@@ -37,6 +37,16 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        sass: {
+          api: "modern",
+        }
+      }
+    }
+  },
+
   css: ['vuetify/lib/styles/main.sass', 'mdi/css/materialdesignicons.min.css', '@/assets/main.scss'],
 
   plugins: [
