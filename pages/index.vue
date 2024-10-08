@@ -4,10 +4,10 @@
       :key="category.name"
       variant="outlined"
       :color="category.color"
-      class="mb-1"
+      class="mb-2"
       >
       <VCardItem>
-        <div class="text-overline mb-1">{{ category.name }}</div>
+        <div class="text-overline">{{ category.name }}</div>
       </VCardItem>
       <VContainer fluid>
         <v-row >
