@@ -26,13 +26,24 @@ public class BattleSenceStrengthen : MonoBehaviour
     private float hitstopTime = 0.15f;
     [SerializeField]
     private bool activateHitStop = true;
+    public bool ActivateHitStop { get => activateHitStop; set { activateHitStop = value; } }
     [SerializeField, Header("振動")]
+    private bool isActivateCameraShake = true;
+    [SerializeField]
     private float shakeDuration = 0.1f;
     [SerializeField]
     private float shakeStrength = 0.1f;
     [SerializeField]
+    private int shakeCount = 2;
+    [SerializeField]
     private Camera tpCamera;
+    [SerializeField, Header("敵の振動")]
+    private float strength = 0.15f;
+    [SerializeField]
+    private int vibration = 20;
     private CancellationToken token;
+    [SerializeField]
+    private vShooterMeleeInput tpInput;
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +53,18 @@ public class BattleSenceStrengthen : MonoBehaviour
         anim = GetComponentInParent<Animator>();
         mm = GetComponentInParent<vMeleeManager>();
         mm.onDamageHit.AddListener(IgnitHitStop);
-        mm.onDamageHit.AddListener((hitinfo) => ShakeCamera(shakeDuration, shakeStrength));
+        
+        if (isActivateCameraShake)
+            mm.onDamageHit.AddListener((hitinfo) => ShakeCamera(shakeDuration, shakeStrength, shakeCount));
+        //mm.onDamageHit.AddListener(ShakeHitEnemy);
         
         //sc = FindObjectOfType<SceneStateController>();
         //sc.OnChangedState += ReadyWeapon;
+    }
+
+    private void Update()
+    {
+        
     }
 
     /// <summary>
@@ -53,10 +72,20 @@ public class BattleSenceStrengthen : MonoBehaviour
     /// </summary>
     /// <param name="duration">振動時間</param>
     /// <param name="strength">振動の強さ</param>
-    public void ShakeCamera(float duration, float strength)
+    public void ShakeCamera(float duration, float strength, int count = 5)
     {
-        tpCamera.DOKill(true);
-        tpCamera.DOShakePosition(shakeDuration, strength, vibrato: 3, randomness: 90f, fadeOut: false);
+        //tpCamera.DOKill(true
+        //tpCamera.DOShakePosition(shakeDuration, strength, vibrato: 3, randomness: 90f, fadeOut: false);
+        Sequence seq = DOTween.Sequence(destroyCancellationToken);
+        float partDuration = duration / count / 2f;
+        float widthHalf = strength / 2f;
+        for (int i = 0; i < count - 1; i++)
+        {
+            seq.Append(tpCamera.transform.DOLocalRotate(new Vector3(-widthHalf, 0f), partDuration));
+            seq.Append(tpCamera.transform.DOLocalRotate(new Vector3(widthHalf, 0f), partDuration));
+        }
+        seq.Append(tpCamera.transform.DOLocalRotate(new Vector3(-widthHalf, 0f), partDuration));
+        seq.Append(tpCamera.transform.DOLocalRotate(Vector3.zero, partDuration));
     }
 
     /// <summary>
@@ -85,12 +114,32 @@ public class BattleSenceStrengthen : MonoBehaviour
     /// <param name="hitinfo">ヒット対象情報</param>
     private async void IgnitHitStop(vHitInfo hitinfo)
     {
-        if (anim.speed == 0f || !activateHitStop)
+        if (!activateHitStop)
+            return;
+        if (anim.speed == 0f)
             return;
 
         float defaultSpeed = anim.speed;
         anim.speed = 0f;
         await UniTask.Delay((int)(hitstopTime * 1000f), cancellationToken: token);
         anim.speed = defaultSpeed;
+    }
+
+    /// <summary>
+    /// 攻撃が当たったオブジェクトを振動させる
+    /// </summary>
+    /// <param name="hitinfo"></param>
+    private void ShakeHitEnemy(vHitInfo hitinfo)
+    {
+        Sequence seq = DOTween.Sequence(hitinfo.targetCollider.gameObject.GetCancellationTokenOnDestroy());
+        seq.Append(
+            hitinfo.targetCollider.transform.DOShakePosition(
+                hitstopTime, 
+                strength, 
+                vibration, 
+                fadeOut: false, 
+                randomnessMode: ShakeRandomnessMode.Harmonic
+                )
+            );
     }
 }
