@@ -2,6 +2,8 @@
 
 - [Shooter Template](#shooter-template)
   - [セットアップ](#セットアップ)
+  - [ダメージ判定](#ダメージ判定)
+    - [ヘッドショット判定](#ヘッドショット判定)
   - [キャラクターの設定](#キャラクターの設定)
     - [カバーアドオン](#カバーアドオン)
   - [武器の設定](#武器の設定)
@@ -30,6 +32,16 @@
     - コンポーネント内の設定を変更することで、厚さや幅を調整可能。
 - 必要に応じてカバーオブジェクトにNavMeshObstaclesをアタッチする
   - オブジェクトが移動しても、Bakeしなおす必要がなくなる
+
+## ダメージ判定
+
+### ヘッドショット判定
+
+- キャラクターにラグドール設定を行う
+  - 各パーツにvDamageReceiverが取り付けられる
+- 頭のvDamageReceiver > Damage Multiplerの値を変更する
+  - 必要であればOverride Reaction IDを有効にする
+- V Shooter Weapon > Layer & Tagに**Default, BodyPart**を設定する
 
 ## キャラクターの設定
 
