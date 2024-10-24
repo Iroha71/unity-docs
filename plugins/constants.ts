@@ -132,6 +132,14 @@ export default defineNuxtPlugin (nuxtApp => {
           prependIcon: "mdi-sword",
           colorVariant: "amber-darken-1",
         },
+        {
+          title: "Realtoon",
+          contentName: "realtoon",
+          descShort: "トゥーンシェーダー",
+          text: "Tips",
+          prependIcon: "mdi-circle-opacity",
+          colorVariant: "amber-darken-2",
+        }
       ]
     },
     {
