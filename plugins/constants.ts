@@ -73,6 +73,14 @@ export default defineNuxtPlugin (nuxtApp => {
           text: "役立つ情報を記載",
           prependIcon: "mdi-lightbulb-on-10",
           colorVariant: "indigo-darken-4",
+        },
+        {
+          title: "着せ替え機能の実装",
+          contentName: "runtime_equipment",
+          descShort: "リアルタイムの着せ替え（VRM）",
+          text: "リアルタイムの着せ替え（VRM）",
+          prependIcon: "mdi-tshirt-crew",
+          colorVariant: "indigo-darken-1",
         }
       ],
     },
