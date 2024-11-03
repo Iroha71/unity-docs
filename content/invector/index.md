@@ -2,6 +2,7 @@
 
 - [Melee](invector/melee.md)
 - [Item Manager](invector/item-manager.md)
+- [Shooter](invector/shooter.md)
 - [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
