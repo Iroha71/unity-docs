@@ -71,6 +71,8 @@ const shooterArticles = reactive<ArticleConfig[]>([
 
 const itemArticles = reactive<ArticleConfig[]>([
   { title: "円形メニューを作りたい", icon: "dots-circle", pageName: "radial_menu", addInfo: "アイテム選択メニューの作り方" },
+  { title: "スクリプトからアイテムを制御したい", icon: "flask", pageName: "item_script", addInfo: "アイテム使用スクリプト・アイテム使用制限の方法" },
+  { title: "装備スロットを追加したい", icon: "shape-square-plus", pageName: "add_slot", addInfo: "スロット・ショートカット追加" }
 ]);
 
 const articleGroup = reactive<ArticleGroup[]>([
