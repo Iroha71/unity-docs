@@ -132,3 +132,11 @@
                 return;
             }
     ```
+
+## ヘッドショット判定
+
+- キャラクターにラグドール設定を行う
+  - 各パーツにvDamageReceiverが取り付けられる
+- 頭のvDamageReceiver > Damage Multiplerの値を変更する
+  - 必要であればOverride Reaction IDを有効にする
+- V Shooter Weapon > Layer & Tagに**Default, BodyPart**を設定する

@@ -59,17 +59,23 @@ const meleeArticles = reactive<ArticleConfig[]>([
   { title: "スタンさせたい", icon: "creation-outline", pageName: "stun", addInfo: "実装方法" },
   { title: "テイクダウンしたい", icon: "knife-military", pageName: "takedown", addInfo: "実装方法" },
   { title: "長押し処理のまとめ", icon: "controller", pageName: "button_longpress", addInfo: "チャージ攻撃・だし分け" },
-  { title: "ダメージに要素を追加したい", icon: "sword-cross", pageName: "damage_config", addInfo: "要素の追加・無敵化" },
+  { title: "ダメージに要素を追加したい", icon: "sword-cross", pageName: "damage_config", addInfo: "要素の追加・無敵化・ヘッドショット" },
   { title: "左手でも攻撃したい", icon: "hand-back-left-outline", pageName: "lefthand_attack", addInfo: "武器装備や入力について" },
   { title: "状態異常を追加したい", icon: "bottle-tonic-skull", pageName: "abnormal", addInfo: "状態異常ロジックの提示" }
 ]);
 
 const shooterArticles = reactive<ArticleConfig[]>([
-  { title: "Shooter: セットアップ", icon: "pistol", pageName: "shooter_setup", addInfo: "" }
+  { title: "Shooter: セットアップ", icon: "pistol", pageName: "shooter_setup", addInfo: "cover addon含めた設定方法" },
+  { title: "武器の設定", icon: "pistol", pageName: "gun_config", addInfo: "WeaponIDやスコープ設定などについて" }
+]);
+
+const itemArticles = reactive<ArticleConfig[]>([
+  { title: "円形メニューを作りたい", icon: "dots-circle", pageName: "radial_menu", addInfo: "アイテム選択メニューの作り方" },
 ]);
 
 const articleGroup = reactive<ArticleGroup[]>([
   { category: "melee", articles: meleeArticles },
   { category: "shooter", articles: shooterArticles },
+  { category: "item manager", articles: itemArticles },
 ]);
 </script>
