@@ -1,9 +1,5 @@
 # Invector Template
 
-- [Melee](invector/melee.md)
-- [Item Manager](invector/item-manager.md)
-- [Shooter](invector/shooter.md)
-- [FSM AI](invector/ai.md)
 - [魔術などの拡張](invector/arts.md)
 - [投擲物の実装](invector/throwable.md)
 - [弓の実装](invector/bow.md)
@@ -16,13 +12,7 @@ Invectorに依存するコンポーネント（Start時にGetComponentする）�
 
 後にStartが実行されるようにする
 
-## UIカーソルのパッド対応
 
-- カーソル用のImageを配置
-  - 最前面に配置する
-  - RaycastTargetをオフにする
-- background等のImageにvJoystickMouseInputをアタッチ
-  - cursorに配置したImageを設定する
 
 ## カスタムタグがあるアニメーションか確認する
 

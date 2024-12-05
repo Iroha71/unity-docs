@@ -6,52 +6,17 @@
 レティクルの変更は**ScopeView > Scope ID**を変更する
 レティクルのIDは**AimCanvas**配下を参照する
 
-- ハンドガン
+|カテゴリ|Moveset ID|UpperBody ID|Shot ID|Reload ID|Equip ID|Scope ID|
+|---    |---       |---         |---    |---      |---      |---    |
+|ハンドガン|1       |1           |-1    |1        |5        |1       |
+|ライフル|1         |2           |2      |2        |0        |2      |
+|ショットガン|1     |3            |3      |3        |0       |4       |
+|スナイパー|1       |2            |4      |2        |0       |0       |
 
-  |ID|設定内容|
-  |---|---|
-  |Move Set ID|1|
-  |Upper Body ID|1|
-  |Shot ID|-1|
-  |Reload ID|1|
-  |Equip ID|5|
-  |Scope ID|1|
-
-- ライフル
-
-  |ID|設定内容|
-  |---|---|
-  |Move Set ID|1|
-  |Upper Body ID|2|
-  |Shot ID|2|
-  |Reload ID|2|
-  |Equip ID|0|
-  |Scope ID|2|
-
-- ショットガン
-
-  |ID|設定内容|
-  |---|---|
-  |Move Set ID|1|
-  |Upper Body ID|3|
-  |Shot ID|3|
-  |Reload ID|3|
-  |Equip ID|0|
-  |Scope ID|4|
 
 - スナイパー
   - スナイパースコープの設定も参照
-
-  |ID|設定内容|
-  |---|---|
-  |Move Set ID|1|
-  |Upper Body ID|2|
-  |Shot ID|4|
-  |Reload ID|2|
-  |Equip ID|0|
-  |Scope ID|0|
-  |Use UI|true|
-
+  - Use UIをtrueにする
 
 ## スナイパースコープの設定例
 
