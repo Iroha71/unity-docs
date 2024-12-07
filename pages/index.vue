@@ -25,6 +25,11 @@
         </v-row>
       </VContainer>
     </VCard>
+    <ContentList path="/" v-slot="{list}">
+      <NuxtLink v-for="article in list" :to="article._path">
+        {{ article.title }}
+      </NuxtLink>
+    </ContentList>
   </v-container>  
 </template>
 

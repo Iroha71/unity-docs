@@ -75,7 +75,7 @@ cc.alwaysWalkByDefault = true;
 
 - 画像のように武器種毎のエフェクト管理リストを作成
 
-    ![attackeffect-list](/img/attackeffect-datalist.png)
+    ![attackeffect-list](img/attackeffect-datalist.png)
 
 - エフェクトの発生を行うスクリプトを作成する
 

@@ -11,4 +11,4 @@
 1. vNoiseListenerを取り付け
 2. AIのステート作成
 
-  ![noise-state](/img/noise-state.png)
+  ![noise-state](img/noise-state.png)

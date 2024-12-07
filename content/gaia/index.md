@@ -20,7 +20,7 @@
   - Influenceをグローバルに変更
   - Imageにスタンプと同じテクスチャを選択する
 
-  ![stamper_config](/img/stamper_config.png)
+  ![stamper_config](img/stamper_config.png)
 
 - 斜面の角度等を変更したい場合は Image Mask > Strength Transformのカーブを編集する
 
@@ -28,7 +28,7 @@
 
 - Stamper > Image Mask > Strength Transformのカーブを編集する
 
-  ![strength_config](/img/stamper_strength_config.png)
+  ![strength_config](img/stamper_strength_config.png)
 
 ## 草原の表現
 

@@ -57,15 +57,15 @@
 - モデルはrenderer配下に格納し、座標を0にする
 - ScopeTarget
 
-  ![scope_target](/img/shooter/scope_target.png)
+  ![scope_target](img/shooter/scope_target.png)
 
 - AimReference
 
-  ![aim_reference](/img/shooter/aim_reference.png)
+  ![aim_reference](img/shooter/aim_reference.png)
 
 - Lefthand IK
 
-  ![lefthand_ik](/img/shooter/lefthand_ik.png)
+  ![lefthand_ik](img/shooter/lefthand_ik.png)
 
 ## エフェクト
 
@@ -105,16 +105,16 @@
 - AnimatorEventsの設定を行う
   - マガジンを落とす演出
   
-  ![instantiate_rifleclip](/img/shooter/clip_instantiate.png)
-  ![removable_clip](/img/shooter/removable_clip.png)
+  ![instantiate_rifleclip](img/shooter/clip_instantiate.png)
+  ![removable_clip](img/shooter/removable_clip.png)
 
   - マガジン表示演出
 
-  ![turnon_rifleclip](/img/shooter/turnon_rifleclip.png)
+  ![turnon_rifleclip](img/shooter/turnon_rifleclip.png)
 
   - アニメーションイベント設定
 
-  ![animation_event_rifleclip](/img/shooter/animation_event_rifleclip.png)
+  ![animation_event_rifleclip](img/shooter/animation_event_rifleclip.png)
 
 ## ショットガンの実装
 

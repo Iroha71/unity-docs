@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@nuxt/content'],
+  modules: ['@nuxt/content', '@nuxt/image'],
 
   content: {
     // コードハイライト有効化
@@ -52,6 +52,12 @@ export default defineNuxtConfig({
   plugins: [
     '@/plugins/constants',
   ],
+
+  nitro: {
+    prerender: {
+      failOnError: false,
+    },
+  },
 
   compatibilityDate: '2024-08-13'
 })
