@@ -1,0 +1,255 @@
+@startuml invector_inherit_input
+title Invectorクラスの継承関係：入力系
+
+package "Invector" {
+    class vThirdPersonController {
+        + MoveToPosition(targetPosition: Transform)
+        + MoveToPosition(targetPosition: Vector3)
+        + ControlAnimatorRootMotion()
+        + ControlLocomotionType()
+        + ControlRotationType()
+        + ControlKeepDirection()
+        + UpdateMoveDirection(referenceTransform: Transform)
+        + Sprint(value: bool)
+        + Crouch()
+        + Strafe()
+        + Jump(consumeStamina: bool)
+        # DelayToJump(): IEnumerator
+        + Roll()
+    }
+
+    class vThirdPersonAnimator {
+        + randomIdleCount: float
+        + walkSpeed: float
+        + runningSpped: float
+        + sprintSpeed: float
+        + lastCharacterPosition: Vector3
+        + UpdateAnimator()
+        + AnimatorLayerControl()
+        + ActionsControl()
+        + UpdateAnimatorParameters()
+        + SetAnimatorMoveSpeed(speed: vMovementSpeed)
+        + SetInputDirection(direction: Vector3)
+        + ResetInputAnimatorParameters()
+        + SetActionState(value: int)
+        + IsAnimatorTag(tag: string)
+        + MatchTarget()
+    }
+
+    class vThirdPersonMotor {
+        + スタミナ関連
+        + ジャンプ関連
+        + ロール関連
+        + randomIdleTimer: float
+        + isDead: bool
+        + ReduceStamina(value: float, accumulate: bool)
+        + ChangeStamina(value: int)
+        + ChangeMaxStamina(value: int)
+        + MoveCharacterConditions()
+        + StopCharacter()
+        + RotateToDirection(direction: Vector3)
+    }
+
+    class vCharacter {
+        + deathBy: DeathBy
+        + animator: Animator
+        + TriggerDamageReaction(damage: vDamage)
+        + SetAnimatorTrigger(trigger: int)
+    }
+
+    class vHealthController {
+        + TakeDamage(damage: vDamage)
+    }
+
+    interface vIHealthController {
+        + onDead: OnDead
+        + currentHealth: float
+        + MaxHealth: int
+        + isDead: bool
+        + AddHealth(value: int)
+        + ChangeHealth(value: int)
+        + ChangeMaxHealth(value: int)
+        + ResetHealth(health: float)
+        + ResetHealth()
+    }
+
+    class vMovementSpeed {
+        + movementSmooth: float
+        + animationSmooth: float
+        + rotationSpeed: float
+        + walkByDefault: bool
+        + rotateWithCamera: bool
+        + walkSpeed: float
+        + runningSpped: float
+        + sprintSpeed: float
+        + crouchSpeed: float
+        + Init()
+        + ResetToDefault()
+    }
+
+    interface vICharacter {
+        + onActiveRagdoll: OnActiveRagdoll
+        + animator: Animator
+        + isCrouching: bool
+        + ragdolled: bool
+        + EnableRagdoll()
+        + ResetRagdoll()
+    }
+
+    vThirdPersonAnimator <|-- vThirdPersonController
+    vThirdPersonAnimator -> vMovementSpeed 
+    vThirdPersonMotor <|-- vThirdPersonAnimator
+    vCharacter <|-- vThirdPersonMotor
+    vICharacter <|-left- vCharacter
+    vHealthController <|-- vCharacter
+    vIHealthController <|-left- vHealthController
+}
+
+
+package "Input" {
+    class vShooterMeleeInput {
+        + Shooter入力: GenericInput
+        + shooterManager: vShooterManager
+        + SetAlwaysAim(value: bool)
+        + AimInput()
+        + TriggerShot()
+        + HandleShotCount(weapon: vShooterWeapon, weaponInput: bool)
+    }
+
+    class vShooterManager {
+        + rWeapon: vShooterWeapon
+        + lWeapon: vShooterWeapon
+        + GetShotID(): int
+    }
+
+    interface vIShooterIKController {
+        + LeftIK: vIKSolver
+        + RightIK: vIKSolver
+        + WeaponIKAdjustList: vWeaponIKAdjustList
+    }
+
+    class vMeleeCombatInput {
+        + 近接入力: GenericInput
+        + isArmed: bool
+        + TriggerWeakAttack()
+        + TriggerStrongAttack()
+        + BlockingInput()
+    }
+
+    interface vIMeleeFighter {
+        + BreakAttack(breakAtkID: int)
+        + OnRecoil(recoilID: int)
+        + isAttacking: bool
+        + isBlocking: bool
+        + character: vICharacter
+    }
+
+    class vThirdPersonInput {
+        + 基本操作: GenericInput
+        + カメラ操作: GenericInput
+        + tpCamera: vThirdPersonCamera
+        + animator: Animator
+        + cc: vThirdPersonController
+        + SetWalkByDefault(value: bool)
+        + SetStrafeLocomotion(value: bool)
+        + InputHandle()
+
+    }
+
+    interface vIAnimatorMoveReceiver {
+        + enabled: bool
+        + OnAnimatorMoveEvent()
+    }
+
+    
+    vIAnimatorMoveReceiver <|-left- vThirdPersonInput
+
+    vThirdPersonInput <|-- vMeleeCombatInput
+    vMeleeCombatInput -|> vIMeleeFighter
+    
+    vIShooterIKController <|- vShooterMeleeInput
+    vMeleeCombatInput <|-- vShooterMeleeInput
+    vShooterMeleeInput -down-* vShooterManager
+}
+
+' AI
+package "AI" {
+    class vControlAIShooter {
+        + IsReloading: bool
+        + IsEquiping: bool
+        + AimTo(point: Vector3)
+        + AimToTarget(stayLookTime: float, sender: object)
+    }
+
+    interface vIControlAIShooter {
+        + shooterManager: vAIShooterManager
+        + SetShooterHitLayer(LayerMask mask)
+        + IsInShotAngle: bool    
+    }
+
+    class vControlAICombat {
+        + attackDistance: float
+        + TakeDamage(damage: vDamage)
+    }
+
+    interface vIControlAICombat {
+        + minDistanceOfTheTarget: float
+        + combatRange: float
+        + isInCombat: bool
+        + attackCount: int
+        + isAttacking: bool
+        + Attack(strongAttack: bool, attackID: int, forceCanAttack: bool)
+        + isBlocking: bool
+    }
+
+    interface vIAttackListener {
+        + OnEnableAttack()
+        + OnDisableAttack()
+        + ResetAttackTriggers()
+    }
+
+    class vControlAI {
+        + secundaryTargets: List<vAITarget>
+        + GetTargetsInRange(): List<vAITarget>
+    }
+
+    interface vIControlAI {
+        + HasComponent<T>()
+        + GetAIComponent<T>() where T : vIAIComponent
+        + NextWayPoint()
+        + MoveTo(destination: Vector3, speed: vAIMovementSpeed)
+        + SetCurrentTarget(target: Transform)
+        + RemoveCurrentTarget()
+        + FindTarget()
+        + TryGetTarget(out target: vAITarget)
+        + LookAround()
+        + Stop()
+    }
+
+    class vAIMotor {
+        + IsAnimatorTag(tag: string): bool
+        + Walk()
+        + Run()
+        + Sprint()
+        + JumpTo(target: Vector3)
+        + RollTo(direction: Vector3)
+        + EnableAIController()
+        + DisableAIController()
+    }
+
+    ' AI
+    vIControlAIShooter <|-left- vControlAIShooter
+    vIShooterIKController <|-- vControlAIShooter
+
+    vIControlAICombat <|- vControlAICombat
+    vIAttackListener <|-left- vControlAICombat
+    vControlAICombat <|-- vControlAIShooter
+
+    vControlAI <|-- vControlAICombat
+    vIControlAI <|-left- vControlAI
+    vAIMotor <|-- vControlAI
+
+    vCharacter <|-- vAIMotor
+}
+
+@enduml
