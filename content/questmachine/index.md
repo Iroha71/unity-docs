@@ -151,7 +151,7 @@ public void OnMessage(MessageArgs args)
 - クエストオブジェクト > State > Actions等でメッセージを設定
   - 画像ではTrueに設定しているが、Activeでも問題ない
 
-    ![message-system-config](/img/message-system-config.png)
+    ![message-system-config](img/message-system-config.png)
 
 ## LUAの拡張
 

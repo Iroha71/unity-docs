@@ -34,7 +34,7 @@ public void Launch()
 - 軌道を大きくする場合
   - ThrowSettings@Default > Min Max Timeの最大値を大きくする
 
-![throw_settings](/img/throwable_settings.png)
+![throw_settings](img/throwable_settings.png)
 
 MinMaxTimeは放物線計算時の時間である。
 

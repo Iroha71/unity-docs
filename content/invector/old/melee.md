@@ -45,5 +45,5 @@
 
 ## 戦闘状態移行
 
-![phase-control](/img/phase-control.png)
+![phase-control](img/phase-control.png)
 

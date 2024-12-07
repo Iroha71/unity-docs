@@ -83,7 +83,7 @@ RootMotionの上書きを無効にする。
 
 - RightHandにSimpleHolderを作成し、武器を配置する
 
-  ![simple_holder](/img/ai/simple_holder.png)
+  ![simple_holder](img/ai/simple_holder.png)
 
 - 任意の場所に納刀状態の武器を取り付ける
 
@@ -110,7 +110,7 @@ RootMotionの上書きを無効にする。
 
 - プレイヤー配下のThrowManagerを有効にする
 
-  ![throw-manager](/img/throw-manager-hieralchy.png)
+  ![throw-manager](img/throw-manager-hieralchy.png)
 
   |オブジェクト名|用途|
   |---|---|

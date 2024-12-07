@@ -25,11 +25,11 @@
 - 弓モデルの調整を行う
   - 画像のようにモデルは親に対して180度反転させる
 
-    ![bow_setup](/img/bow/bow_setup_model.png)
+    ![bow_setup](img/bow/bow_setup_model.png)
   
   - muzzleの位置
 
-    ![muzzle](/img/bow/bow_muzzle.png)
+    ![muzzle](img/bow/bow_muzzle.png)
 
 - vBowから**vShooterWeapon**をコピーし、対象の弓に新しいコンポーネントとして貼り付ける
 - **vShooterWeapon**の以下の設定を調整する
