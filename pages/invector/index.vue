@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { title } from 'process';
+import { reactive } from 'vue';
 import ArticleLinkCard from '~/components/ArticleLinkCard.vue';
 
 const getCardColor = (category: string) => {
