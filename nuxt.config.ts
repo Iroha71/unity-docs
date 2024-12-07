@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@nuxt/content', '@nuxt/image'],
+  modules: ['@nuxt/content'],
 
   content: {
     // コードハイライト有効化
