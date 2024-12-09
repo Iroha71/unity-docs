@@ -60,7 +60,7 @@ interface ArticleConfig {
 
 const utilArticles = reactive<ArticleConfig[]>([
   { title: "UIカーソルをパッドに対応させたい", icon: "cursor-default", pageName: "ui_cursor", addInfo: "カーソル画像の設定" },
-  { title: "Shooter: セットアップ", icon: "pistol", pageName: "shooter_setup", addInfo: "cover addon含めた設定方法" },
+  { title: "セットアップ", icon: "pistol", pageName: "setup", addInfo: "cover addon含めた設定方法" },
   { title: "DeathByのタイミングを調整したい", icon: "bottle-tonic-skull", pageName: "deathby", addInfo: "ラグドール化タイミングの調整方法" },
   { title: "アニメーションタグがあるか確認したい", icon: "tag-outline", pageName: "check_tag", addInfo: "CustomActionなどが実行中か確認する方法" },
   { title: "強制歩行させたい", icon: "pause-octagon-outline", pageName: "force_walk", addInfo: "スクリプト実装" },

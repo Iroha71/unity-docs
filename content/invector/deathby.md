@@ -9,20 +9,20 @@
 
   ```csharp [vAIMotor.cs]
   protected virtual void AnimatorDeath()
+  {
+    // death by animation & ragdoll after a time
+    else if (deathBy == DeathBy.AnimationWithRagdoll)
     {
-        // death by animation & ragdoll after a time
-        else if (deathBy == DeathBy.AnimationWithRagdoll)
-        {
-            int deadLayer = 0;
-            var info = animatorStateInfos.GetStateInfoUsingTag("Dead");
-            if (info != null)
-            {
-                if (!animator.IsInTransition(deadLayer) && info.normalizedTime >= 0.95f && GroundDistanceAnim <= 0.1f)
-                {                      
-                    onActiveRagdoll.Invoke(null);
-                    RemoveComponents();
-                }
-            }
+      int deadLayer = 0;
+      var info = animatorStateInfos.GetStateInfoUsingTag("Dead");
+      if (info != null)
+      {
+        if (!animator.IsInTransition(deadLayer) && info.normalizedTime >= 0.95f && GroundDistanceAnim <= 0.1f)
+        {                      
+            onActiveRagdoll.Invoke(null);
+            RemoveComponents();
         }
+      }
     }
+  }
   ```

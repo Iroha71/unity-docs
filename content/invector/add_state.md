@@ -5,7 +5,7 @@
 - アニメーションを実装する場合は`anim.CrossFade()`を利用する
   - Playだと正常に実行されない
 
-### Actionの追加（メッセンジャー利用）
+## Actionの追加（メッセンジャー利用）
 
 - **AIFSM**ウィンドウで**Action > Controller > Send Message**を選択
 
