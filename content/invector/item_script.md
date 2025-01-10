@@ -18,6 +18,50 @@ if (changeEquip.display != null && changeEquip.display.item != null && changeEqu
 
 ``` csharp
 itemManager.canUseItemDelegate += CheckUseItem;
+// メソッドについて：CheckUseItem(vItem item, ref List<bool> validateResult)
+```
+
+- 実装例（MPが不足している場合は魔法を発動しない例）
+
+```csharp
+private void Awake()
+{
+    itemManager.canUseItemDelegate += CheckUseItem;
+}
+
+/// <summary>
+/// 指定のスロット番号に装備された魔法を発動する
+/// </summary>
+/// <param name="slotIndex">発動する魔法のスロット番号</param>
+public void CastSpell(int slotIndex)
+{
+    if (artsEquipArea.equipSlots[slotIndex] == null)
+        return;
+    
+    vItem spell = artsEquipArea.equipSlots[slotIndex].item;
+    itemManager.inventory.onUseItem.Invoke(spell);
+    if (itemManager.CanUseItem(spell))
+        spellManager.GenerateSpell(lockon.currentTarget, spell.originalObject.GetComponent<Spell>(), spell.customHandler);
+}
+
+/// <summary>
+/// CurrentArtsが魔法発動に必要な量あるか確認する
+/// </summary>
+/// <param name="item">発動する魔法アイテム</param>
+/// <param name="validateResult">発動条件を満たしていないアイテム集計用のリスト</param>
+private void CheckUseItem(vItem item, ref List<bool> validateResult)
+{
+    vItemAttribute arts = item.GetItemAttribute(vItemAttributes.Arts);
+    if (arts != null)
+    {
+        bool isValid = spellManager.CurrentArts >= Mathf.Abs(arts.value);
+        if (!isValid)
+        {
+            validateResult.Add(isValid);
+            Debug.Log("使用不能");
+        }
+    }
+}
 ```
 
 - 実装例（↓のスクリプトはInventory > EquipmentDisplayWindow > EquipDisplay_Downにアタッチされている
