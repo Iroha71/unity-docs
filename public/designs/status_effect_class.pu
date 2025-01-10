@@ -34,9 +34,15 @@ class PoisonBuffFactory {
 }
 
 class StatusEffectReceiver {
-  + PoisonRegist: int
+  + allowedBuff: List<ReceiveEffectConfig>
   + ActiveBuff: List<Buff>
-  + ApplyEffect(sender: Transform, factory: BuffFactory, data: BuffData)
+  + ApplyEffect(sender: Transform, effectName: string, data: BuffData)
+}
+
+class ReceiveEffectConfig {
+  + effectName: string
+  + regist: float
+  + factory: BuffFactory
 }
 
 class StatusEffectGiver {
@@ -45,8 +51,8 @@ class StatusEffectGiver {
 }
 
 class BuffNode {
+  + Name: string
   + Data: BuffData
-  + Factory: BuffFactory
 }
 
 BuffData .right.> BuffFactory : データ投入
