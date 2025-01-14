@@ -6,7 +6,10 @@
       :key="artGroup.category"
     >
       <VCol
-        cols="3"
+        cols="12"
+        lg="3"
+        md="4"
+        sm="6"
         v-for="article in artGroup.articles"
         :key="article.pageName"
       >

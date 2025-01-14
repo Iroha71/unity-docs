@@ -1,5 +1,9 @@
 <template>
-  <VNavigationDrawer color="#AFD3E2" floating permanent>
+  <VNavigationDrawer 
+    color="#AFD3E2" 
+    floating
+    permanent
+  >
     <VList nav>
       <VListItem 
         title="ホーム"

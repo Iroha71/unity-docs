@@ -1,12 +1,13 @@
 <template>
   <v-layout>
     <VAppBar color="#19A7CE" >
-      <VAppBarNavIcon icon="mdi-home-circle" @click="pushHome" />
-      <VAppBarTitle>Unity Docs</VAppBarTitle>
-      <VSpacer/>
+      <VAppBarTitle @click="pushHome"
+        class="cursor-pointer"
+      >
+        Unity Docs
+      </VAppBarTitle>
       <p>{{ currentVersion }}</p>
     </VAppBar>
-    <SideNavbar />
     <VMain>
       <div class="container">
         <NuxtPage />

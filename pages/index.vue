@@ -11,8 +11,11 @@
       </VCardItem>
       <VContainer fluid>
         <v-row >
-          <VCol md="3" sm="6" xs="12" v-for="content in category.contents" :key="content.title">
-            <IndexCard 
+          <VCol cols="12" md="4" sm="6" lg="3" 
+            v-for="content in category.contents"
+            :key="content.title"
+          >
+            <IndexCard
               :key="content.title"
               :title="content.title"
               :subtitle="content.descShort"
