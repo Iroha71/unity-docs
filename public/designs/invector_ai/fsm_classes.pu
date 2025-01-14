@@ -22,6 +22,7 @@ class vAIMotor {
     + RollTo(direction: Vector3): void
     + EnableAIController(): void
     + DisableAIController(): void
+    + SetCurrentTarget(target: Transform, overrideCanseTarget: bool)
 }
 
 class vCharacter {
@@ -62,33 +63,4 @@ vHealthController <|-- vCharacter
 vCharacter <|-- vAIMotor
 vAIMotor <|-- vControlAI
 vControlAI <|-- vControlAICombat
-
-' class vControlAICombat {
-'     # minAttackTime: int
-'     # maxAttackTime: int
-'     + FindTarget(checkForObstacles: bool): void
-
-' }
-
-' class vControlAIMelee {
-'     # moveSetID: int
-'     # attackID: int
-'     # defenseID: int
-'     # recoilID: int
-'     + Attack(strongAttack: bool, forceCanAttack: bool): void
-'     # TryBlockAttack(damage: vDamage): void
-'     # TryApplyRecoil(fighter: vIMeleeFighter): void
-'     + BreakAttack(breakAtkID: int): void
-'     + OnRecoil(recoilID: int): void
-'     + OnReceiveAttack(damage: vDamage, attacker: vIMeleeFighter): void
-' }
-
-' interface vIControlAIMelee {
-
-' }
-
-' interface vIMeleeFighter {
-
-' }
-
 @enduml

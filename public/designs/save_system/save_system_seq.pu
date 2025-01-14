@@ -1,0 +1,19 @@
+@startuml save_system_seq
+title セーブ処理
+
+
+participant SaveSystem
+participant SaveData
+participant ISavable
+participant HealthController
+
+[o-> SaveSystem++ : Save(slot: int)
+  SaveSystem -> SaveData** : saveSlots[slot]取得
+  loop savable in ISavableのコンポーネント
+  SaveSystem -> ISavable++ : Save(fileName: string)
+    ISavable -> HealthController--++ : Save(fileName: string)
+      HealthController -> HealthController-- : ES3.Save()
+  end
+  SaveSystem <-- SaveData : インスタンス
+  SaveSystem -> SaveSystem-- : ES3.Save()
+@enduml

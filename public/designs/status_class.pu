@@ -1,0 +1,54 @@
+@startuml status_class
+
+class StatusSynchronizer {
+  + InitStatus: Status
+  + IsInitialized: bool
+  # statusModules: Dictionary<string, IStatusAccessor>
+  + ApplyModules()
+}
+
+class Status {
+  + Health: StatusInfo
+  + Stamina: StatusInfo
+  + GetStatus(statusName: string): StatusInfo
+}
+
+class StatusInfo {
+  + name: string
+  + displayName: string
+  + value: int
+  + growCurve: AnimationCurve
+  + Value(value: int)
+}
+
+class PlayerStatus {
+  + CurrentHealth: int
+}
+
+interface IStatusAccessor {
+  + GetValue(ref status: Status): Status
+  + OverrideValue(status: Status)
+}
+
+class HealthController {
+  + maxHealth: int
+  + currentHealth: int
+  + ChangeHealth(value: int)
+}
+
+class CharacterController {
+  + stamina: int
+  + ChangeStamina(value: int)
+}
+
+Status <|-- PlayerStatus
+StatusSynchronizer::InitStatus .left.> Status : 参照
+StatusSynchronizer ..> IStatusAccessor::OverrideValue : コンポーネントの値へステータス値を反映
+IStatusAccessor ..> HealthController : maxHealth / currentHealth変更
+IStatusAccessor ..> CharacterController : stamina変更
+StatusSynchronizer ..> IStatusAccessor::GetValue : コンポーネントから値を取得
+HealthController ..> IStatusAccessor : status.health / status.currentHealth書き換え
+CharacterController ..> IStatusAccessor : status.stamina書き換え
+Status ..> StatusInfo : 参照
+
+@enduml
