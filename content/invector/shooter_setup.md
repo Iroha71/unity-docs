@@ -31,6 +31,14 @@
 
 ### 各パラメータの設定
 
+- Nav Mesh Agent
+
+  |設定項目|値|
+  |---|---|
+  |角速度|200～1000|
+  |加速度|50|
+  |停止距離|0.1|
+
 - Movement
   - Free Speed / Strafe Speed
     - すべて 1
@@ -38,11 +46,11 @@
 
   |設定項目|値|
   |---|---|
-  |Acceleration|8|
-  |Stoping Distance|1|
+  |Acceleration|50|
+  |Stoping Distance|0.1|
   |Walking|0|
-  |Running|0.1|
-  |Sprinting|0.15|
+  |Running|0.05|
+  |Sprinting|0.1|
 
 - Detection
 
@@ -105,6 +113,15 @@ RootMotionの上書きを無効にする。
   |---|---|---|
   |EnableWeapon|vAISendMessage|EnableWeapon|
   |DisableWeapon|vAISendMessage|DisableWeapon|
+
+### 攻撃モーションとリアクション
+
+- 攻撃モーション中にリアクションを割り込ませる設定
+  - 攻撃モーションのトランジション > 中断要因を「Next State」に変更する
+    - Null→〇〇AttacksのトランジションとA→Bのようなトランジションへ設定する
+  - Big hit reactionのAnyState→各ステートのトランジション > 中断要因を「Current State」へ変更する
+  - Bit hit reactionのExitへ伸びるトランジション > 中断要因を「Next State」へ変更する
+- 攻撃後に若干時間を空けてあげると、AIが連続的に攻撃することを防げる
 
 ## ThrowManagerの編集
 
