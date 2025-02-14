@@ -1,38 +1,54 @@
 <template>
   <VCard
-    :title="props.title"
-    :subtitle="props.category"
     hover
+    density="compact"
     @click="router.push({path: `/${props.pageName}`})"
   >
-    <template v-slot:prepend>
-      <VAvatar :color="getVariant()">
-        <VIcon :icon="`mdi-${icon}`" />
+    <VImg height="150" :src="`/img/thumbnails/${props.thumbnail}.jpg`" cover>
+      
+    </VImg>
+    <VCardTitle>{{ props.title }}</VCardTitle>
+    <VCardText>{{ props.description }}</VCardText>
+    <VCardActions>
+      <VAvatar :color="badge.color" size="small">
+        <VIcon :icon="`mdi-${badge.iconName}`" />
       </VAvatar>
-    </template>
-    <VCardText class="bg-surface-light pt-4">
-      {{ props.description }}
-    </VCardText>
+      <VChip v-for="tag in props.tags" label>{{ tag }}</VChip>
+    </VCardActions>
   </VCard>
 </template>
 
 <script lang="ts" setup>
 import { VAvatar, VCardText, VIcon, VImg } from 'vuetify/components';
 
+const categoryConfigs: Category[] = [
+  { name: 'util', color: 'brown-lighten-5', iconName: 'cursor-default' },
+  { name: 'shooter', color: 'indigo-lighten-1', iconName: 'pistol' },
+  { name: 'melee', color: 'red-lighten-1', iconName: 'sword-cross' },
+  { name: 'item', color: 'green-lighten-1', iconName: 'flask' },
+  { name: 'ai', color: 'orange-lighten-1', iconName: 'state-machine' },
+]
 
 interface Props {
   title: string,
-  icon: string,
   category: string,
   pageName: string,
   description: string,
-  color?: string,
+  thumbnail: string,
+  tags?: string[],
 }
 
-const getVariant = () => {
-  return props.color == null ? "transparent" : props.color
+interface Category {
+  name: string,
+  color: string,
+  iconName: string,
+}
+
+const getBadge = (category: string): Category => {
+  return categoryConfigs.find(c => c.name === category) ?? categoryConfigs[0];
 }
 
 const props = defineProps<Props>()
 const router = useRouter()
+const badge = getBadge(props.category)
 </script>
