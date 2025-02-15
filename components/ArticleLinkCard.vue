@@ -21,13 +21,9 @@
 <script lang="ts" setup>
 import { VAvatar, VCardText, VIcon, VImg } from 'vuetify/components';
 
-const categoryConfigs: Category[] = [
-  { name: 'util', color: 'brown-lighten-5', iconName: 'cursor-default' },
-  { name: 'shooter', color: 'indigo-lighten-1', iconName: 'pistol' },
-  { name: 'melee', color: 'red-lighten-1', iconName: 'sword-cross' },
-  { name: 'item', color: 'green-lighten-1', iconName: 'flask' },
-  { name: 'ai', color: 'orange-lighten-1', iconName: 'state-machine' },
-]
+const props = defineProps<Props>()
+const router = useRouter()
+const { $articleCategories } = useNuxtApp()
 
 interface Props {
   title: string,
@@ -45,10 +41,8 @@ interface Category {
 }
 
 const getBadge = (category: string): Category => {
-  return categoryConfigs.find(c => c.name === category) ?? categoryConfigs[0];
+  return $articleCategories().find(c => c.name === category) ?? $articleCategories()[0];
 }
 
-const props = defineProps<Props>()
-const router = useRouter()
 const badge = getBadge(props.category)
 </script>

@@ -165,10 +165,28 @@ export default defineNuxtPlugin (nuxtApp => {
       ]
     },
   ];
+
+  interface ArticleCategory {
+    name: string,
+    color: string,
+    iconName: string,
+  }
+
+  const articleCategories = [
+    { name: 'util', color: 'brown-lighten-5', iconName: 'cursor-default' },
+    { name: 'shooter', color: 'indigo-lighten-1', iconName: 'pistol' },
+    { name: 'melee', color: 'red-lighten-1', iconName: 'sword-cross' },
+    { name: 'item', color: 'green-lighten-1', iconName: 'flask' },
+    { name: 'ai', color: 'orange-lighten-1', iconName: 'state-machine' },
+  ]
+
   return {
     provide: {
       categories(): category[] {
         return categories
+      },
+      articleCategories(): ArticleCategory[] {
+        return articleCategories
       }
     }
   }
