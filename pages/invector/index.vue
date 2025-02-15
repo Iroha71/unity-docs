@@ -1,12 +1,28 @@
 <template>
   <VContainer fluid>
+    <VRow>
+      <VCol>
+        <VTextField 
+          label="記事の検索キーワード"
+          append-inner-icon="mdi-magnify"
+          v-model="keyword"
+        />
+      </VCol>
+      <VCol>
+        <VSelect
+          label="カテゴリ検索"
+          :items="getCategoryNames()"
+          v-model="selectedCategory"
+        />
+      </VCol>
+    </VRow>
     <VRow dense>
       <VCol
         cols="12"
         lg="3"
         md="4"
         sm="6"
-        v-for="article in articles"
+        v-for="article in filteredArticles"
         :key="article.title"
       >
         <ArticleLinkCard 
@@ -23,8 +39,31 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed } from 'vue';
+import { VCol, VTextField } from 'vuetify/components';
 import ArticleLinkCard from '~/components/ArticleLinkCard.vue';
+const { $articleCategories } = useNuxtApp()
+
+const keyword = ref("");
+const selectedCategory = ref("");
+
+const getCategoryNames = (): string[] => {
+  let names: string[] = [];
+  $articleCategories().forEach(category => {
+    names.push(category.name);
+  });
+
+  return names;
+}
+
+const filteredArticles = computed(() => {
+  return articles.filter(article => {
+    if (selectedCategory.value === "")
+      return true;
+    else
+      return selectedCategory.value === article.category
+  });
+});
 
 interface Article {
   title: string,
@@ -221,17 +260,4 @@ const articles: Article[] = [
     tags: ["ui"],
   }
 ]
-
-// const utilArticles = reactive<ArticleConfig[]>([
-//   { title: "UIカーソルをパッドに対応させたい", icon: "cursor-default", pageName: "ui_cursor", addInfo: "カーソル画像の設定" },
-// ]);
-
-// const articleGroup = reactive<ArticleGroup[]>([
-//   { category: "melee", articles: meleeArticles },
-//   { category: "shooter", articles: shooterArticles },
-//   { category: "item manager", articles: itemArticles },
-//   { category: "ai", articles: aiArticles },
-//   { category: "throwable", articles: throwableArticles },
-//   { category: "util", articles: utilArticles },
-// ]);
 </script>
