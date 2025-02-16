@@ -90,7 +90,7 @@ const articles: Article[] = [
   {
     title: "キャラのセットアップ",
     description: "AI / プレイヤーの設定値まとめ",
-    pageName: "shooter_setup",
+    pageName: "setup",
     category: "util",
     thumbnail: "source_code",
     tags: ["初期設定", "戦闘", "銃"]
@@ -106,7 +106,7 @@ const articles: Article[] = [
   {
     title: "ローリング",
     description: "設定値・ローリングキャンセル",
-    pageName: "rolling_cancel",
+    pageName: "rolling_cancell",
     category: "melee",
     thumbnail: "rolling",
     tags: [],
@@ -146,7 +146,7 @@ const articles: Article[] = [
   {
     title: "左手での攻撃",
     description: "武器の装備方法や入力実装",
-    pageName: "lefthand",
+    pageName: "lefthand_attack",
     category: "melee",
     thumbnail: "katana_2",
     tags: ["戦闘", "キャラコン"],

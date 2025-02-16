@@ -36,4 +36,4 @@
   - vAISendMessage→vMessageReceiver→vAIMoveToPosition.Move()
   - vFSMChangeBehaviourでCivilianToShooter→ShooterSniperへ変更
 
-  ![sniper](/uml/take_item.png)
+  ![sniper](uml/take_item.png)

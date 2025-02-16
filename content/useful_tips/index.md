@@ -23,6 +23,6 @@
 
 ### 画面遷移のUML（戦技設定画面例）
 
-![ui_class](/uml/ui_class.png)
-![ui_framework](/uml/ui_framework_stack.png)
-![ui_framework_weapon_select](/uml/ui_framework_weapon_select.png)
+![ui_class](uml/ui_class.png)
+![ui_framework](uml/ui_framework_stack.png)
+![ui_framework_weapon_select](uml/ui_framework_weapon_select.png)
