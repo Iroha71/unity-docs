@@ -13,6 +13,7 @@
           label="カテゴリ検索"
           :items="getCategoryNames()"
           v-model="selectedCategory"
+          append-icon="mdi-close"
         />
       </VCol>
     </VRow>
@@ -48,7 +49,7 @@ const keyword = ref("");
 const selectedCategory = ref("");
 
 const getCategoryNames = (): string[] => {
-  let names: string[] = [];
+  let names: string[] = ["*"];
   $articleCategories().forEach(category => {
     names.push(category.name);
   });
@@ -58,12 +59,23 @@ const getCategoryNames = (): string[] => {
 
 const filteredArticles = computed(() => {
   return articles.filter(article => {
-    if (selectedCategory.value === "")
-      return true;
-    else
-      return selectedCategory.value === article.category
+    return isMatchCategory(article.category)
+      && isMatchTitle(article.title)
   });
 });
+
+const isMatchCategory = (category: string): boolean => {
+  if (selectedCategory.value === "" || selectedCategory.value === "*")
+    return true;
+  else if (selectedCategory.value === category)
+    return true;
+  else
+    return false;
+}
+
+const isMatchTitle = (title: string): boolean => {
+  return title.includes(keyword.value);
+}
 
 interface Article {
   title: string,
