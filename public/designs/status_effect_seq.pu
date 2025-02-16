@@ -1,0 +1,45 @@
+@startuml status_effect_class
+title 状態異常の全体構成
+
+autonumber
+
+box 状態異常を与える #AliceBlue
+  participant StatusEffectGiver
+  entity BuffNode
+end box
+entity BuffData
+
+box 状態異常を受ける
+  participant StatusEffectReceiver
+end box
+
+box 状態異常 #LavenderBlush
+  control PoisonBuffFactory
+  participant PoisonBuff
+end box
+actor vHealthController
+
+[o-> StatusEffectGiver++ : Send(target: Transform)
+note over of StatusEffectGiver : BuffNodeを保持し、Receiverへ与える
+  StatusEffectGiver -> StatusEffectReceiver++ : TryGetComponent
+  return receiver
+  StatusEffectGiver -> BuffNode++ : 効果情報を取り出し
+    BuffNode -> BuffData : 参照
+  return node
+  StatusEffectGiver -> StatusEffectReceiver--++ : ApplyEffect(transform, node.factory, node.data)
+    note over of StatusEffectReceiver : BuffDataを受け取り、Factoryへ生成指示を出す
+    StatusEffectReceiver -> BuffData : 参照
+    StatusEffectReceiver -> PoisonBuffFactory++ : GetBuff(sender: Transform, this, data: BuffData)
+      PoisonBuffFactory -> PoisonBuff** : インスタンス生成(sender, target, data)
+      note over of PoisonBuffFactory : Buffを生成する
+    return poisonBuff
+    StatusEffectReceiver -> StatusEffectReceiver : activeBuffにpoisonBuff追加
+    StatusEffectReceiver -> PoisonBuff--++ : Apply()
+      PoisonBuff -> vHealthController++ : TryGetComponent()
+      return health
+      PoisonBuff -> PoisonBuff++ : AddStack(value: int, limit: int)
+        PoisonBuff -> StatusEffectReceiver++ : PoisonRegist取得
+        return poisonRegist
+      return void
+      PoisonBuff -> vHealthController-- : 1s毎にAddHealth(-value)
+@enduml

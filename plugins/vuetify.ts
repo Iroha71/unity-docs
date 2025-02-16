@@ -10,7 +10,11 @@ export default defineNuxtPlugin(app => {
     directives,
     icons: {
       defaultSet: 'mdi',
-    }
+    },
+    theme: {
+      defaultTheme: 'light',
+      //
+    },
   })
 
   app.vueApp.use(vuetify)

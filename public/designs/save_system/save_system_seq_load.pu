@@ -1,0 +1,27 @@
+@startuml save_system_seq
+title ロード処理
+
+participant SaveSystem
+participant SaveData
+participant ScenePassData
+participant ILoadable
+participant HealthController
+
+[o-> SaveSystem++ : Load(slot: int)
+  SaveSystem -> SaveSystem++ : GetLoadMode()
+    SaveSystem -> ScenePassData++ : loadModeを取得
+    return loadMode
+  return loadMode
+alt loadModeがContinue
+  SaveSystem -> SaveSystem++ : ContinueLoad()
+    SaveSystem -> SaveData : saveAtが最新のものからslot番号を取得
+    SaveSystem -> SaveSystem : slot番号からセーブファイル名を算出
+    SaveSystem -> SaveSystem-- : Load(fileName: string)
+else
+  SaveSystem -> SaveSystem++ : Load(fileName: string)
+  loop loadable in ILoadableコンポーネント
+  SaveSystem -> ILoadable--++ : OnLoad()
+    ILoadable -> HealthController-- : ChangeMaxHealth()
+  end
+end
+@enduml
