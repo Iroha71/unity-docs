@@ -4,6 +4,7 @@
       :prepend-icon="Props.icon"
       :color="Props.colorVariant"
       link
+      hover
       @click="router.push({path: `/${Props.contentName}`})"
     >
       <template v-slot:title>{{ Props.title }}</template>
