@@ -118,4 +118,4 @@
 
 ### 仕様
 
-![just_guard](/uml/just_guard.png)
+![just_guard](uml/just_guard.png)

@@ -4,7 +4,7 @@
     density="compact"
     @click="router.push({path: `/${props.pageName}`})"
   >
-    <VImg height="150" :src="`/img/thumbnails/${props.thumbnail}.jpg`" cover>
+    <VImg height="150" :src="`img/thumbnails/${props.thumbnail}.jpg`" cover>
       
     </VImg>
     <VCardTitle>{{ props.title }}</VCardTitle>
