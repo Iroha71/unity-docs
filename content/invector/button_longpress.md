@@ -1,143 +1,49 @@
-# 長押し処理
+# 長押し処理・同時押し処理
 
-## 強攻撃をチャージタイプにする
+## Input systemを使った長押し処理
 
-- vMeleeCombatInput.csにプロパティを追加する
+長押し可能なInputActionを作成する。
+↓StrongAttackを選択し、インタラクション > Holdを追加する。
+![InputAction作成](img/strong_attack_input_action.png)
 
-    ``` csharp
-    // チャージ中か
-    protected bool isChargingStrongAttack = false;
-    // 強攻撃ボタン長押し中のコールバック
-    public UnityAction OnPressingStrongAttack;
-    // 強攻撃ボタンを離したコールバック
-    public UnityAction OnReleasedStrongAttack;
-    // 強攻撃がキャンセルされた際のコールバック
-    public UnityAction OnCanceledStrongAttack;
-    ```
+## チャージ方式の強攻撃
 
-- vMeleeCombatInput.cs > MeleeStrongAttackInput()を編集する
+`strongAttackRef`に強攻撃用のInputActionを設定する。
 
-    ``` csharp
-    public virtual void MeleeStrongAttackInput()
+```cs [vShooterMeleeInput.cs]
+[SerializeField]
+protected InputActionReference strongAttackRef;
+protected bool isChargeComplete = false;
+public UnityAction OnCharged;
+
+/// <summary>
+/// 強攻撃入力時のイベントを登録する
+/// </summary>
+protected void RegistStrongAttackEvent()
+{
+    // 押し始め
+    strongAttackRef.action.started += (context) =>
     {
-        if (animator == null)
-        {
-            return;
-        }
-
-        // 元のコードを削除
-        //if (strongAttackInput.GetButtonDown() && (!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack) && MeleeAttackStaminaConditions())
-        //{
-        //    TriggerStrongAttack();
-        //}
-        
-        // 強攻撃可能な武器か判定
-        if (meleeManager.CurrentActiveAttackWeapon == null || meleeManager.CurrentActiveAttackWeapon.useStrongAttack == false)
-            return;
-        // 強攻撃長押し
-        if (strongAttackInput.GetButton()
+        if ((!meleeManager.CurrentActiveAttackWeapon || meleeManager.CurrentActiveAttackWeapon.useStrongAttack)
             && MeleeAttackStaminaConditions())
         {
-            isChargingStrongAttack = true;
-            OnPressingStrongAttack?.Invoke();
-        }
-        // 強攻撃ボタンを離した際
-        else if (isChargingStrongAttack)
-        {
-            if (meleeManager.CurrentActiveAttackWeapon.useStrongAttack)
-            {
-                OnReleasedStrongAttack?.Invoke();
-            }
-            else
-            {
-                OnCanceledStrongAttack?.Invoke();
-            }
-            isChargingStrongAttack = false;
-        }
-    }
-    ```
-
-- MeleeStrongAttackInput()の呼び出し元の編集
-    - Shooter = vShooterMeleeInput > InputHandle()
-    - Melee = vMeleeCombatInput > InputHandle()
-
-    ``` csharp
-    #region MeleeInput
-
-    if (MeleeAttackConditions() && !IsAiming && !isReloading && !lockMeleeInput && !CurrentActiveWeapon)
-    {
-        // チャージ中は弱攻撃ができないように
-        if ((shooterManager.canUseMeleeWeakAttack_H || shooterManager.CurrentWeapon == null)
-            && isChargingStrongAttack == false)
-        {
-            MeleeWeakAttackInput();
-        }
-
-        if (shooterManager.canUseMeleeStrongAttack_H || shooterManager.CurrentWeapon == null)
-        {
-            MeleeStrongAttackInput();
-        }
-        // チャージ中はガードができないように
-        if ((shooterManager.canUseMeleeBlock_H || shooterManager.CurrentWeapon == null)
-            && isChargingStrongAttack == false)
-        {
-            BlockingInput();
-        }
-        else
-        {
-            isBlocking = false;
-        }
-    }
-
-    #endregion
-    ```
-
-### 使用例
-
-- [ここのスクリプトを参照](https://github.com/Iroha71/unity-docs/blob/develop/assets/origin-scripts/chargable_strong_attack/)
-
-## 長押し・単押し出し分け
-
-- 強攻撃出し分ける例
-
-    ``` csharp[SameButton.cs]
-    public virtual void MeleeStrongAttackInput()
-    {
-        if (animator == null)
-        {
-            return;
-        }
-
-        if (strongAttackInput.GetButtonTimer(0.7f) && 
-            (!meleeManager.CurrentActiveAttackWeapon || 
-            meleeManager.CurrentActiveAttackWeapon.useStrongAttack) 
-            && MeleeAttackStaminaConditions())
-        {
-            isArtsReady = true;
-            OnInputArtsAttack?.Invoke();
-            return;
-        }
-
-        if (strongAttackInput.GetButtonDown() && isArtsReady)
-            isArtsReady = false;
-
-        if (strongAttackInput.GetButtonUp() && 
-            isArtsReady == false && 
-            (!meleeManager.CurrentActiveAttackWeapon ||
-            meleeManager.CurrentActiveAttackWeapon.useStrongAttack)
-            && MeleeAttackStaminaConditions())
-        {
+            isChargeComplete = false;
             TriggerStrongAttack();
         }
-    }
-    ```
+    };
 
-## ボタン同時押し
+    // 規定時間まで押した場合
+    strongAttackRef.action.performed += (context) =>
+    {
+        isChargeComplete = true;
+        OnCharged?.Invoke();
+    };
 
-``` csharp[SameButton.cs]
-// LB + Xボタンの例
-if (exampleInput.GetButtonDown() && otherInput.GetButton())
-{
-  同時押しの処理
+    // ボタンを離した場合
+    strongAttackRef.action.canceled += (context) =>
+    {
+        TriggerStrongAttack(isChargeComplete ? "ChargeAttack" : "QuickAttack");
+        isChargeComplete = false;
+    };
 }
 ```

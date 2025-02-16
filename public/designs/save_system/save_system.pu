@@ -1,0 +1,51 @@
+@startuml save_system
+title セーブシステム
+hide empty member
+
+class ScriptableObject
+
+class ScenePassData {
+  + loadMote: string
+  + selectedSaveSlot: string
+}
+
+ScriptableObject <|-- ScenePassData
+
+class SaveData {
+  + slotNumber: int
+  + saveAt: DateTime
+  + lastScene: string
+  + SaveData(slot: int, saveAt: DateTime, scene: string)
+}
+
+class SaveSystem {
+  + saveDatas: List<SaveData>
+  + Save(slotNumber: int)
+  + Load(slotNumber: int)
+  + ContinueLoad()
+  - GetLeatestSaveData(): SaveData
+}
+
+interface ISavable {
+  + OnSave(fileName: string)
+}
+
+interface ILoadable {
+  + OnLoad(fileName: string)
+}
+
+class HealthController {
+  - currentHealth: int
+  - maxHealth: int
+  + ChangeHealth(value: int)
+  + ChangeMaxHealth(value: int)
+}
+
+SaveSystem ..> SaveData : 参照
+HealthController -left-|> ISavable
+HealthController --|> ILoadable
+SaveSystem .right.> ISavable : セーブ処理呼び出し
+SaveSystem ..> ILoadable : ロード処理呼び出し
+SaveSystem .left.> ScenePassData : ロード時にロード方法を参照
+
+@enduml

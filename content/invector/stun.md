@@ -8,7 +8,7 @@
 
 - スタン値を加算する
 
-  ``` csharp[AddStun.cs]
+  ``` csharp [AddStun.cs]
   enum StunState { STUNNED, NOT_STUN };
 
   public void AddStun(int value)
@@ -28,7 +28,7 @@
 
 - スタン状態に変更
 
-  ``` csharp[Stun.cs]
+  ``` csharp [Stun.cs]
   private void ChangeStunState(StunState state)
   {
       // AI挙動を停止
@@ -41,7 +41,7 @@
 - スタン監視
   - Unitaskはキャンセルが面倒のため、Updateを利用
 
-  ``` csharp[Update.cs]
+  ``` csharp [Update.cs]
   void Update()
   {
       if (stunState == StunState.STUNNED)
@@ -58,7 +58,7 @@
 
 - スタン状態に遷移するスクリプト
 
-  ``` csharp[Stun.cs]
+  ``` csharp [Stun.cs]
   private void ChangeStunState(StunState state)
   {
       // AI挙動を再開

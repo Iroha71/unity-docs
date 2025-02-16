@@ -1,0 +1,5 @@
+@startuml shooter_damage_logic
+title Shooterのダメージ処理
+
+
+@enduml

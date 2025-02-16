@@ -1,0 +1,21 @@
+@startuml status_effect_buffdata
+title BuffData / Factory / Nodeの関係
+
+participant StatusEffectSender
+participant StatusEffectReceiver
+participant BuffNode
+participant BuffData
+participant BuffFactory
+participant Buff
+
+[o-> StatusEffectSender++ : Send()
+  StatusEffectSender -> StatusEffectReceiver--++ : 状態異常ノードを渡す
+    StatusEffectReceiver --> BuffNode++ : ノードからジェネレータと材料（データ）を取り出す
+      BuffNode <-- BuffFactory : ジェネレータ取り出し
+      BuffNode <-- BuffData : 材料取り出し
+    return ジェネレータと材料
+    StatusEffectReceiver -> BuffFactory++ : 生成指示と材料投入
+    BuffFactory -> Buff-- : バフの生成
+    Buff --> StatusEffectReceiver : activeEffectsに追加する
+  deactivate StatusEffectReceiver
+@enduml

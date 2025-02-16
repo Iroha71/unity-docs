@@ -2,44 +2,44 @@
 
 - **vThrowManagerBase** > **UpdateThrowInput()** を編集する
 
-  ``` csharp
+  ``` csharp [vThrowManagerBase.cs]
   protected virtual void UpdateThrowInput()
   {
-      if (!ThrowConditions)
-      {
-          return;
-      }
+    if (!ThrowConditions)
+    {
+        return;
+    }
 
-      if (aimThrowInput.GetButtonDown() 
-        && !inEnterThrowMode 
-        && !isThrowing 
-        && !isAiming)
-      {
-          EnterThrowMode();
-          return;
-      }
-      // ↓エイム解除処理をコメントアウト
-      //if (aimThrowInput.GetButtonUp() && aimHoldingButton && (isAiming || inEnterThrowMode) && !isThrowing)
-      //{
-      //    ExitThrowMode();
-      //}
+    if (aimThrowInput.GetButtonDown() 
+      && !inEnterThrowMode 
+      && !isThrowing 
+      && !isAiming)
+    {
+        EnterThrowMode();
+        return;
+    }
+    // ↓エイム解除処理をコメントアウト
+    //if (aimThrowInput.GetButtonUp() && aimHoldingButton && (isAiming || inEnterThrowMode) && !isThrowing)
+    //{
+    //    ExitThrowMode();
+    //}
 
-      if (isAiming 
-        && !isThrowing 
-        && !pressThrowInput)
-      {
-          // throwInput→aimThrowInputへ変更
-          if (aimThrowInput.GetButtonDown())
-              pressThrowInput = true;
-      }
+    if (isAiming 
+      && !isThrowing 
+      && !pressThrowInput)
+    {
+        // throwInput→aimThrowInputへ変更
+        if (aimThrowInput.GetButtonDown())
+            pressThrowInput = true;
+    }
 
-      if (!aimHoldingButton 
-        && aimThrowInput.GetButtonDown() 
-        && !pressThrowInput 
-        && (isAiming || inEnterThrowMode) 
-        && !isThrowing)
-      {
-          ExitThrowMode();
-      }
+    if (!aimHoldingButton 
+      && aimThrowInput.GetButtonDown() 
+      && !pressThrowInput 
+      && (isAiming || inEnterThrowMode) 
+      && !isThrowing)
+    {
+        ExitThrowMode();
+    }
   }
   ```

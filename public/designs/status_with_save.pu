@@ -1,0 +1,46 @@
+@startuml status_with_save
+title セーブシステムとステータスを組み合わせた例
+
+participant SaveSystem
+participant ISaveWriter
+participant ISaveReader
+participant PlayerStatusHolder
+participant Status
+participant IStatusAccessor
+participant HealthController
+
+== セーブ処理 ==
+[o-> SaveSystem++ : Save()
+  SaveSystem -> ISaveWriter--++ : Save()
+    ISaveWriter -> PlayerStatusHolder--++ : Save()
+      PlayerStatusHolder -> Status** : Scriptable.CreateInstance
+      PlayerStatusHolder -> IStatusAccessor++ : GetValue(statusName: string, syncStatus: Status)
+        IStatusAccessor -> HealthController++ : GetValue(statusName: string, syncStatus: Status)
+          alt statusName == Health
+          HealthController -> HealthController : syncStatus.MaxHealthに代入
+          else statusName == CurrentHealth
+          HealthController -> HealthController : syncStatus.Healthに代入
+          end
+        return syncStatus
+      return syncStatus
+    PlayerStatusHolder -> PlayerStatusHolder-- : ES3.Save(key: string, status: Status, filePath: string)
+
+== ロード処理 ==
+[o-> SaveSystem++ : Load()
+SaveSystem -> ISaveReader--++ : Load()
+  ISaveReader -> PlayerStatusHolder--++ : Load()
+    PlayerStatusHolder -> Status++ : ES3.Load(key: string)
+    return status
+    PlayerStatusHolder -> IStatusAccessor++ : InitStatus(statusName: string, baseStatus: Status, modules: Dictionary)
+      IStatusAccessor -> HealthController++ : InitStatus(statusName: string, baseStatus: Status, modules: Dictionary)
+        alt statusName == Health
+        HealthController -> HealthController : syncStatus.MaxHealthをmaxHealthに代入
+        HealthController -> HealthController : modules.Add("health", this)
+        else statusName == CurrentHealth
+        HealthController -> HealthController : syncStatus.HealthをcurrentHealthに代入
+        HealthController -> HealthController : modules.Add("currentHealth", this)
+        end
+      return void
+    return void
+  deactivate PlayerStatusHolder
+@enduml
