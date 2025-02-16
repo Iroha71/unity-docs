@@ -1,4 +1,17 @@
-# セットアップ
+# キャラクターのセットアップ
+
+- [キャラクターのセットアップ](#キャラクターのセットアップ)
+  - [カバーアドオン](#カバーアドオン)
+  - [キャラクター自身に機能追加する場合](#キャラクター自身に機能追加する場合)
+  - [ThrowManagerの編集](#throwmanagerの編集)
+  - [AI](#ai)
+    - [各パラメータの設定](#各パラメータの設定)
+    - [AIの調整項目](#aiの調整項目)
+    - [Root Motionの修正](#root-motionの修正)
+    - [武器の設定](#武器の設定)
+
+
+## カバーアドオン
 
 - Invector > Cover Add-On > Create Cover Controllerでキャラクターを作成する
 - UIの変更（任意）
@@ -13,11 +26,6 @@
     - コンポーネント内の設定を変更することで、厚さや幅を調整可能。
 - 必要に応じてカバーオブジェクトにNavMeshObstaclesをアタッチする
   - オブジェクトが移動しても、Bakeしなおす必要がなくなる
-
-## キャラクターの設定
-
-### カバーアドオン
-
 - V Cover Controller > Cover Settings
 
   |項目|内容|
@@ -26,8 +34,29 @@
   |Auto Enter Cover|自動カバー|
   |Auto Exit Cover|壁を離れるような入力を受けるとカバーを外す|
 
+## キャラクター自身に機能追加する場合
 
-## AIのセットアップ手順
+- interfaceを作成する
+- vThirdPersonMotor or vThirdPersonControllerに実装を行う
+  - Motor: スタミナ・ローリングなどの動作定義・TakeDamage()の実装が行われている
+- vEditorToolBarでインスペクタ上でグリッド表示が行える
+
+## ThrowManagerの編集
+
+- プレイヤー配下のThrowManagerを有効にする
+
+  ![throw-manager](img/throw-manager-hieralchy.png)
+
+  |オブジェクト名|用途|
+  |---|---|
+  |~-Inventory_EquipArea|投擲物を装備欄に装備するタイプ|
+  |~-Inventory_Item|Itemとして管理するが、装備の必要がない|
+  |~-Standalone|ItemManagerとは独立して管理|
+
+- vThrowManagerInventory > Throwable > Default Handlerを設定する
+  - 場所: RightHand配下に作成
+
+## AI
 
 ### 各パラメータの設定
 
@@ -69,6 +98,19 @@
   |Min Distance Of The Target|1 ~ 1.4|
   |Combat Distance|2.5~3|
 
+### AIの調整項目
+
+- vControlAI > Movement > StrafeSpeed
+  - WalkSpeed
+  - RunningSpeed
+- vControlAI > Agent
+  - Aceleration: 50
+  - Stoping Distance: 1
+- vControlAI > Combat Settings
+  - Attack Distance: 1.25
+  - Min Distance Of The Target: 1
+  - Combat Distance: 2.5
+
 ### Root Motionの修正
 
 攻撃アニメーションにRoot付きのものを利用すると
@@ -105,18 +147,3 @@ RootMotionの上書きを無効にする。
   |---|---|---|
   |EnableWeapon|vAISendMessage|EnableWeapon|
   |DisableWeapon|vAISendMessage|DisableWeapon|
-
-## ThrowManagerの編集
-
-- プレイヤー配下のThrowManagerを有効にする
-
-  ![throw-manager](img/throw-manager-hieralchy.png)
-
-  |オブジェクト名|用途|
-  |---|---|
-  |~-Inventory_EquipArea|投擲物を装備欄に装備するタイプ|
-  |~-Inventory_Item|Itemとして管理するが、装備の必要がない|
-  |~-Standalone|ItemManagerとは独立して管理|
-
-- vThrowManagerInventory > Throwable > Default Handlerを設定する
-  - 場所: RightHand配下に作成

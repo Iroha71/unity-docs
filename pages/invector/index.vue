@@ -60,7 +60,11 @@ interface ArticleConfig {
 
 const utilArticles = reactive<ArticleConfig[]>([
   { title: "UIカーソルをパッドに対応させたい", icon: "cursor-default", pageName: "ui_cursor", addInfo: "カーソル画像の設定" },
-  { title: "Shooter: セットアップ", icon: "pistol", pageName: "shooter_setup", addInfo: "cover addon含めた設定方法" },
+  { title: "セットアップ", icon: "pistol", pageName: "setup", addInfo: "cover addon含めた設定方法" },
+  { title: "DeathByのタイミングを調整したい", icon: "bottle-tonic-skull", pageName: "deathby", addInfo: "ラグドール化タイミングの調整方法" },
+  { title: "アニメーションタグがあるか確認したい", icon: "tag-outline", pageName: "check_tag", addInfo: "CustomActionなどが実行中か確認する方法" },
+  { title: "強制歩行させたい", icon: "pause-octagon-outline", pageName: "force_walk", addInfo: "スクリプト実装" },
+  { title: "ロックオンを解除させたい", icon: "target", pageName: "unlock", addInfo: "スクリプト実装" },
 ]);
 
 const meleeArticles = reactive<ArticleConfig[]>([
@@ -71,7 +75,8 @@ const meleeArticles = reactive<ArticleConfig[]>([
   { title: "長押し処理のまとめ", icon: "controller", pageName: "button_longpress", addInfo: "チャージ攻撃・だし分け" },
   { title: "ダメージに要素を追加したい", icon: "sword-cross", pageName: "damage_config", addInfo: "要素の追加・無敵化・ヘッドショット" },
   { title: "左手でも攻撃したい", icon: "hand-back-left-outline", pageName: "lefthand_attack", addInfo: "武器装備や入力について" },
-  { title: "状態異常を追加したい", icon: "bottle-tonic-skull", pageName: "abnormal", addInfo: "状態異常ロジックの提示" }
+  { title: "状態異常を追加したい", icon: "bottle-tonic-skull", pageName: "abnormal", addInfo: "状態異常ロジックの提示" },
+  { title: "演出強化スクリプト", icon: "emoticon-happy-outline", pageName: "melee_emphasis", addInfo: "ヒットストップ・カメラ揺れ" },
 ]);
 
 const shooterArticles = reactive<ArticleConfig[]>([
